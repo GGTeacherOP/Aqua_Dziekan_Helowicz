@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaParadise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+      color: #333;
+    }
+    header {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    header .content {
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5em;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      padding: 1em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      margin: 0 1em;
+      text-decoration: none;
+      color: #007BFF;
+      padding: 0.5em 1em;
+      border-radius: 20px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #e0f2ff;
+    }
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2em;
+      padding: 2em;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1.5em;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .cta {
+      text-align: center;
+      margin: 3em 0;
+    }
+    .cta button {
+      background: #007BFF;
+      color: white;
+      padding: 1em 2em;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cta button:hover {
+      background: #0056b3;
+    }
+    footer {
+      text-align: center;
+      padding: 2em;
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="content">
+      <h1>Welcome to AquaParadise</h1>
+      <p>Discover fun, relaxation, and unforgettable moments in one water wonderland.</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#aquapark">Aquapark</a>
+    <a href="#spa">Spa & Sauna</a>
+    <a href="#hotel">Hotel</a>
+    <a href="#dining">Dining</a>
+    <a href="#newsletter">Newsletter</a>
+  </nav>
+
+  <section class="sections">
+    <div class="card">
+      <h3>Wave Pool</h3>
+      <p>Experience our epic artificial waves perfect for all ages!</p>
+    </div>
+    <div class="card">
+      <h3>Slides</h3>
+      <p>Adrenaline-filled water slides with twists and turns for the brave!</p>
+    </div>
+    <div class="card">
+      <h3>Kids Zone</h3>
+      <p>Safe and colorful area designed for toddlers and young swimmers.</p>
+    </div>
+    <div class="card">
+      <h3>Relax & Rejuvenate</h3>
+      <p>Discover our aromatherapy saunas, salt grottos, and jacuzzis.</p>
+    </div>
+    <div class="card">
+      <h3>Stay With Us</h3>
+      <p>Book comfortable rooms and enjoy poolside views day and night.</p>
+    </div>
+    <div class="card">
+      <h3>Dine & Delight</h3>
+      <p>From fresh juices to full-course meals, taste paradise with us.</p>
+    </div>
+  </section>
+
+  <div class="cta">
+    <button>Buy Tickets Now</button>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AquaParadise | Designed for fun and release</p>
+    <div>
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+    </div>
+  </footer>
+</body>
+</html>

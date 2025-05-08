@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaParadise - Aquapark</title> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Zmienne Główne (NOWA Paleta Jasna Niebieska) --- */
+        :root {
+            --primary: #0077cc;        /* Główny niebieski */
+            --primary-light: #33aaff;  /* Jaśniejszy niebieski */
+            --secondary: #00b8d4;     /* Akcent cyjanowy/turkusowy */
+            --secondary-light: #62efff; 
+
+            --bg-base: #f4f9ff;       /* Bardzo jasne tło, prawie białe */
+            --bg-elements: #ffffff;   /* Tło dla kart/elementów */
+            --bg-elements-alt: #e9f5ff; /* Alternatywne tło */
+            
+            --text-dark: #1a2a45;     /* Ciemny granat dla tekstu */
+            --text-medium: #556a8c;   /* Średni szaro-niebieski */
+            --text-light: #f8f8ff;    /* Bardzo jasny tekst (na ciemnych tłach) */
+            --white: #ffffff;
+
+            --accent-glow: #ff4081;    /* Różowy/Magenta jako kontrastowy akcent */
+            --accent-secondary-glow: #ff80ab; 
+            
+            --shadow-color: rgba(79, 129, 189, 0.15); /* Kolor cienia oparty na niebieskim */
+            --shadow-strong: rgba(79, 129, 189, 0.25);
+
+            /* Przejścia */
+            --transition-fast: all 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            --transition-medium: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            --transition-slow: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+            /* Wersje RGB */
+            --primary-rgb: 0,119,204;
+            --secondary-rgb: 0,184,212;
+            --accent-glow-rgb: 255,64,129;
+            --text-dark-rgb: 26,42,69;
+            --light-text-rgb: 248,248,255;
+            --bg-elements-rgb: 255,255,255;
+        }
+
+        /* --- Animacje (Nowe lub zmodyfikowane) --- */
+        @keyframes animatedBodyGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes floatBodyShape { 0% { transform: translate(0vw, 0vh) rotate(0deg); opacity: 0.5; } 25% { transform: translate(4vw, -6vh) rotate(10deg); opacity: 0.7; } 50% { transform: translate(-3vw, 8vh) rotate(-5deg); opacity: 0.6; } 75% { transform: translate(2vw, -4vh) rotate(5deg); opacity: 0.8; } 100% { transform: translate(0vw, 0vh) rotate(0deg); opacity: 0.5; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 15px 5px rgba(var(--accent-glow-rgb), 0.4); } 50% { box-shadow: 0 0 25px 10px rgba(var(--accent-glow-rgb), 0.6); } }
+        @keyframes subtleRotate { 0% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }
+        
+        /* --- Styl Ogólny Body i Tła (Nowe, Jasne) --- */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-base);
+            background-image: linear-gradient(170deg, 
+                var(--bg-base) 0%, 
+                #e6f7ff 50%, /* Jaśniejszy błękit */
+                #d0efff 100% /* Jeszcze inny jasny błękit */
+            );
+            background-size: 150% 150%; /* Mniejszy rozmiar dla subtelniejszego ruchu */
+            animation: animatedBodyGradient 30s ease infinite;
+            color: var(--text-dark); /* Ciemny tekst */
+            overflow-x: hidden;
+            line-height: 1.7; /* Zwiększony interlinia */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Nowe, subtelniejsze kształty tła dla jasnego motywu */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 120vmax; 
+            height: 120vmax;
+            transform-origin: center center;
+            z-index: -1; 
+            pointer-events: none;
+            mix-blend-mode: overlay; /* Inny blend mode dla jasnego tła */
+            will-change: transform, opacity;
+            filter: blur(60px); /* Większe rozmycie */
+            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; /* Bardziej płynne kształty */
+        }
+
+        body::before {
+             background: radial-gradient(ellipse at center, hsla(200, 100%, 75%, 0.4) 0%, transparent 60%), /* Jaśniejszy niebieski */
+                        radial-gradient(ellipse at 20% 80%, hsla(170, 80%, 70%, 0.35) 0%, transparent 55%), /* Miętowy/Turkus */
+                        radial-gradient(ellipse at 80% 30%, hsla(220, 80%, 80%, 0.35) 0%, transparent 60%); /* Inny niebieski */
+            animation: floatBodyShape 35s ease-in-out infinite alternate;
+            opacity: 0.7;
+        }
+
+        body::after {
+            width: 150vmax; height: 150vmax;
+            background: radial-gradient(ellipse at center, hsla(240, 80%, 80%, 0.3) 0%, transparent 60%), /* Lawendowy */
+                        radial-gradient(ellipse at 70% 70%, hsla(0, 0%, 100%, 0.3) 0%, transparent 50%), 
+                        radial-gradient(ellipse at 30% 20%, hsla(185, 90%, 75%, 0.3) 0%, transparent 55%); /* Cyjan */
+            animation: floatBodyShape 45s ease-in-out infinite alternate-reverse;
+            filter: blur(70px);
+             opacity: 0.8;
+        }
+
+        .page-content-wrapper { position: relative; z-index: 1; background-color: transparent; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* --- Nagłówek (Nowy styl - jaśniejszy) --- */
+        .aquapark-header { 
+            background: linear-gradient(rgba(var(--primary-rgb), 0.6), rgba(var(--secondary-rgb), 0.7)),
+                url('aquapark_header.jpg') center/cover no-repeat; /* Usunięto fixed dla innego efektu */
+            height: 80vh; /* Wysokość jak w oryginale aquapark */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 8px solid var(--secondary); /* Grubsza linia w kolorze wtórnym */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%); /* Inny kształt dolnej krawędzi */
+        }
+
+        /* Usunięto .aquapark-header::before dla czystszego wyglądu clip-path */
+
+        .header-content { 
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1.3s ease-out;
+            background: none; /* Usunięto tło dla czystszego wyglądu tekstu na obrazie */
+            padding: 20px; /* Mniejszy padding */
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .header-content h1 { 
+            font-size: 5rem; /* Jeszcze większy tytuł */
+            margin-bottom: 0.3em;
+            text-shadow: 0 4px 15px rgba(var(--text-dark-rgb), 0.5); /* Cień tekstu */
+            letter-spacing: -2px;
+            font-weight: 700;
+        }
+
+        .header-content p { 
+            font-size: 1.5rem; /* Większy opis */
+            max-width: 850px;
+            margin: 0 auto;
+            text-shadow: 0 2px 10px rgba(var(--text-dark-rgb), 0.4);
+            opacity: 1; /* Pełna widoczność */
+            line-height: 1.75;
+            font-weight: 300; /* Lżejszy font dla opisu */
+        }
+
+        /* --- Nawigacja (Styl z hotel.html, dostosowany do jasnego tła) --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            background: rgba(var(--bg-elements-rgb), 0.85); /* Białe tło z przezroczystością */
+            backdrop-filter: blur(10px);
+            padding: 1em 1em;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px var(--shadow-color); /* Delikatny cień */
+            border-bottom: 1px solid rgba(var(--primary-rgb), 0.1); /* Subtelna linia */
+        }
+
+        nav a {
+            margin: 0 0.8em; /* Mniejszy margines */
+            text-decoration: none;
+            color: var(--text-dark); /* Ciemny tekst */
+            padding: 0.6em 1.3em; 
+            border-radius: 25px; 
+            transition: var(--transition-medium);
+            font-weight: 500; 
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent; /* Dodano dla efektu hover */
+        }
+        /* Usunięto ::before dla innego efektu hover */
+
+        nav a:hover {
+            color: var(--primary); 
+            background-color: rgba(var(--primary-rgb), 0.1); /* Jasnoniebieskie tło */
+            transform: translateY(-2px);
+            box-shadow: none; /* Usunięto cień */
+            border-color: rgba(var(--primary-rgb), 0.3); /* Pojawiająca się ramka */
+        }
+
+        nav a.active { 
+            background: var(--primary); 
+            color: var(--white); /* Biały tekst na aktywnym */
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
+            border-color: var(--primary);
+        }
+        nav a.active:hover { /* Poprawka dla hover aktywnego linku */
+             background: var(--primary-dark);
+             color: var(--white);
+              transform: translateY(-2px);
+              box-shadow: 0 6px 15px rgba(var(--primary-dark-rgb), 0.5);
+        }
+
+
+        /* --- Główny Kontener i Tytuły Sekcji --- */
+        .container { max-width: 1300px; margin: 4em auto; padding: 0 2em; flex: 1; } /* Szerszy kontener */
+        .section-title { margin-bottom: 3em; text-align: center;}
+        .section-title h2 {
+            font-size: 2.8rem; /* Większy tytuł sekcji */
+            color: var(--text-dark); 
+            text-shadow: none; /* Bez cienia */
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.3em;
+        }
+        .section-title h2::after { /* Inny styl podkreślenia */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary)); /* Gradientowe podkreślenie */
+            border-radius: 3px;
+            box-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3);
+        }
+
+        /* --- Sekcja Atrakcji (NOWY UKŁAD - Dynamiczna Siatka) --- */
+        .attractions-list { /* Zmieniono nazwę klasy kontenera */
+             display: grid;
+             /* Bardziej dynamiczna siatka - dopasowuje liczbę kolumn */
+             grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); 
+             gap: 2.5em; /* Odstępy */
+             margin-bottom: 4em;
+             align-items: start; /* Różne wysokości kart */
+        }
+
+        .attraction-card { /* NOWY styl karty - jaśniejszy, inne efekty */
+            background: var(--bg-elements);
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px var(--shadow-color);
+            overflow: hidden; /* Przycinanie obrazka */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
+            display: flex; /* Reset flex z poprzedniej wersji */
+            flex-direction: column; /* Treść pod obrazkiem */
+        }
+         /* Usunięto :nth-child(even) dla jednolitego układu */
+
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 45px var(--shadow-strong);
+        }
+        /* Usunięto ::after dla eksplozji */
+
+        .attraction-img { 
+            flex: none; /* Obrazek nie jest już elementem flex w poziomie */
+            height: 250px; /* Wysokość obrazka */
+            position: relative;
+            overflow: hidden;
+            border-radius: 0; /* Reset zaokrąglenia */
+            box-shadow: none; /* Reset cienia */
+        }
+
+        .attraction-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .attraction-card:hover .attraction-img img {
+            transform: scale(1.1); 
+            filter: brightness(1.05) contrast(1.1); /* Inny efekt na hover */
+        }
+        
+        /* Overlay na zdjęciu */
+         .attraction-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(var(--text-dark-rgb), 0.6) 0%, transparent 60%);
+             opacity: 0;
+             transition: opacity 0.4s ease;
+        }
+         .attraction-card:hover .attraction-img::after {
+             opacity: 1;
+        }
+
+        .attraction-content { 
+            padding: 1.8em; 
+            position: relative; /* Reset z-index */
+            color: var(--text-dark); /* Ciemny tekst */
+            overflow: visible; /* Reset overflow */
+            background: none; /* Usunięcie tła gradientowego karty */
+            flex-grow: 1; /* Pozwala treści rosnąć */
+        }
+         /* Usunięto ::before, ::after dla tła treści */
+
+        .attraction-content h3 {
+            font-size: 1.5rem; /* Mniejszy tytuł */
+            margin-bottom: 0.5em;
+            color: var(--text-dark); 
+            text-shadow: none; /* Bez cienia */
+            font-weight: 600;
+        }
+
+        .attraction-content p {
+            margin-bottom: 1.2em; 
+            line-height: 1.65;
+            color: var(--text-medium); /* Średni kolor tekstu */
+            font-size: 0.9rem;
+             flex-grow: 1; /* Dopycha resztę w dół */
+        }
+
+        .attraction-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5em; /* Mniejszy odstęp */
+            margin-bottom: 1.2em; /* Odstęp przed akcją */
+        }
+
+        .feature-tag { /* Nowy styl tagów */
+            background: var(--bg-elements-alt); /* Alternatywne tło */
+            color: var(--primary); /* Kolor główny */
+            border: none;
+            padding: 0.4em 0.8em;
+            border-radius: 6px;
+            font-size: 0.7rem; 
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: none;
+            transition: var(--transition-fast);
+             line-height: 1.3;
+        }
+        .feature-tag:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(var(--secondary-rgb), 0.3);
+        }
+
+        .attraction-action { /* Styl kontenera przycisku */
+             border-top: 1px solid var(--light-bg-accent1);
+             padding-top: 1em;
+             margin-top: 1em;
+             display: flex;
+             justify-content: flex-end;
+        }
+
+        .details-button { /* Nowy styl przycisku */
+            background-color: var(--primary); 
+            color: var(--white); 
+            padding: 0.6em 1.3em; 
+            border-radius: 20px;
+            font-size: 0.8rem; 
+            box-shadow: 0 3px 10px rgba(var(--primary-rgb), 0.3);
+        }
+        .details-button:hover {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(var(--primary-dark-rgb), 0.4);
+        }
+
+        /* --- Sekcja Statystyk (NOWY UKŁAD - Bloki Liczników) --- */
+        .stats-section-wrapper { margin: 5em 0; } 
+        .stats-counter-grid { /* Zmieniono nazwę kontenera */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Tło gradientowe dla sekcji */
+            padding: 3em 2em;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.25);
+        }
+
+        .counter-item { /* Styl pojedynczego licznika */
+            text-align: center;
+            color: var(--white);
+             transition: transform 0.3s ease;
+        }
+         .counter-item:hover {
+             transform: scale(1.05);
+         }
+
+        .counter-item i {
+            font-size: 3.5rem; /* Duża ikona */
+            display: block;
+            margin-bottom: 0.3em;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(var(--white-rgb, 255,255,255), 0.3);
+             /* Definicja --white-rgb */
+             :root { --white-rgb: 255,255,255; }
+        }
+        .counter-item .stat-number { /* Duży numer */
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 0.1em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+             /* Tutaj można dodać JS do animacji liczenia */
+        }
+        .counter-item .stat-label { /* Etykieta */
+            font-size: 1rem;
+            font-weight: 300;
+             opacity: 0.9;
+        }
+        
+
+        /* --- Sekcja Galerii (Nowy, dynamiczny układ siatki) --- */
+        .gallery-section { margin: 5em 0; }
+        .gallery-grid {
+            display: grid;
+            /* Siatka z różnymi rozmiarami kolumn i wierszy */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            grid-auto-rows: 150px; /* Domyślna wysokość wiersza */
+            grid-auto-flow: dense; /* Gęste upakowanie */
+            gap: 1em;
+        }
+
+        .gallery-item {
+            height: auto; /* Wysokość automatyczna */
+            overflow: hidden;
+            border-radius: 12px; /* Mniejsze zaokrąglenie */
+            position: relative;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            transition: var(--transition-medium);
+            cursor: pointer;
+        }
+         /* Różne rozmiary elementów galerii */
+         .gallery-item:nth-child(7n+1) { grid-column: span 2; grid-row: span 2; height: 316px;} /* Większy co 7 (2x2) */
+         .gallery-item:nth-child(7n+4) { grid-column: span 1; grid-row: span 2; height: 316px;} /* Wyższy co 7 */
+         .gallery-item:nth-child(7n+6) { grid-column: span 2; grid-row: span 1; height: 150px;} /* Szerszy co 7 */
+
+        .gallery-item:hover {
+            transform: scale(1.03); 
+            box-shadow: 0 12px 30px var(--shadow-strong);
+            z-index: 10; /* Na wierzch przy hover */
+        }
+
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease-out; }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-overlay { position: absolute; inset: 0; background: rgba(var(--primary-dark-rgb), 0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: var(--transition-medium); border-radius: 12px; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-overlay i { color: var(--accent-glow); font-size: 2rem; transform: scale(0.8); transition: transform 0.3s var(--transition-fast); }
+        .gallery-item:hover .gallery-overlay i { transform: scale(1.15) rotate(10deg); }
+
+        /* --- Sekcja CTA --- */
+        .cta-section { text-align: center; margin: 5em 0; }
+        .cta-button { 
+            display: inline-block; 
+            background: linear-gradient(45deg, var(--primary), var(--secondary)); /* Gradient dla przycisku */
+            color: var(--white); 
+            padding: 1em 2.5em; /* Większy padding */
+            border-radius: 50px; /* Pełne zaokrąglenie */
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.2rem; /* Większy font */
+            letter-spacing: 0.8px; 
+            box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4); 
+            transition: var(--transition-medium); 
+            border: none; cursor: pointer; position: relative; overflow: hidden;
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05); 
+            box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.5);
+        }
+         /* Można dodać ikonę do przycisku dla lepszego efektu */
+         .cta-button i { margin-left: 0.5em; }
+
+        /* --- Stopka (Styl z hotel.html, jasne tło) --- */
+        footer {
+            background: var(--bg-elements-alt); /* Jasne tło stopki */
+            color: var(--text-medium); /* Średni kolor tekstu */
+            padding: 4em 0 2em;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0; 
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--light-bg-accent2); /* Linia oddzielająca */
+        }
+        
+        .footer-content { 
+            max-width: 1200px; margin: 0 auto; padding: 0 2em; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 2em; text-align: left; position: relative; z-index: 1;
+        }
+        .footer-column { padding: 1em 0; border-radius: 0; transition: none; } /* Usunięto transition */
+        .footer-column:hover { background: none; transform: none; } /* Usunięto hover */
+
+        .footer-column h3 { 
+            font-size: 1.2rem; /* Mniejszy nagłówek */
+            margin-bottom: 0.8em; 
+            color: var(--text-dark); /* Ciemny nagłówek */
+            font-weight: 600;
+        }
+        .footer-column h3::after { 
+            background: var(--primary); /* Niebieskie podkreślenie */
+             height: 3px; width: 35px; bottom: -5px;
+        }
+
+        .footer-column p, .footer-column a { 
+            color: var(--text-medium); 
+            opacity: 1; 
+            font-size: 0.88rem; /* Nieco mniejszy tekst */
+        }
+        .footer-column a:hover { 
+            color: var(--primary); 
+            transform: translateX(3px); 
+        }
+        .footer-column a i { 
+            color: var(--primary); 
+        }
+        .footer-column a:hover i { 
+            color: var(--primary-dark); 
+        }
+
+        .social-links { gap: 0.7em; margin-top: 0.8em; }
+        .social-links a { 
+            width: 36px; height: 36px; /* Mniejsze ikony */
+            background: var(--bg-elements); /* Białe tło */
+            box-shadow: 0 2px 6px var(--shadow-color); 
+        }
+        .social-links a i { 
+            font-size: 1rem; 
+            color: var(--primary); /* Kolor ikony */
+            opacity: 1;
+        }
+        .social-links a:hover { 
+            background: var(--primary); 
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.3); 
+        }
+        .social-links a:hover i { 
+            color: var(--white); 
+            transform: none; 
+        }
+
+        .copyright { 
+            margin-top: 2.5em; 
+            padding-top: 1.5em; 
+            border-top: 1px solid var(--light-bg-accent2);
+            color: var(--text-medium); 
+            opacity: 0.8; 
+            font-size: 0.85rem; 
+        }
+        .copyright:hover p { color: var(--text-dark); opacity: 1; }
+
+
+        /* --- Style Responsywne (Dostosowane do nowego layoutu) --- */
+        @media (max-width: 992px) {
+            body::before, body::after { display: none; }
+            .attractions-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); } /* Dostosowanie siatki atrakcji */
+            .stats-counter-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); grid-auto-rows: 130px; }
+             /* Resetowanie specjalnych rozmiarów galerii */
+             .gallery-item:nth-child(7n+1), .gallery-item:nth-child(7n+4), .gallery-item:nth-child(7n+6) { grid-column: span 1; grid-row: span 1; height: 130px;} 
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 { font-size: 3.5rem; }
+            .header-content p { font-size: 1.2rem; }
+            nav { flex-wrap: wrap; justify-content: center; }
+            nav a { margin: 0.3em; font-size: 0.8rem; padding: 0.5em 1em; }
+            .attractions-list { grid-template-columns: 1fr; gap: 2em; } /* Jedna kolumna dla atrakcji */
+            .stats-counter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5em;} 
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); grid-auto-rows: 120px; gap: 0.8em;}
+             .gallery-item:nth-child(7n+1), .gallery-item:nth-child(7n+4), .gallery-item:nth-child(7n+6) { height: 120px;}
+            .footer-content { grid-template-columns: 1fr; text-align: center; } 
+            .footer-column { margin-bottom: 1.5em; padding: 0.5em; }
+            .footer-column h3::after { left: 50%; transform: translateX(-50%); }
+            .social-links { justify-content: center; }
+        }
+
+         @media (max-width: 480px) {
+            .header-content h1 { font-size: 2.8rem; }
+            .header-content p { font-size: 1.1rem; }
+            .stats-counter-grid { grid-template-columns: 1fr; } 
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5em; grid-auto-rows: 120px;} /* 2 kolumny galerii */
+             .gallery-item:nth-child(7n+1), .gallery-item:nth-child(7n+4), .gallery-item:nth-child(7n+6) { height: 120px;}
+            .cta-button { font-size: 1rem; padding: 0.8em 1.5em;}
+            .attraction-content { padding: 1.5em; }
+            .feature-tag { font-size: 0.7rem; padding: 0.4em 0.9em; }
+         }
+
+    </style>
+</head>
+
+<body>
+<div class="page-content-wrapper">
+    <header class="aquapark-header"> 
+        <div class="header-content">
+            <h1>AquaParadise</h1> 
+            <p>Dive into a world of aquatic luxury and adventure. Experience the ultimate water escape.</p> 
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a> 
+        <a href="aquapark.html" class="active">Aquapark</a> 
+        <a href="hotel.html">Hotel</a>
+        <a href="#spa">Spa & Wellness</a>
+        <a href="#dining">Dining</a>
+    </nav>
+
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Attractions</h2> 
+        </div>
+
+        <div class="attractions-list"> 
+            <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_wave_pool.jpg" alt="Wave Pool">
+                </div>
+                <div class="attraction-content">
+                    <h3>Wave Pool</h3>
+                    <p>Feel the ocean's thrill in our majestic wave pool. Perfect for family fun and relaxation.</p>
+                    <div class="attraction-features">
+                        <span class="feature-tag">Family</span>
+                        <span class="feature-tag">Waves every 30 mins</span>
+                        <span class="feature-tag">Sun loungers</span>
+                    </div>
+                    <div class="attraction-action"> 
+                         <a href="#" class="details-button">More Info</a> 
+                    </div>
+                </div>
+            </div>
+
+             <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_slides.jpg" alt="Water Slides">
+                </div>
+                <div class="attraction-content">
+                    <h3>Thrilling Slides</h3>
+                    <p>Get your adrenaline pumping with our exhilarating water slides. A rush of excitement awaits!</p>
+                    <div class="attraction-features">
+                        <span class="feature-tag">Adrenaline</span>
+                        <span class="feature-tag">High Speed</span>
+                        <span class="feature-tag">Daredevil</span>
+                    </div>
+                    <div class="attraction-action">
+                         <a href="#" class="details-button">More Info</a>
+                    </div>
+                </div>
+            </div>
+
+             <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_kids_zone.jpg" alt="Kids' Zone">
+                </div>
+                <div class="attraction-content">
+                    <h3>Kids Paradise</h3> 
+                    <p>A safe and enchanting zone for our little guests. Fun and laughter guaranteed!</p>
+                    <div class="attraction-features">
+                        <span class="feature-tag">Children</span>
+                        <span class="feature-tag">Safe</span>
+                        <span class="feature-tag">Interactive</span>
+                    </div>
+                    <div class="attraction-action">
+                         <a href="#" class="details-button">More Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="attraction-card"> 
+                <div class="attraction-img">
+                    <img src="aquapark_spa.jpg" alt="Spa & Wellness">
+                </div>
+                <div class="attraction-content">
+                    <h3>Spa & Wellness</h3>
+                    <p>Indulge in relaxation at our spa. Rejuvenate your mind, body, and soul.</p>
+                    <div class="attraction-features">
+                        <span class="feature-tag">Relaxation</span>
+                        <span class="feature-tag">Sauna</span>
+                        <span class="feature-tag">Jacuzzi</span>
+                    </div>
+                    <div class="attraction-action">
+                         <a href="#" class="details-button">More Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="attraction-card"> 
+                <div class="attraction-img">
+                    <img src="aquapark_cabanas.jpg" alt="Cabanas">
+                </div>
+                <div class="attraction-content">
+                    <h3>Private Cabanas</h3>
+                    <p>Enjoy exclusive comfort and privacy in our luxurious poolside cabanas.</p>
+                    <div class="attraction-features">
+                        <span class="feature-tag">Luxury</span>
+                        <span class="feature-tag">Private</span>
+                        <span class="feature-tag">Relaxation</span>
+                    </div>
+                    <div class="attraction-action">
+                         <a href="#" class="details-button">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section-wrapper"> 
+            <div class="section-title">
+                 <h2>Aquapark Stats</h2> 
+            </div>
+            <div class="stats-counter-grid"> 
+                 <div class="counter-item">
+                     <i class="fas fa-swimming-pool"></i> 
+                     <div class="stat-number">12</div>
+                     <div class="stat-label">Pools</div>
+                 </div>
+                 <div class="counter-item">
+                     <i class="fas fa-water"></i>
+                     <div class="stat-number">20+</div>
+                     <div class="stat-label">Slides</div>
+                 </div>
+                 <div class="counter-item">
+                     <i class="fas fa-child"></i>
+                     <div class="stat-number">3</div>
+                     <div class="stat-label">Kids Zones</div> 
+                 </div>
+                 <div class="counter-item">
+                     <i class="fas fa-users"></i>
+                     <div class="stat-number">1000+</div>
+                     <div class="stat-label">Daily Visitors</div>
+                 </div>
+             </div>
+         </div>
+
+
+        <div class="gallery-section">
+             <div class="section-title">
+                <h2>Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                 <div class="gallery-item">
+                    <img src="aquapark_gallery1.jpg" alt="Aquapark Overview">
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquapark_gallery2.jpg" alt="Water Slides Detail">
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquapark_gallery3.jpg" alt="Kids Zone Fun"> 
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquapark_gallery4.jpg" alt="Lazy River Relaxation">
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquapark_gallery5.jpg" alt="Spa Tranquility">
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="aquapark_gallery6.jpg" alt="Poolside Cabanas">
+                    <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
+                </div>
+                 <div class="gallery-item"> <img src="aquapark_wave_pool.jpg" alt="Wave pool action"> <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div> </div>
+                 <div class="gallery-item"> <img src="aquapark_slides.jpg" alt="Slide details"> <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div> </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <button class="cta-button">Plan Your Visit Today! <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>AquaParadise</h3> 
+                <p>Your ultimate destination for water adventures. Experience unforgettable moments of fun and relaxation.</p> 
+                <div class="social-links">
+                    <a href="#" class="social-facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday: 10:00 AM - 10:00 PM</p>
+                <p>Saturday - Sunday: 9:00 AM - 11:00 PM</p>
+                <p>Holidays: Check our website</p>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <a href="tel:+1234567890"><i class="fas fa-phone"></i> +1 234 567 890</a>
+                <a href="mailto:info@aquaparadise.com"><i class="fas fa-envelope"></i> info@aquaparadise.com</a> 
+                <a href="#"><i class="fas fa-map-marker-alt"></i> 123 Aqua Lane, Paradise City</a> 
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 AquaParadise. All rights reserved.</p> 
+        </div>
+    </footer>
+</div> 
+</body>
+</html>

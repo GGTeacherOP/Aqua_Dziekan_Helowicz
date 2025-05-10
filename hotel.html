@@ -1098,55 +1098,6 @@
     
     <div id="reservation-confirmation-placeholder"></div> 
 
-    <script>
-        // Skrypt dla potwierdzenia rezerwacji (jeśli jest potrzebny)
-        document.addEventListener('DOMContentLoaded', () => {
-            const reserveButtons = document.querySelectorAll('.reserve-button');
-            const confirmationPlaceholder = document.getElementById('reservation-confirmation-placeholder');
-            let confirmationBox = null;
-
-            reserveButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    
-                    if (this.classList.contains('reserved')) return;
-
-                    // Usuń istniejące potwierdzenie, jeśli jest
-                    if (confirmationBox) {
-                        confirmationBox.remove();
-                        confirmationBox = null;
-                    }
-
-                    // Stwórz nowe potwierdzenie
-                    confirmationBox = document.createElement('div');
-                    confirmationBox.id = 'reservation-confirmation';
-                    confirmationBox.innerHTML = `<i class="fas fa-check-circle"></i> Pokój Zarezerwowany! Petarda!`;
-                    confirmationPlaceholder.appendChild(confirmationBox);
-                    
-                    // Pokaż z animacją
-                    setTimeout(() => {
-                        confirmationBox.classList.add('show');
-                    }, 10); // Małe opóźnienie dla pewności, że element jest w DOM
-
-                    // Zmień przycisk na "Zarezerwowany"
-                    this.textContent = 'Zarezerwowano';
-                    this.classList.add('reserved');
-
-                    // Ukryj potwierdzenie po chwili
-                    setTimeout(() => {
-                        if (confirmationBox) {
-                            confirmationBox.classList.remove('show');
-                            confirmationBox.classList.add('exit');
-                            // Usuń element po zakończeniu animacji wyjścia
-                            confirmationBox.addEventListener('animationend', () => {
-                                if (confirmationBox) confirmationBox.remove();
-                                confirmationBox = null;
-                            }, { once: true });
-                        }
-                    }, 4000); // Czas wyświetlania potwierdzenia
-                });
-            });
-        });
-    </script>
+   
 </body>
 </html>

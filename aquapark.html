@@ -8,50 +8,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- Zmienne Główne (NOWA Paleta Jasna Niebieska z różnymi odcieniami) --- */
         :root {
             --primary: #0077cc;
-            /* Główny niebieski */
             --primary-light: #33aaff;
-            /* Jaśniejszy niebieski */
             --primary-dark: #005EA6;
-            /* Nieco ciemniejszy główny niebieski */
-
             --secondary: #0F509E;
-            /* Głęboki, bogatszy odcień niebieskiego (różny od primary) */
             --secondary-light: #4A8FE0;
-            /* Jaśniejszy, bardziej żywy odcień secondary blue */
-
             --bg-base: #f4f9ff;
-            /* Bardzo jasne tło, prawie białe */
             --bg-elements: #ffffff;
-            /* Tło dla kart/elementów */
             --bg-elements-alt: #e9f5ff;
-            /* Alternatywne tło */
-
             --text-dark: #1a2a45;
-            /* Ciemny granat dla tekstu */
             --text-medium: #556a8c;
-            /* Średni szaro-niebieski */
             --text-light: #f8f8ff;
-            /* Bardzo jasny tekst (na ciemnych tłach) */
             --white: #ffffff;
-
             --accent-glow: #ff4081;
-            /* Różowy/Magenta jako kontrastowy akcent */
             --accent-secondary-glow: #ff80ab;
-
             --shadow-color: rgba(79, 129, 189, 0.15);
-            /* Kolor cienia oparty na niebieskim */
             --shadow-strong: rgba(79, 129, 189, 0.25);
-
-            /* Przejścia */
             --transition-fast: all 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             --transition-medium: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             --transition-slow: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-            /* Wersje RGB */
             --primary-rgb: 0, 119, 204;
+            --primary-light-rgb: 51, 170, 255;
             --primary-dark-rgb: 0, 94, 166;
             --secondary-rgb: 15, 80, 158;
             --secondary-light-rgb: 74, 143, 224;
@@ -61,153 +39,65 @@
             --bg-elements-rgb: 255, 255, 255;
             --white-rgb: 255, 255, 255;
             --bg-base-rgb: 244, 249, 255;
-            /* Dodano RGB dla bg-base */
         }
 
-        /* --- Animacje (NOWE: Bardziej dynamiczne i pulsacyjne) --- */
         @keyframes animatedBodyGradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         @keyframes floatBodyShape {
-            0% {
-                transform: translate(0vw, 0vh) rotate(0deg) scale(1);
-                opacity: 0.3;
-                filter: blur(80px);
-            }
-
-            /* Zmniejszona bazowa opacity, zwiększony blur */
-            20% {
-                transform: translate(8vw, -10vh) rotate(25deg) scale(1.1);
-                opacity: 0.6;
-                filter: blur(100px);
-            }
-
-            40% {
-                transform: translate(-6vw, 12vh) rotate(-15deg) scale(0.95);
-                opacity: 0.4;
-                filter: blur(90px);
-            }
-
-            60% {
-                transform: translate(10vw, 5vh) rotate(30deg) scale(1.1);
-                opacity: 0.7;
-                filter: blur(110px);
-            }
-
-            80% {
-                transform: translate(-4vw, -8vh) rotate(-20deg) scale(1.05);
-                opacity: 0.5;
-                filter: blur(105px);
-            }
-
-            100% {
-                transform: translate(0vw, 0vh) rotate(0deg) scale(1);
-                opacity: 0.3;
-                filter: blur(80px);
-            }
+            0% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; filter: blur(80px); }
+            20% { transform: translate(8vw, -10vh) rotate(25deg) scale(1.1); opacity: 0.6; filter: blur(100px); }
+            40% { transform: translate(-6vw, 12vh) rotate(-15deg) scale(0.95); opacity: 0.4; filter: blur(90px); }
+            60% { transform: translate(10vw, 5vh) rotate(30deg) scale(1.1); opacity: 0.7; filter: blur(110px); }
+            80% { transform: translate(-4vw, -8vh) rotate(-20deg) scale(1.05); opacity: 0.5; filter: blur(105px); }
+            100% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; filter: blur(80px); }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulseGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 15px 5px rgba(var(--accent-glow-rgb), 0.4);
-            }
-
-            50% {
-                box-shadow: 0 0 25px 10px rgba(var(--accent-glow-rgb), 0.6);
-            }
+            0%, 100% { box-shadow: 0 0 15px 5px rgba(var(--accent-glow-rgb), 0.4); }
+            50% { box-shadow: 0 0 25px 10px rgba(var(--accent-glow-rgb), 0.6); }
         }
 
         @keyframes subtleRotate {
-            0% {
-                transform: rotate(-2deg);
-            }
-
-            50% {
-                transform: rotate(2deg);
-            }
-
-            100% {
-                transform: rotate(-2deg);
-            }
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+            100% { transform: rotate(-2deg); }
         }
 
-        /* NOWE: Animacja pulsacyjna dla statystyk przed najechaniem kursorem */
         @keyframes counterPulseSubtle {
-            0%,
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0px rgba(var(--white-rgb), 0);
-            }
-
-            50% {
-                transform: scale(1.03);
-                box-shadow: 0 0 15px rgba(var(--white-rgb), 0.3);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0px rgba(var(--white-rgb), 0); }
+            50% { transform: scale(1.03); box-shadow: 0 0 15px rgba(var(--white-rgb), 0.3); }
         }
 
-        /* NOWE: Animacja dla ikon w sekcji statystyk */
         @keyframes iconFloat {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
-        /* NOWE: Animacja tła nagłówka (Parallax) */
         @keyframes headerParallax {
-            0%,
-            100% {
-                background-position: center 0%;
-            }
-
-            50% {
-                background-position: center 10%;
-            }
-
-            /* Przesunięcie tła w dół */
+            0%, 100% { background-position: center 0%; }
+            50% { background-position: center 10%; }
         }
 
-        /* NOWE: Animacja świecącego tekstu w nagłówku */
         @keyframes headerTextGlow {
-            0%,
-            100% {
-                text-shadow: 0 4px 15px rgba(var(--text-dark-rgb), 0.5), 0 0 20px rgba(var(--white-rgb), 0.4);
-            }
-
-            50% {
-                text-shadow: 0 4px 20px rgba(var(--text-dark-rgb), 0.7), 0 0 30px rgba(var(--white-rgb), 0.7);
-            }
+            0%, 100% { text-shadow: 0 4px 15px rgba(var(--text-dark-rgb), 0.5), 0 0 20px rgba(var(--white-rgb), 0.4); }
+            50% { text-shadow: 0 4px 20px rgba(var(--text-dark-rgb), 0.7), 0 0 30px rgba(var(--white-rgb), 0.7); }
+        }
+        
+        @keyframes float {
+          0% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); filter: blur(5px);}
+          50% { transform: translateY(-30px) translateX(20px) scale(1.1) rotate(180deg); filter: blur(10px);}
+          100% { transform: translateY(0px) translateX(0px) scale(1) rotate(360deg); filter: blur(5px);}
         }
 
-        /* --- Styl Ogólny Body i Tła (NOWE: Bardziej mieszane i dynamiczne tło) --- */
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -221,21 +111,16 @@
                     rgba(var(--secondary-rgb), 0.3) 75%,
                     rgba(var(--primary-rgb), 0.2) 100%);
             background-size: 350% 350%;
-            /* Zwiększony rozmiar dla bardziej dramatycznego ruchu */
             animation: animatedBodyGradient 20s ease-in-out infinite;
-            /* Zmieniono czas na bardziej dynamiczny */
             color: var(--text-dark);
-            /* Ciemny tekst */
             overflow-x: hidden;
             line-height: 1.7;
-            /* Zwiększony interlinia */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             position: relative;
         }
 
-        /* NOWE: Bardziej intensywne, mieszane kształty tła */
         body::before,
         body::after {
             content: '';
@@ -243,19 +128,14 @@
             left: 50%;
             top: 50%;
             width: 150vmax;
-            /* Zwiększona szerokość */
             height: 150vmax;
-            /* Zwiększona wysokość */
             transform-origin: center center;
-            z-index: -1;
+            z-index: -1; 
             pointer-events: none;
             mix-blend-mode: overlay;
-            /* Inny blend mode dla jasnego tła */
             will-change: transform, opacity;
             filter: blur(120px);
-            /* Zwiększony blur */
             border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-            /* Bardziej płynne kształty */
         }
 
         body::before {
@@ -263,26 +143,86 @@
                 radial-gradient(ellipse at 20% 80%, rgba(var(--primary-light-rgb), 0.4) 0%, transparent 55%),
                 radial-gradient(ellipse at 80% 30%, rgba(var(--secondary-rgb), 0.45) 0%, transparent 60%);
             animation: floatBodyShape 28s ease-in-out infinite alternate;
-            /* Zmieniono czas dla większej dynamiki */
             opacity: 0.7;
         }
 
         body::after {
             width: 180vmax;
-            /* Zwiększona szerokość */
             height: 180vmax;
-            /* Zwiększona wysokość */
             background: radial-gradient(ellipse at center, rgba(var(--secondary-rgb), 0.4) 0%, transparent 60%),
                 radial-gradient(ellipse at 70% 70%, rgba(var(--white-rgb), 0.4) 0%, transparent 50%),
                 radial-gradient(ellipse at 30% 20%, rgba(var(--primary-rgb), 0.45) 0%, transparent 55%);
             animation: floatBodyShape 38s ease-in-out infinite alternate-reverse;
-            /* Zmieniono czas dla większej dynamiki */
             filter: blur(130px);
-            /* Zwiększony blur */
             opacity: 0.8;
         }
+        
+        .bg-shapes {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          z-index: -2; 
+          overflow: hidden;
+          pointer-events: none;
+        }
 
-        /* NOWE: Dodatkowe kształty w tle, bliżej zawartości */
+        .bg-shape {
+          position: absolute;
+          border-radius: 50%;
+          animation: float 20s infinite ease-in-out alternate;
+        }
+        
+        .bg-shape.shape1 {
+          width: 220px; height: 220px;
+          background: var(--primary-light);
+          top: 15%; left: 8%;
+          animation-duration: 23s;
+          opacity: 0.12;
+        }
+        .bg-shape.shape2 {
+          width: 160px; height: 160px;
+          background: var(--secondary-light);
+          top: 65%; left: 78%;
+          animation-duration: 26s;
+          animation-delay: -4s;
+          opacity: 0.1;
+        }
+        .bg-shape.shape3 {
+          width: 110px; height: 110px;
+          background: var(--primary);
+          top: 38%; left: 42%;
+          animation-duration: 19s;
+          animation-delay: -9s;
+          opacity: 0.15;
+        }
+         .bg-shape.shape4 {
+          width: 260px; height: 260px;
+          background: var(--secondary);
+          top: 75%; left: 12%;
+          animation-duration: 29s;
+          animation-delay: -2s;
+          opacity: 0.08;
+        }
+        .bg-shape.shape5 {
+          width: 130px; height: 130px;
+          background: var(--accent-glow); 
+          top: 8%; left: 72%;
+          animation-duration: 21s;
+          animation-delay: -7s;
+          opacity: 0.1; 
+        }
+
+        .page-content-wrapper {
+            position: relative;
+            z-index: 1; 
+            background-color: transparent; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
         .page-content-wrapper::before,
         .page-content-wrapper::after {
             content: '';
@@ -290,60 +230,38 @@
             left: 50%;
             top: 50%;
             width: 60vmax;
-            /* Mniejszy rozmiar niż body shapes */
             height: 60vmax;
             transform-origin: center center;
-            z-index: 0;
-            /* Warstwa pomiędzy body shapes a content */
+            z-index: 0; 
             pointer-events: none;
             mix-blend-mode: screen;
-            /* Inny tryb mieszania dla zróżnicowanego efektu */
             will-change: transform, opacity;
             filter: blur(40px);
             border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%;
-            /* Bardziej horyzontalny kształt */
         }
 
         .page-content-wrapper::before {
             background: radial-gradient(ellipse at center, rgba(var(--primary-light-rgb), 0.6) 0%, transparent 70%);
             animation: floatBodyShape 20s ease-in-out infinite alternate;
             animation-delay: -5s;
-            /* Opóźnienie animacji */
-            opacity: 0.5;
-            /* Zmniejszona opacity */
+            opacity: 0.3; 
         }
 
         .page-content-wrapper::after {
             background: radial-gradient(ellipse at center, rgba(var(--secondary-light-rgb), 0.5) 0%, transparent 65%);
             animation: floatBodyShape 25s ease-in-out infinite alternate-reverse;
             animation-delay: -10s;
-            /* Opóźnienie animacji */
-            opacity: 0.4;
-            /* Zmniejszona opacity */
+            opacity: 0.25; 
             transform: translate(-50%, -50%) rotate(180deg);
-            /* Rozpocznij obrócony */
         }
 
-
-        .page-content-wrapper {
-            position: relative;
-            z-index: 1;
-            background-color: transparent;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* --- Nagłówek (NOWE: Bardziej dynamiczny wygląd) --- */
         .aquapark-header {
             background: linear-gradient(rgba(var(--primary-rgb), 0.6), rgba(var(--secondary-rgb), 0.7)),
-                url('aquapark_header.jpg') center/cover no-repeat;
+                url('aquapark_header.jpg'); 
             background-size: cover;
-            /* Upewnij się, że tło pokrywa cały obszar */
+            background-position: center center;
             animation: headerParallax 30s linear infinite alternate;
-            /* NOWE: Animacja parallax */
             height: 80vh;
-            /* Wysokość jak w oryginale aquapark */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -352,71 +270,54 @@
             position: relative;
             overflow: hidden;
             border-bottom: 8px solid var(--secondary);
-            /* Grubsza linia w kolorze wtórnym */
             clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-            /* Inny kształt dolnej krawędzi */
         }
-
-        /* Usunięto .aquapark-header::before dla czystszego wyglądu clip-path */
 
         .header-content {
             position: relative;
-            z-index: 2;
+            z-index: 2; 
             animation: fadeInUp 1.3s ease-out;
-            background: none;
-            /* Usunięto tło dla czystszego wyglądu tekstu na obrazie */
+            background: none; 
             padding: 20px;
-            /* Mniejszy padding */
             border-radius: 0;
             box-shadow: none;
         }
 
         .header-content h1 {
             font-size: 5rem;
-            /* Jeszcze większy tytuł */
             margin-bottom: 0.3em;
             animation: headerTextGlow 4s ease-in-out infinite alternate;
-            /* NOWE: Animacja świecącego tekstu */
             letter-spacing: -2px;
             font-weight: 700;
         }
 
         .header-content p {
             font-size: 1.5rem;
-            /* Większy opis */
             max-width: 850px;
             margin: 0 auto;
             text-shadow: 0 2px 10px rgba(var(--text-dark-rgb), 0.4);
             opacity: 1;
-            /* Pełna widoczność */
             line-height: 1.75;
             font-weight: 300;
-            /* Lżejszy font dla opisu */
         }
 
-        /* --- Nawigacja (Styl z hotel.html, dostosowany do jasnego tła) --- */
         nav {
             display: flex;
             justify-content: center;
-            background: rgba(var(--bg-elements-rgb), 0.85);
-            /* Białe tło z przezroczystością */
+            background: rgba(var(--bg-elements-rgb), 0.85); 
             backdrop-filter: blur(10px);
             padding: 1em 1em;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1000; 
             box-shadow: 0 5px 20px var(--shadow-color);
-            /* Delikatny cień */
             border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
-            /* Subtelna linia */
         }
 
         nav a {
             margin: 0 0.8em;
-            /* Mniejszy margines */
             text-decoration: none;
-            color: var(--text-dark);
-            /* Ciemny tekst */
+            color: var(--text-dark); 
             padding: 0.6em 1.3em;
             border-radius: 25px;
             transition: var(--transition-medium);
@@ -425,50 +326,34 @@
             position: relative;
             overflow: hidden;
             border: 1px solid transparent;
-            /* Dodano dla efektu hover */
         }
-
-        /* Usunięto ::before dla innego efektu hover */
 
         nav a:hover {
             color: var(--primary);
             background-color: rgba(var(--primary-rgb), 0.1);
-            /* Jasnoniebieskie tło */
             transform: translateY(-4px) scale(1.02) rotate(1deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
-            /* Dodano cień */
             border-color: rgba(var(--primary-rgb), 0.3);
-            /* Pojawiająca się ramka */
         }
 
         nav a.active {
             background: var(--primary);
             color: var(--white);
-            /* Biały tekst na aktywnym */
             box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
             border-color: var(--primary);
         }
 
         nav a.active:hover {
-            /* Poprawka dla hover aktywnego linku */
             background: var(--primary-dark);
-            /* Użycie nowego primary-dark */
             color: var(--white);
             transform: translateY(-4px) scale(1.02) rotate(1deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 10px 30px rgba(var(--primary-dark-rgb), 0.5);
-            /* Wzmocnione animacje hover */
         }
 
-
-        /* --- Główny Kontener i Tytuły Sekcji --- */
         .container {
             max-width: 1600px;
-            /* Zwiększona szerokość */
             margin: 4em auto;
-            padding: 0 1em;
-            /* Zmniejszony padding */
+            padding: 0 1em; 
             flex: 1;
         }
 
@@ -479,17 +364,14 @@
 
         .section-title h2 {
             font-size: 2.8rem;
-            /* Większy tytuł sekcji */
-            color: var(--text-dark);
+            color: var(--text-dark); 
             text-shadow: none;
-            /* Bez cienia */
             position: relative;
             display: inline-block;
             padding-bottom: 0.3em;
         }
 
         .section-title h2::after {
-            /* Inny styl podkreślenia */
             content: '';
             position: absolute;
             bottom: 0;
@@ -498,66 +380,41 @@
             width: 80px;
             height: 5px;
             background: linear-gradient(90deg, var(--secondary), var(--primary));
-            /* Gradientowe podkreślenie */
             border-radius: 3px;
             box-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3);
         }
 
-        /* --- Sekcja Atrakcji (NOWY UKŁAD - Dynamiczna Siatka) --- */
         .attractions-list {
-            /* Zmieniono nazwę klasy kontenera */
             display: grid;
-            /* Bardziej dynamiczna siatka - dopasowuje liczbę kolumn */
             grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
             gap: 2.5em;
-            /* Odstępy */
             margin-bottom: 4em;
-            align-items: start;
-            /* Różne wysokości kart */
+            align-items: start; 
         }
 
         .attraction-card {
-            /* NOWY styl karty - jaśniejszy, inne efekty */
-            background: var(--bg-elements);
+            background: var(--bg-elements); 
             border-radius: 16px;
             box-shadow: 0 10px 30px var(--shadow-color);
             overflow: hidden;
-            /* Przycinanie obrazka */
             transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-            /* Zmieniono transition */
             position: relative;
             display: flex;
-            /* Reset flex z poprzedniej wersji */
             flex-direction: column;
-            /* Treść pod obrazkiem */
             border: 2px solid transparent;
-            /* Domyślna, przezroczysta ramka */
         }
-
-        /* Usunięto :nth-child(even) dla jednolitego układu */
 
         .attraction-card:hover {
             transform: translateY(-18px) scale(1.04) rotate(1deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 25px 60px rgba(var(--shadow-strong), 0.8), 0 0 40px rgba(var(--primary-light-rgb), 0.6);
-            /* Wzmocnione animacje hover */
             border-color: rgba(var(--primary-light-rgb), 0.8);
-            /* NOWE: Dynamiczna ramka na hover */
         }
 
-        /* Usunięto ::after dla eksplozji */
-
         .attraction-img {
-            flex: none;
-            /* Obrazek nie jest już elementem flex w poziomie */
+            flex: none; 
             height: 250px;
-            /* Wysokość obrazka */
             position: relative;
             overflow: hidden;
-            border-radius: 0;
-            /* Reset zaokrąglenia */
-            box-shadow: none;
-            /* Reset cienia */
         }
 
         .attraction-img img {
@@ -565,18 +422,14 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s var(--transition-medium), filter 0.5s var(--transition-medium);
-            /* Zmieniono transition */
         }
 
         .attraction-card:hover .attraction-img img {
             transform: scale(1.15);
-            /* Zwiększono skalę */
             filter: brightness(1.05) contrast(1.1);
-            /* Inny efekt na hover */
         }
 
-        /* Overlay na zdjęciu */
-        .attraction-img::after {
+        .attraction-img::after { 
             content: '';
             position: absolute;
             inset: 0;
@@ -592,228 +445,159 @@
         .attraction-content {
             padding: 1.8em;
             position: relative;
-            /* Reset z-index */
-            color: var(--text-dark);
-            /* Ciemny tekst */
-            overflow: visible;
-            /* Reset overflow */
-            background: none;
-            /* Usunięcie tła gradientowego karty */
-            flex-grow: 1;
-            /* Pozwala treści rosnąć */
+            color: var(--text-dark); 
+            background: none; 
+            flex-grow: 1; 
         }
-
-        /* Usunięto ::before, ::after dla tła treści */
 
         .attraction-content h3 {
             font-size: 1.5rem;
-            /* Mniejszy tytuł */
             margin-bottom: 0.5em;
             color: var(--text-dark);
-            text-shadow: none;
-            /* Bez cienia */
             font-weight: 600;
         }
 
         .attraction-content p {
             margin-bottom: 1.2em;
             line-height: 1.65;
-            color: var(--text-medium);
-            /* Średni kolor tekstu */
+            color: var(--text-medium); 
             font-size: 0.9rem;
             flex-grow: 1;
-            /* Dopycha resztę w dół */
         }
 
         .attraction-features {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5em;
-            /* Mniejszy odstęp */
             margin-bottom: 1.2em;
-            /* Odstęp przed akcją */
         }
 
         .feature-tag {
-            /* Nowy styl tagów */
-            background: var(--bg-elements-alt);
-            /* Alternatywne tło */
+            background: var(--bg-elements-alt); 
             color: var(--primary);
-            /* Kolor główny */
-            border: none;
             padding: 0.4em 0.8em;
             border-radius: 6px;
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: none;
             transition: var(--transition-fast);
-            /* Pozostawiono szybkie przejście */
             line-height: 1.3;
         }
 
         .feature-tag:hover {
             background-color: var(--secondary);
-            /* Zmieniono na nowy secondary */
             color: var(--white);
             transform: scale(1.1) rotate(3deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 4px 15px rgba(var(--secondary-rgb), 0.5);
-            /* Wzmocnione animacje hover */
         }
 
         .attraction-action {
-            /* Styl kontenera przycisku */
-            border-top: 1px solid var(--light-bg-accent1);
+            border-top: 1px solid rgba(var(--primary-rgb),0.1); 
             padding-top: 1em;
-            margin-top: 1em;
+            margin-top: 1em; 
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-end; 
         }
 
         .details-button {
-            /* Nowy styl przycisku */
             background-color: var(--primary);
             color: var(--white);
             padding: 0.6em 1.3em;
             border-radius: 20px;
             font-size: 0.8rem;
             box-shadow: 0 3px 10px rgba(var(--primary-rgb), 0.3);
+            text-decoration: none;
+            transition: var(--transition-fast);
         }
 
         .details-button:hover {
             background-color: var(--primary-dark);
-            color: var(--white);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(var(--primary-dark-rgb), 0.4);
         }
 
-        /* --- Sekcja Statystyk (NOWY UKŁAD - Bloki Liczników) --- */
         .stats-section-wrapper {
             margin: 5em 0;
         }
 
         .stats-counter-grid {
-            /* Zmieniono nazwę kontenera */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2em;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            /* Tło gradientowe dla sekcji */
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
             padding: 3em 2em;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.25);
         }
 
         .counter-item {
-            /* Styl pojedynczego licznika */
             text-align: center;
-            color: var(--white);
+            color: var(--white); 
             animation: counterPulseSubtle 4s ease-in-out infinite alternate;
-            /* Ciągła animacja pulsacyjna */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* Zachowano transition dla hover */
         }
 
         .counter-item:hover {
             transform: scale(1.05);
             box-shadow: 0 0 30px rgba(var(--white-rgb), 0.5);
-            /* Wzmocniony cień na hover */
         }
 
         .counter-item i {
             font-size: 3.5rem;
-            /* Duża ikona */
             display: block;
             margin-bottom: 0.3em;
             opacity: 0.8;
-            text-shadow: 0 0 10px rgba(var(--white-rgb, 255, 255, 255), 0.3);
+            text-shadow: 0 0 10px rgba(var(--white-rgb), 0.3);
             animation: iconFloat 2s ease-in-out infinite alternate;
-            /* NOWE: Animacja dla ikon */
         }
 
         .counter-item .stat-number {
-            /* Duży numer */
             font-size: 3.5rem;
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 0.1em;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            /* Tutaj można dodać JS do animacji liczenia */
         }
 
         .counter-item .stat-label {
-            /* Etykieta */
             font-size: 1rem;
             font-weight: 300;
             opacity: 0.9;
         }
 
-
-        /* --- Sekcja Galerii (Nowy, dynamiczny układ siatki) --- */
         .gallery-section {
             margin: 5em 0;
         }
 
         .gallery-grid {
             display: grid;
-            /* Siatka z różnymi rozmiarami kolumn i wierszy */
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             grid-auto-rows: 150px;
-            /* Domyślna wysokość wiersza */
-            grid-auto-flow: dense;
-            /* Gęste upakowanie */
+            grid-auto-flow: dense; 
             gap: 1em;
         }
 
         .gallery-item {
-            height: auto;
-            /* Wysokość automatyczna */
+            height: auto; 
             overflow: hidden;
             border-radius: 12px;
-            /* Mniejsze zaokrąglenie */
             position: relative;
             box-shadow: 0 8px 20px var(--shadow-color);
             transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-            /* Zmieniono transition */
             cursor: pointer;
             border: 3px solid transparent;
-            /* Domyślna, przezroczysta ramka */
         }
-
-        /* Różne rozmiary elementów galerii */
-        .gallery-item:nth-child(7n + 1) {
-            grid-column: span 2;
-            grid-row: span 2;
-            height: 316px;
-        }
-
-        /* Większy co 7 (2x2) */
-        .gallery-item:nth-child(7n + 4) {
-            grid-column: span 1;
-            grid-row: span 2;
-            height: 316px;
-        }
-
-        /* Wyższy co 7 */
-        .gallery-item:nth-child(7n + 6) {
-            grid-column: span 2;
-            grid-row: span 1;
-            height: 150px;
-        }
-
-        /* Szerszy co 7 */
+        
+        .gallery-item:nth-child(7n + 1) { grid-column: span 2; grid-row: span 2; height: 316px; }
+        .gallery-item:nth-child(7n + 4) { grid-column: span 1; grid-row: span 2; height: 316px; }
+        .gallery-item:nth-child(7n + 6) { grid-column: span 2; grid-row: span 1; height: 150px; }
 
         .gallery-item:hover {
             transform: scale(1.06) rotate(2deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 15px 35px rgba(var(--shadow-strong), 0.7), 0 0 25px rgba(var(--secondary-rgb), 0.5);
-            /* Wzmocnione animacje hover */
             border-color: rgba(var(--secondary-light-rgb), 0.7);
-            /* NOWE: Dynamiczna ramka na hover */
-            z-index: 10;
-            /* Na wierzch przy hover */
+            z-index: 10; 
         }
 
         .gallery-item img {
@@ -836,7 +620,7 @@
             justify-content: center;
             opacity: 0;
             transition: var(--transition-medium);
-            border-radius: 12px;
+            border-radius: inherit; 
         }
 
         .gallery-item:hover .gallery-overlay {
@@ -844,7 +628,7 @@
         }
 
         .gallery-overlay i {
-            color: var(--accent-glow);
+            color: var(--accent-glow); 
             font-size: 2rem;
             transform: scale(0.8);
             transition: transform 0.3s var(--transition-fast);
@@ -854,7 +638,6 @@
             transform: scale(1.15) rotate(10deg);
         }
 
-        /* --- Sekcja CTA --- */
         .cta-section {
             text-align: center;
             margin: 5em 0;
@@ -863,16 +646,12 @@
         .cta-button {
             display: inline-block;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            /* Gradient dla przycisku */
             color: var(--white);
             padding: 1em 2.5em;
-            /* Większy padding */
             border-radius: 50px;
-            /* Pełne zaokrąglenie */
             text-decoration: none;
             font-weight: 600;
             font-size: 1.2rem;
-            /* Większy font */
             letter-spacing: 0.8px;
             box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
             transition: var(--transition-medium);
@@ -884,74 +663,51 @@
 
         .cta-button:hover {
             transform: translateY(-8px) scale(1.08);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.6);
-            /* Wzmocnione animacje hover */
         }
 
-        /* Można dodać ikonę do przycisku dla lepszego efektu */
         .cta-button i {
             margin-left: 0.5em;
         }
 
-        /* --- Stopka (Styl z hotel.html, jasne tło + nowa plama) --- */
-        /* --- Stopka (Dostosowane kolory dla lepszej widoczności tekstu) --- */
         footer {
-            /* Zmienione tło na ciemniejszy gradient (jak w sekcji statystyk) */
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--light-text);
-            /* Jasny tekst na ciemnym tle */
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color: var(--text-light); 
             padding: 4em 0 2em;
             text-align: center;
             width: 100%;
             box-sizing: border-box;
-            margin: 0;
             position: relative;
-            overflow: hidden;
+            overflow: hidden; 
             border-top: 3px solid var(--primary-light);
             box-shadow: 0 -8px 20px rgba(var(--primary-rgb), 0.1);
         }
 
-        /* Dodano: Kształt "plamy" w tle stopki */
-        footer::before {
+        footer::before { 
             content: '';
             position: absolute;
             top: -80px;
             left: 50%;
             width: 500px;
             height: 500px;
-            /* Kolor plamy dostosowany do nowego, ciemniejszego tła stopki */
             background: radial-gradient(ellipse at center, rgba(var(--secondary-light-rgb), 0.35) 0%, transparent 60%);
-            /* Jasny turkus jako subtelny akcent */
             border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
             filter: blur(80px);
             opacity: 0.35;
-            /* Zmniejszona nieco opacity, by się nie zlewała */
-            z-index: 0;
+            z-index: 0; 
             transform: translateX(-50%) translateY(0);
             animation: subtleFooterFloat 25s ease-in-out infinite alternate;
             pointer-events: none;
         }
 
-        /* Definicja animacji pozostaje bez zmian */
         @keyframes subtleFooterFloat {
-            0% {
-                transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1);
-            }
-
-            50% {
-                transform: translateX(-48%) translateY(15px) rotate(5deg) scale(1.02);
-            }
-
-            /* Dodano scale */
-            100% {
-                transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1);
-            }
+            0% { transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateX(-48%) translateY(15px) rotate(5deg) scale(1.02); }
+            100% { transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1); }
         }
 
         .footer-content {
             max-width: 1500px;
-            /* Zwiększona szerokość */
             margin: 0 auto;
             padding: 0 2em;
             display: grid;
@@ -959,13 +715,7 @@
             gap: 2em;
             text-align: left;
             position: relative;
-            z-index: 1;
-        }
-
-        .footer-column {
-            transition: var(--transition-medium);
-            padding: 1em 0;
-            border-radius: 0;
+            z-index: 1; 
         }
 
         .footer-column h3 {
@@ -973,7 +723,6 @@
             margin-bottom: 1em;
             position: relative;
             display: inline-block;
-            /* Nagłówki na białym tle */
             color: var(--white);
             font-weight: 600;
         }
@@ -985,20 +734,14 @@
             left: 0;
             width: 40px;
             height: 3px;
-            /* Podkreślenie dopasowane do ciemnego tła */
-            background: var(--accent-glow);
-            /* Używamy akcentowego koloru */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: var(--transition-fast);
+            background: var(--accent-glow); 
             border-radius: 1.5px;
         }
 
         .footer-column p,
         .footer-column a {
-            /* Tekst akapitowy i linki na jasnym tle */
-            color: var(--light-text);
+            color: var(--text-light);
             opacity: 0.85;
-            /* Nieco wyższa przezroczystość dla czytelności */
             line-height: 1.7;
             transition: var(--transition-fast);
             text-decoration: none;
@@ -1009,30 +752,19 @@
 
         .footer-column a:hover {
             color: var(--white);
-            /* Biały tekst na hover */
             transform: translateX(4px);
-            text-shadow: none;
             opacity: 1;
         }
 
         .footer-column a i {
             margin-right: 0.7em;
-            /* Kolor ikon w stopce */
-            color: var(--secondary-light);
-            /* Używamy jaśniejszego odcienia z palety */
-            transition: var(--transition-fast);
+            color: var(--secondary-light); 
             width: 20px;
             display: inline-block;
             text-align: center;
         }
+        .footer-column a:hover i { color: var(--white); }
 
-        .footer-column a:hover i {
-            color: var(--white);
-            /* Ikony stają się białe na hover */
-            transform: none;
-        }
-
-        /* --- Social Links (Dostosowane do nowego tła) --- */
         .social-links {
             display: flex;
             gap: 0.8em;
@@ -1043,207 +775,105 @@
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            /* Tło przycisków social media */
-            background: rgba(var(--white-rgb), 0.15);
-            /* Lekko przezroczysty biały */
+            background: rgba(var(--white-rgb), 0.15); 
             display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition-medium);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            padding: 0;
         }
 
         .social-links a i {
             font-size: 1.1rem;
-            transition: var(--transition-fast);
-            line-height: normal;
-            display: block;
-            margin: 0;
-            padding: 0;
-            /* Kolor ikon social media */
             color: var(--white);
-            /* Białe ikony */
             opacity: 0.8;
         }
 
         .social-links a:hover {
-            background: var(--accent-glow);
-            /* Kolor akcentu na hover */
+            background: var(--accent-glow); 
             transform: translateY(-6px) scale(1.15) rotate(8deg);
-            /* Wzmocnione animacje hover */
             box-shadow: 0 8px 15px rgba(var(--accent-glow-rgb), 0.5);
-            /* Wzmocnione animacje hover */
         }
+         .social-links a:hover i { opacity: 1; }
 
         .copyright {
             margin-top: 3em;
             padding-top: 1.8em;
             border-top: 1px solid rgba(var(--light-text-rgb), 0.1);
-            color: var(--light-text);
-            /* Jasny tekst */
+            color: var(--text-light);
             opacity: 0.85;
             font-size: 0.9rem;
             position: relative;
-            z-index: 1;
+            z-index: 1; 
         }
+        .copyright:hover p { color: var(--white); opacity: 1; }
 
-        .copyright p {
-            transition: color var(--transition-fast), opacity var(--transition-fast);
-        }
-
-        .copyright:hover p {
-            color: var(--white);
-            opacity: 1;
-            text-shadow: none;
-        }
-
-        /* --- Style Responsywne (Dostosowane do nowego layoutu) --- */
         @media (max-width: 992px) {
-
-            body::before,
-            body::after {
-                display: none;
+            .bg-shapes { 
+                display: none; 
             }
-
-            .page-content-wrapper::before,
-            .page-content-wrapper::after {
-                display: none;
-            }
-
-            /* Ukryj nowe kształty na mniejszych ekranach */
-            .attractions-list {
-                grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            }
-
-            /* Dostosowanie siatki atrakcji */
-            .stats-counter-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            }
-
+            .attractions-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+            .stats-counter-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
             .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
                 grid-auto-rows: 130px;
             }
-
-            /* Resetowanie specjalnych rozmiarów galerii */
             .gallery-item:nth-child(7n + 1),
             .gallery-item:nth-child(7n + 4),
             .gallery-item:nth-child(7n + 6) {
-                grid-column: span 1;
-                grid-row: span 1;
-                height: 130px;
+                grid-column: span 1; grid-row: span 1; height: 130px;
             }
         }
 
         @media (max-width: 768px) {
-            .header-content h1 {
-                font-size: 3.5rem;
-            }
-
-            .header-content p {
-                font-size: 1.2rem;
-            }
-
-            nav {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            nav a {
-                margin: 0.3em;
-                font-size: 0.8rem;
-                padding: 0.5em 1em;
-            }
-
-            .attractions-list {
-                grid-template-columns: 1fr;
-                gap: 2em;
-            }
-
-            /* Jedna kolumna dla atrakcji */
-            .stats-counter-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5em;
-            }
-
+            .header-content h1 { font-size: 3.5rem; }
+            .header-content p { font-size: 1.2rem; }
+            nav { flex-wrap: wrap; justify-content: center; }
+            nav a { margin: 0.3em; font-size: 0.8rem; padding: 0.5em 1em; }
+            .attractions-list { grid-template-columns: 1fr; gap: 2em; }
+            .stats-counter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5em; }
             .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                grid-auto-rows: 120px;
-                gap: 0.8em;
+                grid-auto-rows: 120px; gap: 0.8em;
             }
-
             .gallery-item:nth-child(7n + 1),
             .gallery-item:nth-child(7n + 4),
-            .gallery-item:nth-child(7n + 6) {
-                height: 120px;
-            }
+            .gallery-item:nth-child(7n + 6) { height: 120px; }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .footer-column {
-                margin-bottom: 1.5em;
-                padding: 0.5em;
-            }
-
-            .footer-column h3::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .social-links {
-                justify-content: center;
-            }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-column { margin-bottom: 1.5em; padding: 0.5em; }
+            .footer-column h3::after { left: 50%; transform: translateX(-50%); }
+            .social-links { justify-content: center; }
         }
 
         @media (max-width: 480px) {
-            .header-content h1 {
-                font-size: 2.8rem;
-            }
-
-            .header-content p {
-                font-size: 1.1rem;
-            }
-
-            .stats-counter-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .header-content h1 { font-size: 2.8rem; }
+            .header-content p { font-size: 1.1rem; }
+            .stats-counter-grid { grid-template-columns: 1fr; }
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5em;
-                grid-auto-rows: 120px;
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 0.5em; grid-auto-rows: 120px;
             }
-
-            /* 2 kolumny galerii */
-            .gallery-item:nth-child(7n + 1),
+             .gallery-item:nth-child(7n + 1),
             .gallery-item:nth-child(7n + 4),
-            .gallery-item:nth-child(7n + 6) {
-                height: 120px;
-            }
+            .gallery-item:nth-child(7n + 6) { height: 120px; } 
 
-            .cta-button {
-                font-size: 1rem;
-                padding: 0.8em 1.5em;
-            }
-
-            .attraction-content {
-                padding: 1.5em;
-            }
-
-            .feature-tag {
-                font-size: 0.7rem;
-                padding: 0.4em 0.9em;
-            }
+            .cta-button { font-size: 1rem; padding: 0.8em 1.5em; }
+            .attraction-content { padding: 1.5em; }
+            .feature-tag { font-size: 0.7rem; padding: 0.4em 0.9em; }
         }
     </style>
 </head>
 
 <body>
+    <div class="bg-shapes">
+        <div class="bg-shape shape1"></div>
+        <div class="bg-shape shape2"></div>
+        <div class="bg-shape shape3"></div>
+        <div class="bg-shape shape4"></div>
+        <div class="bg-shape shape5"></div>
+    </div>
+
     <div class="page-content-wrapper">
         <header class="aquapark-header">
             <div class="header-content">
@@ -1338,7 +968,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="stats-section-wrapper">
@@ -1369,37 +998,36 @@
                 </div>
             </div>
 
-
             <div class="gallery-section">
                 <div class="section-title">
                     <h2>Gallery</h2>
                 </div>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="aquapark_gallery1.jpg" alt="Aquapark Overview">
+                        <img src="aquapark_gallery1.jpg" alt="Aquapark Overview"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="aquapark_gallery2.jpg" alt="Water Slides Detail">
+                        <img src="aquapark_gallery2.jpg" alt="Water Slides Detail"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="aquapark_gallery3.jpg" alt="Kids Zone Fun">
+                        <img src="aquapark_gallery3.jpg" alt="Kids Zone Fun"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="aquapark_gallery4.jpg" alt="Basen z Hydromasażem">
+                        <img src="aquapark_gallery4.jpg" alt="Basen z Hydromasażem"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="aquapark_gallery5.jpg" alt="Spa Tranquility">
+                        <img src="aquapark_gallery5.jpg" alt="Spa Tranquility"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="aquapark_gallery6.jpg" alt="Wewnętrzna Strefa Relaksu">
+                        <img src="aquapark_gallery6.jpg" alt="Wewnętrzna Strefa Relaksu"> 
                         <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
                     </div>
-                    <div class="gallery-item"> <img src="aquapark_wave_pool.jpg" alt="Wave pool action">
+                    <div class="gallery-item"> <img src="aquapark_wave_pool.jpg" alt="Wave pool action"> 
                         <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
                     </div>
                 </div>

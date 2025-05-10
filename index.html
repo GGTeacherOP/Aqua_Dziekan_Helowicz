@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaParadise - Witaj w Raju!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #00A8E8; /* Vibrant Blue */
+      --secondary-color: #007EA7; /* Deeper Blue */
+      --accent-color: #FFD166;   /* Sunny Yellow */
+      --text-light: #F0F4F8;
+      --text-dark: #1A2A45;
+      --bg-dark-transparent: rgba(10, 25, 47, 0.85); /* For overlays */
+      --bg-light-transparent: rgba(255, 255, 255, 0.1);
+      --bg-page: #0A192F; /* Deep Navy Blue */
+      --card-bg: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      --shadow-color: rgba(0, 168, 232, 0.2);
+      --shadow-strong: rgba(0, 168, 232, 0.4);
+      --transition-fast: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      --transition-medium: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+      --accent-color-rgb: 255, 209, 102; /* RGB for accent color for dynamic shadows */
+      --primary-color-rgb: 0, 168, 232; /* RGB for primary color */
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-light);
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    /* Animated Background Shapes */
+    .bg-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 20s infinite ease-in-out alternate;
+    }
+
+    .bg-shape.shape1 {
+      width: 200px; height: 200px;
+      background: var(--primary-color);
+      top: 10%; left: 5%;
+      animation-duration: 22s;
+    }
+    .bg-shape.shape2 {
+      width: 150px; height: 150px;
+      background: var(--accent-color);
+      top: 70%; left: 80%;
+      animation-duration: 25s;
+      animation-delay: -5s;
+    }
+    .bg-shape.shape3 {
+      width: 100px; height: 100px;
+      background: var(--secondary-color);
+      top: 40%; left: 45%;
+      animation-duration: 18s;
+      animation-delay: -10s;
+    }
+     .bg-shape.shape4 {
+      width: 250px; height: 250px;
+      background: var(--primary-color);
+      top: 80%; left: 10%;
+      animation-duration: 28s;
+       animation-delay: -3s;
+    }
+    .bg-shape.shape5 {
+      width: 120px; height: 120px;
+      background: var(--accent-color);
+      top: 5%; left: 70%;
+      animation-duration: 20s;
+      animation-delay: -8s;
+    }
+
+
+    @keyframes float {
+      0% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); filter: blur(5px);}
+      50% { transform: translateY(-30px) translateX(20px) scale(1.1) rotate(180deg); filter: blur(10px);}
+      100% { transform: translateY(0px) translateX(0px) scale(1) rotate(360deg); filter: blur(5px);}
+    }
+
+    /* Header */
+    .main-header {
+      min-height: 100vh;
+      background: url('beach.jpg') center/cover no-repeat; /* Actual Aquapark Image */
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2em;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 25, 47, 0.7); /* Darker overlay */
+      z-index: 1;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .header-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      color: var(--white);
+      margin-bottom: 0.3em;
+      text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.5);
+      letter-spacing: 1px;
+    }
+     .header-content .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--text-light);
+      margin-bottom: 1.5em;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .pulse-button {
+      background: var(--accent-color);
+      color: var(--text-dark);
+      padding: 0.8em 2em;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-decoration: none;
+      box-shadow: 0 0 25px rgba(var(--accent-color-rgb), 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .pulse-button:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(var(--primary-color-rgb), 0.7);
+      animation-play-state: paused;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(var(--accent-color-rgb), 0); }
+      100% { box-shadow: 0 0 0 0 rgba(var(--accent-color-rgb), 0); }
+    }
+
+    /* Navigation */
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-dark-transparent);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .main-nav a {
+      color: var(--text-light);
+      margin: 0 1.2em;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5em 0;
+      position: relative;
+      transition: color var(--transition-fast);
+      letter-spacing: 0.5px;
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--accent-color);
+      border-radius: 2px;
+      transition: width var(--transition-fast);
+    }
+
+    .main-nav a:hover {
+      color: var(--accent-color);
+    }
+
+    .main-nav a:hover::after {
+      width: 100%;
+    }
+    
+    /* Main Content Area */
+    .page-wrapper {
+        padding: 4em 2em;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 3em;
+    }
+
+    .section-title h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: clamp(2rem, 5vw, 3rem);
+        color: var(--text-light);
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.5em;
+    }
+
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        width: 70px;
+        height: 4px;
+        background: var(--primary-color);
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+        box-shadow: 0 0 15px var(--shadow-strong);
+    }
+    
+    /* "Explore Our Worlds" Section */
+    .explore-worlds {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5em;
+        max-width: 1300px; /* Adjusted for potentially 3 columns */
+        margin: 0 auto;
+    }
+
+    .world-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 0 1px var(--bg-light-transparent);
+        transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+        position: relative;
+        cursor: pointer;
+        border: 1px solid rgba(var(--primary-color-rgb),0.2);
+        display: flex;
+        flex-direction: column; /* Ensure content flows top to bottom */
+    }
+    
+    .world-card:hover {
+        transform: translateY(-15px) scale(1.03);
+        box-shadow: 0 20px 50px var(--shadow-strong), inset 0 0 0 1.5px var(--primary-color);
+    }
+
+    .world-card-image {
+        height: 220px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0; /* Prevent image from shrinking */
+    }
+
+    .world-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-medium), filter 0.4s ease;
+    }
+
+    .world-card:hover .world-card-image img {
+        transform: scale(1.1);
+        filter: brightness(1.1);
+    }
+    
+    .world-card-image::after { /* Gradient overlay on image */
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 80%;
+        background: linear-gradient(to top, rgba(10,25,47,0.8), transparent);
+    }
+
+    .world-card-content {
+        padding: 1.8em;
+        position: relative; 
+        flex-grow: 1; /* Allow content to take remaining space */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .world-card-content h3 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.6rem;
+        color: var(--accent-color);
+        margin-bottom: 0.5em;
+        transition: color var(--transition-fast);
+    }
+    
+    .world-card:hover .world-card-content h3 {
+        color: var(--primary-color);
+    }
+
+    .world-card-content p {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        opacity: 0.85;
+        line-height: 1.7;
+        margin-bottom: 1.2em;
+        flex-grow: 1; /* Push link to bottom */
+    }
+
+    .world-card-link {
+        display: inline-block;
+        text-decoration: none;
+        color: var(--accent-color);
+        font-weight: 600;
+        transition: var(--transition-fast);
+        position: relative;
+        margin-top: auto; /* Align to bottom */
+    }
+    
+    .world-card-link i {
+        margin-left: 0.3em;
+        transition: transform var(--transition-fast);
+    }
+    
+    .world-card:hover .world-card-link {
+        color: var(--primary-color);
+        letter-spacing: 0.5px;
+    }
+
+    .world-card:hover .world-card-link i {
+        transform: translateX(5px);
+    }
+
+    /* Call to Action Section */
+    .cta-section {
+        text-align: center;
+        padding: 5em 2em;
+        background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.95)), 
+                    url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1026&q=80') center/cover fixed; /* Parallax-like bg */
+        margin-top: 4em;
+    }
+    
+    .cta-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--white);
+      margin-bottom: 0.5em;
+    }
+    
+    .cta-section p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 1.5em auto;
+    }
+
+    /* Footer */
+    .main-footer {
+      text-align: center;
+      padding: 3em 2em 2em;
+      background: var(--bg-dark-transparent);
+      margin-top: auto; /* Pushes footer to bottom if content is short */
+      border-top: 1px solid var(--bg-light-transparent);
+    }
+
+    .footer-social-icons a {
+      color: var(--text-light);
+      font-size: 1.2rem; /* Adjusted for new dimensions */
+      margin: 0 0.5em; /* Slightly reduced margin */
+      transition: color var(--transition-fast), transform var(--transition-fast); /* Removed box-shadow from base transition */
+      display: inline-flex; /* Use flex to center icon */
+      align-items: center;
+      justify-content: center;
+      width: 44px;  /* Fixed width for square shape */
+      height: 44px; /* Fixed height for square shape */
+      border-radius: 50%; /* Makes it a circle */
+      text-decoration: none;
+      position: relative; /* For potential pseudo-elements if needed later */
+    }
+
+    .footer-social-icons a:hover {
+      color: var(--accent-color);
+      /* Animation will handle transform and box-shadow */
+      animation: hoverSocialPulse 0.8s infinite ease-in-out;
+    }
+    
+    @keyframes hoverSocialPulse {
+      0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(var(--accent-color-rgb), 0);
+      }
+      50% {
+        transform: translateY(-5px) scale(1.2);
+        box-shadow: 0 8px 20px rgba(var(--accent-color-rgb), 0.5);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(var(--accent-color-rgb), 0);
+      }
+    }
+
+    .main-footer p {
+      margin-top: 1.5em; 
+      font-size: 0.9rem;
+      color: var(--text-light);
+      opacity: 0.7;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) { 
+        .explore-worlds {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+        }
+    }
+    
+    @media (max-width: 768px) {
+      .main-nav {
+        flex-direction: column;
+        padding: 1em 0;
+      }
+      .main-nav a {
+        margin: 0.5em 0;
+      }
+      .explore-worlds {
+        grid-template-columns: 1fr; 
+        gap: 2em;
+      }
+      .world-card-content p {
+        min-height: auto; 
+      }
+      .footer-social-icons a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-shapes">
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
+    <div class="bg-shape shape3"></div>
+    <div class="bg-shape shape4"></div>
+    <div class="bg-shape shape5"></div>
+  </div>
+
+  <header class="main-header">
+    <div class="header-content">
+      <h1>Witaj w AquaParadise!</h1>
+      <p class="subtitle">Twoje miejsce ucieczki do świata wodnych przygód, luksusowego wypoczynku i niezapomnianych chwil. Odkryj magię, która czeka na Ciebie.</p>
+      <a href="#explore" class="pulse-button" onclick="event.preventDefault(); document.querySelector('#explore').scrollIntoView({ behavior: 'smooth' });">Odkryj Nasze Światy</a>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <a href="index.html">Home</a>
+    <a href="aquapark.html">Aquapark</a>
+    <a href="hotel.html">Hotel</a>
+    <a href="#dining">Spa & Wellness</a>
+    <a href="restaurant.html">Dining</a>
+  </nav>
+
+  <div class="page-wrapper" id="explore">
+    <section class="section-title">
+      <h2>Eksploruj Nasze Światy</h2>
+    </section>
+
+    <section class="explore-worlds">
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.1s backwards;">
+        <div class="world-card-image">
+          <img src="https://aquapark.wroc.pl/wp-content/uploads/2022/09/DJI_0017-min-1.jpg" alt="Strefa Rekreacji Aquaparku">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-water"></i> Niesamowity Aquapark</h3>
+          <p>Zanurz się w ekscytującym świecie zjeżdżalni, basenów z falami i stref relaksu dla całej rodziny. Adrenalina i zabawa gwarantowana!</p>
+          <a href="aquapark.html" class="world-card-link">Zobacz Więcej <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.2s backwards;">
+        <div class="world-card-image">
+          <img src="https://aquapark.wroc.pl/wp-content/uploads/2022/08/saunarium-ogrod-saunowy-wroclaw-min.jpg" alt="Luksusowy Hotel AquaParadise">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-concierge-bell"></i> Luksusowy Hotel</h3>
+          <p>Odpocznij w komfortowych pokojach z widokiem na wodne atrakcje. Idealne miejsce na regenerację sił po dniu pełnym wrażeń.</p>
+          <a href="hotel.html" class="world-card-link">Rezerwuj Pobyt <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.3s backwards;">
+        <div class="world-card-image">
+          <img src="https://aquapark.wroc.pl/wp-content/uploads/2022/08/saunarium-wnetrza-wroclaw-min.jpg" alt="Strefa Spa & Wellness">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-spa"></i> Strefa Spa & Wellness</h3>
+          <p>Zrelaksuj ciało i umysł w naszej ekskluzywnej strefie spa. Sauny, masaże i zabiegi, które przywrócą Ci energię i harmonię.</p>
+          <a href="#spa-info" class="world-card-link">Odkryj Relaks <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.4s backwards;">
+        <div class="world-card-image">
+          <img src="https://aquapark.wroc.pl/wp-content/uploads/2022/08/restauracja-aquapark-wroclaw-min.jpg" alt="Wyjątkowe Restauracje">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-utensils"></i> Wyjątkowe Restauracje</h3>
+          <p>Skosztuj kulinarnych arcydzieł w naszych restauracjach i barach. Od szybkich przekąsek po eleganckie kolacje - każdy znajdzie coś dla siebie.</p>
+          <a href="#dining-info" class="world-card-link">Menu i Lokale <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.5s backwards;">
+        <div class="world-card-image">
+          <img src="https://aquapark.wroc.pl/wp-content/uploads/2022/08/strefa-dziecka-aquapark-wroclaw-min.jpg" alt="Dziecięca Kraina Zabaw">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-child"></i> Dziecięca Kraina Zabaw</h3>
+          <p>Bezpieczne i ekscytujące atrakcje wodne zaprojektowane specjalnie dla naszych najmłodszych gości. Płytkie baseny, mini-zjeżdżalnie i interaktywne fontanny!</p>
+          <a href="#kids-zone" class="world-card-link">Dla Najmłodszych <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="world-card" style="animation: fadeInUp 0.5s ease-out 0.6s backwards;">
+        <div class="world-card-image">
+          <img src="https://images.unsplash.com/photo-1618064120060-1880a212ee85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Imprezy i Wydarzenia Specjalne">
+        </div>
+        <div class="world-card-content">
+          <h3><i class="fas fa-star"></i> Imprezy i Wydarzenia</h3>
+          <p>Doświadcz więcej niż tylko wody! Dołącz do nas podczas weekendów tematycznych, wieczorów z muzyką na żywo, pokazów nocnych i sezonowych festiwali.</p>
+          <a href="#events" class="world-card-link">Sprawdź Kalendarz <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Gotowy na Przygodę Życia?</h2>
+      <p>Zaplanuj swój pobyt w AquaParadise już dziś i stwórz wspomnienia, które zostaną z Tobą na zawsze. Czekamy na Ciebie!</p>
+      <a href="#contact" class="pulse-button" style="background: var(--primary-color); color: var(--white); animation-name: pulseBlue; --accent-color-rgb: 0,168,232;">Kup Bilety lub Zarezerwuj</a>
+    </section>
+    <style> @keyframes pulseBlue { 0% { box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7); } 70% { box-shadow: 0 0 0 20px rgba(var(--primary-color-rgb), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0); } } </style>
+
+  </div>
+
+  <footer class="main-footer">
+    <div class="footer-social-icons">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p>&copy; 2025 AquaParadise. Wszelkie prawa zastrzeżone. Zaprojektowane z pasją do przygody.</p>
+  </footer>
+
+</body>
+</html>

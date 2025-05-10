@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AquaParadise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #f5e6da, #e4d5c7);
+      color: #4e342e;
+    }
+    header {
+      background: url('lounge.jpg') center/cover no-repeat;
+      height: 80vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff3e0;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(78, 52, 46, 0.5);
+      z-index: 1;
+    }
+    header .content {
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5em;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #d7ccc8;
+      padding: 1em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      margin: 0 1em;
+      text-decoration: none;
+      color: #6d4c41;
+      padding: 0.5em 1em;
+      border-radius: 20px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #efebe9;
+    }
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2em;
+      padding: 2em;
+    }
+    .card {
+      background: #fff3e0;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1.5em;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .cta {
+      text-align: center;
+      margin: 3em 0;
+    }
+    .cta button {
+      background: #6d4c41;
+      color: white;
+      padding: 1em 2em;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cta button:hover {
+      background: #4e342e;
+    }
+    footer {
+      text-align: center;
+      padding: 2em;
+      background: #d7ccc8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="content">
+      <h1>Welcome to AquaParadise</h1>
+      <p>Discover fun, relaxation, and unforgettable moments in one water wonderland.</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aquapark.html">Aquapark</a>
+    <a href="hotel.html">Hotel</a>
+    <a href="#dining">Spa & Wellness</a>
+    <a href="restaurant.html">Dining</a>
+  </nav>
+
+<section class="sections" style="display: flex; flex-direction: column; align-items: center; gap: 2em;">
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Appetizers</h3>
+      <p>Start your meal with our delicious starters like bruschetta and calamari.</p>
+      <ul>
+        <li>Bruschetta - $8.99</li>
+        <li>Calamari - $12.99</li>
+        <li>Stuffed Mushrooms - $10.99</li>
+      </ul>
+    </div>
+    <img src="apple-appetizers-with-cheese.jpg" alt="Appetizers" style="border-radius: 8px; height: 200px; object-fit: cover;">
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Main Courses</h3>
+      <p>Enjoy a variety of dishes including pasta, steaks, and fresh seafood.</p>
+      <ul>
+        <li>Grilled Salmon - $18.99</li>
+        <li>Spaghetti Carbonara - $15.99</li>
+        <li>Ribeye Steak - $24.99</li>
+      </ul>
+    </div>
+    <img src="partridge-in-cider-with-apples-celery-dd0f3c6.jpg" alt="Main Courses" style="border-radius: 8px; height: 200px; object-fit: cover;">
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Vegetarian Options</h3>
+      <p>Savor our plant-based dishes crafted with fresh, organic ingredients.</p>
+      <ul>
+        <li>Vegetable Stir Fry - $14.99</li>
+        <li>Quinoa Salad - $12.99</li>
+        <li>Stuffed Bell Peppers - $13.99</li>
+      </ul>
+    </div>
+    <img src="grass.jpg" alt="Vegetarian Options" style="border-radius: 8px; height: 200px; object-fit: cover;">
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Desserts</h3>
+      <p>Indulge in sweet treats like tiramisu, cheesecake, and gelato.</p>
+      <ul>
+        <li>Tiramisu - $7.99</li>
+        <li>New York Cheesecake - $8.99</li>
+        <li>Chocolate Lava Cake - $9.99</li>
+      </ul>
+    </div>
+    <img src="Tiramisu-Cheesecake-Dessert_EXPS_TOHD24_40878_EricKleinberg_9.jpg" alt="Desserts" style="border-radius: 8px; height: 200px; object-fit: cover; padding-left: 100px;">
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Beverages</h3>
+      <p>Choose from a selection of wines, cocktails, and non-alcoholic drinks.</p>
+      <ul>
+        <li>Red Wine - $6.99</li>
+        <li>Mojito - $8.99</li>
+        <li>Fresh Lemonade - $4.99</li>
+      </ul>
+    </div>
+    <img src="beverages-cover.jpg" alt="Beverages" style="border-radius: 8px; height: 200px; object-fit: cover;">
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1em; width: 100%; max-width: 900px;">
+    <div>
+      <h3>Specials</h3>
+      <p>Discover our chef's specials, changing weekly to surprise your palate.</p>
+      <ul>
+        <li>Truffle Risotto - $19.99</li>
+        <li>Duck Confit - $22.99</li>
+        <li>Seasonal Fruit Tart - $9.99</li>
+      </ul>
+    </div>
+    <img src="kebab_przepis_4.jpg" alt="Specials" style="border-radius: 8px; height: 200px; object-fit: cover;">
+  </div>
+</section>
+
+<div class="cta">
+    <button>Reserve Your Table</button>
+</div>
+
+  <footer>
+    <p>&copy; 2025 AquaParadise | Designed for fun and release</p>
+    <div>
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaParadise Spa & Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+            color: #004d40;
+        }
+        header {
+            background: url('spa_assets/back.jpg') center/cover no-repeat;
+            height: 80vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #e0f2f1;
+            animation: fadeIn 2s ease-in-out;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 77, 64, 0.5);
+            z-index: 1;
+        }
+        header .content {
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 0.5em;
+            animation: slideDown 1.5s ease-out;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #b2dfdb;
+            padding: 1em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            margin: 0 1em;
+            text-decoration: none;
+            color: #004d40;
+            padding: 0.5em 1em;
+            border-radius: 20px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        nav a:hover {
+            background: #e0f2f1;
+            transform: scale(1.1);
+            border: 2px solid #004d40;
+            border-radius: 20px;
+        }
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+            padding: 2em;
+        }
+        .card {
+            background: #e0f2f1;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 1.5em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .cta {
+            text-align: center;
+            margin: 3em 0;
+        }
+        .cta button {
+            background: #004d40;
+            color: white;
+            padding: 1em 2em;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .cta button:hover {
+            background: #00251a;
+            transform: scale(1.1);
+        }
+        footer {
+            text-align: center;
+            padding: 2em;
+            background: #b2dfdb;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="content">
+            <h1>Welcome to AquaParadise Spa & Wellness</h1>
+            <p>Relax, rejuvenate, and restore your inner peace with our luxurious spa treatments.</p>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="aquapark.html">Aquapark</a>
+        <a href="hotel.html">Hotel</a>
+        <a href="spa.html">Spa & Wellness</a>
+        <a href="restaurant.html">Dining</a>
+    </nav>
+
+    <section class="sections">
+        <div class="card">
+            <h3>Massage Therapy</h3>
+            <p>Experience ultimate relaxation with our range of massage therapies.</p>
+            <ul>
+                <li>Swedish Massage - $80</li>
+                <li>Deep Tissue Massage - $90</li>
+                <li>Hot Stone Massage - $100</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Facial Treatments</h3>
+            <p>Rejuvenate your skin with our personalized facial treatments.</p>
+            <ul>
+                <li>Hydrating Facial - $70</li>
+                <li>Anti-Aging Facial - $85</li>
+                <li>Acne Treatment - $75</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Body Treatments</h3>
+            <p>Indulge in our luxurious body scrubs and wraps for glowing skin.</p>
+            <ul>
+                <li>Sea Salt Scrub - $60</li>
+                <li>Detox Body Wrap - $90</li>
+                <li>Herbal Mud Wrap - $95</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Wellness Packages</h3>
+            <p>Choose from our curated packages for a complete spa experience.</p>
+            <ul>
+                <li>Relaxation Package - $150</li>
+                <li>Rejuvenation Package - $200</li>
+                <li>Couples Retreat - $250</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="cta">
+        <button>Book Your Spa Day</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 AquaParadise | Designed for relaxation and wellness</p>
+        <div>
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+        </div>
+    </footer>
+</body>
+</html>

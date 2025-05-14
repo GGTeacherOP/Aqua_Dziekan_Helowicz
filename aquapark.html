@@ -1,1074 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaParadise - Aquapark</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0077cc;
-            --primary-light: #33aaff;
-            --primary-dark: #005EA6;
-            --secondary: #0F509E;
-            --secondary-light: #4A8FE0;
-            --bg-base: #f4f9ff;
-            --bg-elements: #ffffff;
-            --bg-elements-alt: #e9f5ff;
-            --text-dark: #1a2a45;
-            --text-medium: #556a8c;
-            --text-light: #f8f8ff;
-            --white: #ffffff;
-            --accent-glow: #ff4081;
-            --accent-secondary-glow: #ff80ab;
-            --shadow-color: rgba(79, 129, 189, 0.15);
-            --shadow-strong: rgba(79, 129, 189, 0.25);
-            --transition-fast: all 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            --transition-medium: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            --transition-slow: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --primary-rgb: 0, 119, 204;
-            --primary-light-rgb: 51, 170, 255;
-            --primary-dark-rgb: 0, 94, 166;
-            --secondary-rgb: 15, 80, 158;
-            --secondary-light-rgb: 74, 143, 224;
-            --accent-glow-rgb: 255, 64, 129;
-            --text-dark-rgb: 26, 42, 69;
-            --light-text-rgb: 248, 248, 255;
-            --bg-elements-rgb: 255, 255, 255;
-            --white-rgb: 255, 255, 255;
-            --bg-base-rgb: 244, 249, 255;
-        }
-
-        @keyframes animatedBodyGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes floatBodyShape {
-            0% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; filter: blur(80px); }
-            20% { transform: translate(8vw, -10vh) rotate(25deg) scale(1.1); opacity: 0.6; filter: blur(100px); }
-            40% { transform: translate(-6vw, 12vh) rotate(-15deg) scale(0.95); opacity: 0.4; filter: blur(90px); }
-            60% { transform: translate(10vw, 5vh) rotate(30deg) scale(1.1); opacity: 0.7; filter: blur(110px); }
-            80% { transform: translate(-4vw, -8vh) rotate(-20deg) scale(1.05); opacity: 0.5; filter: blur(105px); }
-            100% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; filter: blur(80px); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px 5px rgba(var(--accent-glow-rgb), 0.4); }
-            50% { box-shadow: 0 0 25px 10px rgba(var(--accent-glow-rgb), 0.6); }
-        }
-
-        @keyframes subtleRotate {
-            0% { transform: rotate(-2deg); }
-            50% { transform: rotate(2deg); }
-            100% { transform: rotate(-2deg); }
-        }
-
-        @keyframes counterPulseSubtle {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0px rgba(var(--white-rgb), 0); }
-            50% { transform: scale(1.03); box-shadow: 0 0 15px rgba(var(--white-rgb), 0.3); }
-        }
-
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
-        @keyframes headerParallax {
-            0%, 100% { background-position: center 0%; }
-            50% { background-position: center 10%; }
-        }
-
-        @keyframes headerTextGlow {
-            0%, 100% { text-shadow: 0 4px 15px rgba(var(--text-dark-rgb), 0.5), 0 0 20px rgba(var(--white-rgb), 0.4); }
-            50% { text-shadow: 0 4px 20px rgba(var(--text-dark-rgb), 0.7), 0 0 30px rgba(var(--white-rgb), 0.7); }
-        }
-        
-        @keyframes float {
-          0% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); filter: blur(5px);}
-          50% { transform: translateY(-30px) translateX(20px) scale(1.1) rotate(180deg); filter: blur(10px);}
-          100% { transform: translateY(0px) translateX(0px) scale(1) rotate(360deg); filter: blur(5px);}
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-base);
-            background-image: radial-gradient(ellipse at 50% 0%, rgba(var(--primary-light-rgb), 0.15) 0%, transparent 40%),
-                radial-gradient(ellipse at 0% 100%, rgba(var(--secondary-light-rgb), 0.1) 0%, transparent 50%),
-                linear-gradient(170deg,
-                    rgba(var(--bg-base-rgb), 0.8) 0%,
-                    rgba(var(--primary-light-rgb), 0.4) 25%,
-                    rgba(var(--secondary-light-rgb), 0.5) 50%,
-                    rgba(var(--secondary-rgb), 0.3) 75%,
-                    rgba(var(--primary-rgb), 0.2) 100%);
-            background-size: 350% 350%;
-            animation: animatedBodyGradient 20s ease-in-out infinite;
-            color: var(--text-dark);
-            overflow-x: hidden;
-            line-height: 1.7;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 150vmax;
-            height: 150vmax;
-            transform-origin: center center;
-            z-index: -1; 
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            will-change: transform, opacity;
-            filter: blur(120px);
-            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-        }
-
-        body::before {
-            background: radial-gradient(ellipse at center, rgba(var(--secondary-light-rgb), 0.5) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(var(--primary-light-rgb), 0.4) 0%, transparent 55%),
-                radial-gradient(ellipse at 80% 30%, rgba(var(--secondary-rgb), 0.45) 0%, transparent 60%);
-            animation: floatBodyShape 28s ease-in-out infinite alternate;
-            opacity: 0.7;
-        }
-
-        body::after {
-            width: 180vmax;
-            height: 180vmax;
-            background: radial-gradient(ellipse at center, rgba(var(--secondary-rgb), 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 70%, rgba(var(--white-rgb), 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 20%, rgba(var(--primary-rgb), 0.45) 0%, transparent 55%);
-            animation: floatBodyShape 38s ease-in-out infinite alternate-reverse;
-            filter: blur(130px);
-            opacity: 0.8;
-        }
-        
-        .bg-shapes {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100vh;
-          z-index: -2; 
-          overflow: hidden;
-          pointer-events: none;
-        }
-
-        .bg-shape {
-          position: absolute;
-          border-radius: 50%;
-          animation: float 20s infinite ease-in-out alternate;
-        }
-        
-        .bg-shape.shape1 {
-          width: 220px; height: 220px;
-          background: var(--primary-light);
-          top: 15%; left: 8%;
-          animation-duration: 23s;
-          opacity: 0.12;
-        }
-        .bg-shape.shape2 {
-          width: 160px; height: 160px;
-          background: var(--secondary-light);
-          top: 65%; left: 78%;
-          animation-duration: 26s;
-          animation-delay: -4s;
-          opacity: 0.1;
-        }
-        .bg-shape.shape3 {
-          width: 110px; height: 110px;
-          background: var(--primary);
-          top: 38%; left: 42%;
-          animation-duration: 19s;
-          animation-delay: -9s;
-          opacity: 0.15;
-        }
-         .bg-shape.shape4 {
-          width: 260px; height: 260px;
-          background: var(--secondary);
-          top: 75%; left: 12%;
-          animation-duration: 29s;
-          animation-delay: -2s;
-          opacity: 0.08;
-        }
-        .bg-shape.shape5 {
-          width: 130px; height: 130px;
-          background: var(--accent-glow); 
-          top: 8%; left: 72%;
-          animation-duration: 21s;
-          animation-delay: -7s;
-          opacity: 0.1; 
-        }
-
-        .page-content-wrapper {
-            position: relative;
-            z-index: 1; 
-            background-color: transparent; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        .page-content-wrapper::before,
-        .page-content-wrapper::after {
-            content: '';
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 60vmax;
-            height: 60vmax;
-            transform-origin: center center;
-            z-index: 0; 
-            pointer-events: none;
-            mix-blend-mode: screen;
-            will-change: transform, opacity;
-            filter: blur(40px);
-            border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%;
-        }
-
-        .page-content-wrapper::before {
-            background: radial-gradient(ellipse at center, rgba(var(--primary-light-rgb), 0.6) 0%, transparent 70%);
-            animation: floatBodyShape 20s ease-in-out infinite alternate;
-            animation-delay: -5s;
-            opacity: 0.3; 
-        }
-
-        .page-content-wrapper::after {
-            background: radial-gradient(ellipse at center, rgba(var(--secondary-light-rgb), 0.5) 0%, transparent 65%);
-            animation: floatBodyShape 25s ease-in-out infinite alternate-reverse;
-            animation-delay: -10s;
-            opacity: 0.25; 
-            transform: translate(-50%, -50%) rotate(180deg);
-        }
-
-        .aquapark-header {
-            background: linear-gradient(rgba(var(--primary-rgb), 0.6), rgba(var(--secondary-rgb), 0.7)),
-                url('aquapark_header.jpg'); 
-            background-size: cover;
-            background-position: center center;
-            animation: headerParallax 30s linear infinite alternate;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-            border-bottom: 8px solid var(--secondary);
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2; 
-            animation: fadeInUp 1.3s ease-out;
-            background: none; 
-            padding: 20px;
-            border-radius: 0;
-            box-shadow: none;
-        }
-
-        .header-content h1 {
-            font-size: 5rem;
-            margin-bottom: 0.3em;
-            animation: headerTextGlow 4s ease-in-out infinite alternate;
-            letter-spacing: -2px;
-            font-weight: 700;
-        }
-
-        .header-content p {
-            font-size: 1.5rem;
-            max-width: 850px;
-            margin: 0 auto;
-            text-shadow: 0 2px 10px rgba(var(--text-dark-rgb), 0.4);
-            opacity: 1;
-            line-height: 1.75;
-            font-weight: 300;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background: rgba(var(--bg-elements-rgb), 0.85); 
-            backdrop-filter: blur(10px);
-            padding: 1em 1em;
-            position: sticky;
-            top: 0;
-            z-index: 1000; 
-            box-shadow: 0 5px 20px var(--shadow-color);
-            border-bottom: 1px solid rgba(var(--primary-rgb), 0.1);
-        }
-
-        nav a {
-            margin: 0 0.8em;
-            text-decoration: none;
-            color: var(--text-dark); 
-            padding: 0.6em 1.3em;
-            border-radius: 25px;
-            transition: var(--transition-medium);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid transparent;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-            background-color: rgba(var(--primary-rgb), 0.1);
-            transform: translateY(-4px) scale(1.02) rotate(1deg);
-            box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.4);
-            border-color: rgba(var(--primary-rgb), 0.3);
-        }
-
-        nav a.active {
-            background: var(--primary);
-            color: var(--white);
-            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
-            border-color: var(--primary);
-        }
-
-        nav a.active:hover {
-            background: var(--primary-dark);
-            color: var(--white);
-            transform: translateY(-4px) scale(1.02) rotate(1deg);
-            box-shadow: 0 10px 30px rgba(var(--primary-dark-rgb), 0.5);
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 4em auto;
-            padding: 0 1em; 
-            flex: 1;
-        }
-
-        .section-title {
-            margin-bottom: 3em;
-            text-align: center;
-        }
-
-        .section-title h2 {
-            font-size: 2.8rem;
-            color: var(--text-dark); 
-            text-shadow: none;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 0.3em;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            border-radius: 3px;
-            box-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3);
-        }
-
-        .attractions-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
-            gap: 2.5em;
-            margin-bottom: 4em;
-            align-items: start; 
-        }
-
-        .attraction-card {
-            background: var(--bg-elements); 
-            border-radius: 16px;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            overflow: hidden;
-            transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid transparent;
-        }
-
-        .attraction-card:hover {
-            transform: translateY(-18px) scale(1.04) rotate(1deg);
-            box-shadow: 0 25px 60px rgba(var(--shadow-strong), 0.8), 0 0 40px rgba(var(--primary-light-rgb), 0.6);
-            border-color: rgba(var(--primary-light-rgb), 0.8);
-        }
-
-        .attraction-img {
-            flex: none; 
-            height: 250px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .attraction-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s var(--transition-medium), filter 0.5s var(--transition-medium);
-        }
-
-        .attraction-card:hover .attraction-img img {
-            transform: scale(1.15);
-            filter: brightness(1.05) contrast(1.1);
-        }
-
-        .attraction-img::after { 
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(var(--text-dark-rgb), 0.6) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .attraction-card:hover .attraction-img::after {
-            opacity: 1;
-        }
-
-        .attraction-content {
-            padding: 1.8em;
-            position: relative;
-            color: var(--text-dark); 
-            background: none; 
-            flex-grow: 1; 
-        }
-
-        .attraction-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5em;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .attraction-content p {
-            margin-bottom: 1.2em;
-            line-height: 1.65;
-            color: var(--text-medium); 
-            font-size: 0.9rem;
-            flex-grow: 1;
-        }
-
-        .attraction-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5em;
-            margin-bottom: 1.2em;
-        }
-
-        .feature-tag {
-            background: var(--bg-elements-alt); 
-            color: var(--primary);
-            padding: 0.4em 0.8em;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: var(--transition-fast);
-            line-height: 1.3;
-        }
-
-        .feature-tag:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: 0 4px 15px rgba(var(--secondary-rgb), 0.5);
-        }
-
-        .attraction-action {
-            border-top: 1px solid rgba(var(--primary-rgb),0.1); 
-            padding-top: 1em;
-            margin-top: 1em; 
-            display: flex;
-            justify-content: flex-end; 
-        }
-
-        .details-button {
-            background-color: var(--primary);
-            color: var(--white);
-            padding: 0.6em 1.3em;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            box-shadow: 0 3px 10px rgba(var(--primary-rgb), 0.3);
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
-
-        .details-button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(var(--primary-dark-rgb), 0.4);
-        }
-
-        .stats-section-wrapper {
-            margin: 5em 0;
-        }
-
-        .stats-counter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2em;
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            padding: 3em 2em;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.25);
-        }
-
-        .counter-item {
-            text-align: center;
-            color: var(--white); 
-            animation: counterPulseSubtle 4s ease-in-out infinite alternate;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .counter-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(var(--white-rgb), 0.5);
-        }
-
-        .counter-item i {
-            font-size: 3.5rem;
-            display: block;
-            margin-bottom: 0.3em;
-            opacity: 0.8;
-            text-shadow: 0 0 10px rgba(var(--white-rgb), 0.3);
-            animation: iconFloat 2s ease-in-out infinite alternate;
-        }
-
-        .counter-item .stat-number {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 0.1em;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .counter-item .stat-label {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-
-        .gallery-section {
-            margin: 5em 0;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            grid-auto-rows: 150px;
-            grid-auto-flow: dense; 
-            gap: 1em;
-        }
-
-        .gallery-item {
-            height: auto; 
-            overflow: hidden;
-            border-radius: 12px;
-            position: relative;
-            box-shadow: 0 8px 20px var(--shadow-color);
-            transition: transform var(--transition-medium), box-shadow var(--transition-medium), border-color var(--transition-medium);
-            cursor: pointer;
-            border: 3px solid transparent;
-        }
-        
-        .gallery-item:nth-child(7n + 1) { grid-column: span 2; grid-row: span 2; height: 316px; }
-        .gallery-item:nth-child(7n + 4) { grid-column: span 1; grid-row: span 2; height: 316px; }
-        .gallery-item:nth-child(7n + 6) { grid-column: span 2; grid-row: span 1; height: 150px; }
-
-        .gallery-item:hover {
-            transform: scale(1.06) rotate(2deg);
-            box-shadow: 0 15px 35px rgba(var(--shadow-strong), 0.7), 0 0 25px rgba(var(--secondary-rgb), 0.5);
-            border-color: rgba(var(--secondary-light-rgb), 0.7);
-            z-index: 10; 
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease-out;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(var(--primary-dark-rgb), 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition-medium);
-            border-radius: inherit; 
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-overlay i {
-            color: var(--accent-glow); 
-            font-size: 2rem;
-            transform: scale(0.8);
-            transition: transform 0.3s var(--transition-fast);
-        }
-
-        .gallery-item:hover .gallery-overlay i {
-            transform: scale(1.15) rotate(10deg);
-        }
-
-        .cta-section {
-            text-align: center;
-            margin: 5em 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1em 2.5em;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            letter-spacing: 0.8px;
-            box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
-            transition: var(--transition-medium);
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.6);
-        }
-
-        .cta-button i {
-            margin-left: 0.5em;
-        }
-
-        footer {
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            color: var(--text-light); 
-            padding: 4em 0 2em;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden; 
-            border-top: 3px solid var(--primary-light);
-            box-shadow: 0 -8px 20px rgba(var(--primary-rgb), 0.1);
-        }
-
-        footer::before { 
-            content: '';
-            position: absolute;
-            top: -80px;
-            left: 50%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(ellipse at center, rgba(var(--secondary-light-rgb), 0.35) 0%, transparent 60%);
-            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-            filter: blur(80px);
-            opacity: 0.35;
-            z-index: 0; 
-            transform: translateX(-50%) translateY(0);
-            animation: subtleFooterFloat 25s ease-in-out infinite alternate;
-            pointer-events: none;
-        }
-
-        @keyframes subtleFooterFloat {
-            0% { transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1); }
-            50% { transform: translateX(-48%) translateY(15px) rotate(5deg) scale(1.02); }
-            100% { transform: translateX(-50%) translateY(0px) rotate(0deg) scale(1); }
-        }
-
-        .footer-content {
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 0 2em;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2em;
-            text-align: left;
-            position: relative;
-            z-index: 1; 
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1em;
-            position: relative;
-            display: inline-block;
-            color: var(--white);
-            font-weight: 600;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--accent-glow); 
-            border-radius: 1.5px;
-        }
-
-        .footer-column p,
-        .footer-column a {
-            color: var(--text-light);
-            opacity: 0.85;
-            line-height: 1.7;
-            transition: var(--transition-fast);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5em;
-            font-size: 0.9rem;
-        }
-
-        .footer-column a:hover {
-            color: var(--white);
-            transform: translateX(4px);
-            opacity: 1;
-        }
-
-        .footer-column a i {
-            margin-right: 0.7em;
-            color: var(--secondary-light); 
-            width: 20px;
-            display: inline-block;
-            text-align: center;
-        }
-        .footer-column a:hover i { color: var(--white); }
-
-        .social-links {
-            display: flex;
-            gap: 0.8em;
-            margin-top: 1em;
-        }
-
-        .social-links a {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(var(--white-rgb), 0.15); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-medium);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-        }
-
-        .social-links a i {
-            font-size: 1.1rem;
-            color: var(--white);
-            opacity: 0.8;
-        }
-
-        .social-links a:hover {
-            background: var(--accent-glow); 
-            transform: translateY(-6px) scale(1.15) rotate(8deg);
-            box-shadow: 0 8px 15px rgba(var(--accent-glow-rgb), 0.5);
-        }
-         .social-links a:hover i { opacity: 1; }
-
-        .copyright {
-            margin-top: 3em;
-            padding-top: 1.8em;
-            border-top: 1px solid rgba(var(--light-text-rgb), 0.1);
-            color: var(--text-light);
-            opacity: 0.85;
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1; 
-        }
-        .copyright:hover p { color: var(--white); opacity: 1; }
-
-        @media (max-width: 992px) {
-            .bg-shapes { 
-                display: none; 
-            }
-            .attractions-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
-            .stats-counter-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                grid-auto-rows: 130px;
-            }
-            .gallery-item:nth-child(7n + 1),
-            .gallery-item:nth-child(7n + 4),
-            .gallery-item:nth-child(7n + 6) {
-                grid-column: span 1; grid-row: span 1; height: 130px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content h1 { font-size: 3.5rem; }
-            .header-content p { font-size: 1.2rem; }
-            nav { flex-wrap: wrap; justify-content: center; }
-            nav a { margin: 0.3em; font-size: 0.8rem; padding: 0.5em 1em; }
-            .attractions-list { grid-template-columns: 1fr; gap: 2em; }
-            .stats-counter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5em; }
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                grid-auto-rows: 120px; gap: 0.8em;
-            }
-            .gallery-item:nth-child(7n + 1),
-            .gallery-item:nth-child(7n + 4),
-            .gallery-item:nth-child(7n + 6) { height: 120px; }
-
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .footer-column { margin-bottom: 1.5em; padding: 0.5em; }
-            .footer-column h3::after { left: 50%; transform: translateX(-50%); }
-            .social-links { justify-content: center; }
-        }
-
-        @media (max-width: 480px) {
-            .header-content h1 { font-size: 2.8rem; }
-            .header-content p { font-size: 1.1rem; }
-            .stats-counter-grid { grid-template-columns: 1fr; }
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 0.5em; grid-auto-rows: 120px;
-            }
-             .gallery-item:nth-child(7n + 1),
-            .gallery-item:nth-child(7n + 4),
-            .gallery-item:nth-child(7n + 6) { height: 120px; } 
-
-            .cta-button { font-size: 1rem; padding: 0.8em 1.5em; }
-            .attraction-content { padding: 1.5em; }
-            .feature-tag { font-size: 0.7rem; padding: 0.4em 0.9em; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="bg-shapes">
-        <div class="bg-shape shape1"></div>
-        <div class="bg-shape shape2"></div>
-        <div class="bg-shape shape3"></div>
-        <div class="bg-shape shape4"></div>
-        <div class="bg-shape shape5"></div>
-    </div>
 
-    <div class="page-content-wrapper">
-        <header class="aquapark-header">
-            <div class="header-content">
-                <h1>AquaParadise</h1>
-                <p>Dive into a world of aquatic luxury and adventure. Experience the ultimate water escape.</p>
-            </div>
-        </header>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="aquapark.html">Aquapark</a>
-    <a href="hotel.html">Hotel</a>
-    <a href="spa.html">Spa & Wellness</a>
-    <a href="restaurant.html">Dining</a>
-  </nav>
-
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Attractions</h2>
-            </div>
-
-            <div class="attractions-list">
-                <div class="attraction-card">
-                    <div class="attraction-img">
-                        <img src="aquapark_wave_pool.jpg" alt="Wave Pool">
-                    </div>
-                    <div class="attraction-content">
-                        <h3>Wave Pool</h3>
-                        <p>Feel the ocean's thrill in our majestic wave pool. Perfect for family fun and relaxation.</p>
-                        <div class="attraction-features">
-                            <span class="feature-tag">Family</span>
-                            <span class="feature-tag">Waves every 30 mins</span>
-                            <span class="feature-tag">Sun loungers</span>
-                        </div>
-                        <div class="attraction-action">
-                            <a href="#" class="details-button">More Info</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="attraction-card">
-                    <div class="attraction-img">
-                        <img src="aquapark_slides.jpg" alt="Water Slides">
-                    </div>
-                    <div class="attraction-content">
-                        <h3>Thrilling Slides</h3>
-                        <p>Get your adrenaline pumping with our exhilarating water slides. A rush of excitement awaits!
-                        </p>
-                        <div class="attraction-features">
-                            <span class="feature-tag">Adrenaline</span>
-                            <span class="feature-tag">High Speed</span>
-                            <span class="feature-tag">Daredevil</span>
-                        </div>
-                        <div class="attraction-action">
-                            <a href="#" class="details-button">More Info</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="attraction-card">
-                    <div class="attraction-img">
-                        <img src="aquapark_kids_zone.jpg" alt="Kids' Zone">
-                    </div>
-                    <div class="attraction-content">
-                        <h3>Kids Paradise</h3>
-                        <p>A safe and enchanting zone for our little guests. Fun and laughter guaranteed!</p>
-                        <div class="attraction-features">
-                            <span class="feature-tag">Children</span>
-                            <span class="feature-tag">Safe</span>
-                            <span class="feature-tag">Interactive</span>
-                        </div>
-                        <div class="attraction-action">
-                            <a href="#" class="details-button">More Info</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="attraction-card">
-                    <div class="attraction-img">
-                        <img src="aquapark_spa.jpg" alt="Spa & Wellness">
-                    </div>
-                    <div class="attraction-content">
-                        <h3>Spa & Wellness</h3>
-                        <p>Indulge in relaxation at our spa. Rejuvenate your mind, body, and soul.</p>
-                        <div class="attraction-features">
-                            <span class="feature-tag">Relaxation</span>
-                            <span class="feature-tag">Sauna</span>
-                            <span class="feature-tag">Jacuzzi</span>
-                        </div>
-                        <div class="attraction-action">
-                            <a href="#" class="details-button">More Info</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stats-section-wrapper">
-                <div class="section-title">
-                    <h2>Aquapark Stats</h2>
-                </div>
-                <div class="stats-counter-grid">
-                    <div class="counter-item">
-                        <i class="fas fa-swimming-pool"></i>
-                        <div class="stat-number">12</div>
-                        <div class="stat-label">Pools</div>
-                    </div>
-                    <div class="counter-item">
-                        <i class="fas fa-water"></i>
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Slides</div>
-                    </div>
-                    <div class="counter-item">
-                        <i class="fas fa-child"></i>
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Kids Zones</div>
-                    </div>
-                    <div class="counter-item">
-                        <i class="fas fa-users"></i>
-                        <div class="stat-number">1000+</div>
-                        <div class="stat-label">Daily Visitors</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="gallery-section">
-                <div class="section-title">
-                    <h2>Gallery</h2>
-                </div>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery1.jpg" alt="Aquapark Overview"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery2.jpg" alt="Water Slides Detail"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery3.jpg" alt="Kids Zone Fun"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery4.jpg" alt="Basen z Hydromasażem"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery5.jpg" alt="Spa Tranquility"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="aquapark_gallery6.jpg" alt="Wewnętrzna Strefa Relaksu"> 
-                        <div class="gallery-overlay"> <i class="fas fa-search-plus"></i> </div>
-                    </div>
-                    <div class="gallery-item"> <img src="aquapark_wave_pool.jpg" alt="Wave pool action"> 
-                        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <button class="cta-button">Plan Your Visit Today! <i class="fas fa-arrow-right"></i></button>
-            </div>
+    <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('aquapark_header.jpg');">
+        <div class="content">
+            <h1>Nasz Niezwykły Aquapark</h1>
+            <p>Zanurz się w świecie wodnych emocji i niezapomnianej zabawy dla całej rodziny!</p>
         </div>
+    </header>
 
-        <footer>
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>AquaParadise</h3>
-                    <p>Your ultimate destination for water adventures. Experience unforgettable moments of fun and
-                        relaxation.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-facebook" aria-label="Facebook"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-instagram" aria-label="Instagram"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <nav class="main-nav">
+        <div class="nav-links">
+            <a href="index.html">Strona Główna</a>
+            <a href="aquapark.html" class="active">Aquapark</a>
+            <a href="hotel.html">Hotel</a>
+            <a href="spa.html">Spa & Wellness</a>
+            <a href="restaurant.html">Restauracja</a>
+        </div>
+        <div class="nav-auth">
+            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
+            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <section class="section-title-container">
+            <h2>Główne Atrakcje Aquaparku</h2>
+        </section>
+
+        <section class="attractions-list horizontal-layout">
+            <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_wave_pool.jpg" alt="Basen z Falą">
+                </div>
+                <div class="attraction-content">
+                    <h3>Basen z Falą Morską</h3>
+                    <p>Poczuj prawdziwą morską bryzę i daj się ponieść falom w naszym imponującym basenie.</p>
+                    <div class="features-tags">
+                        <span class="feature-tag">Dla Rodzin</span>
+                        <span class="feature-tag">Fale co 30 min</span>
+                    </div>
+                    </div>
+            </div>
+
+            <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_slides.jpg" alt="Ekscytujące Zjeżdżalnie">
+                </div>
+                <div class="attraction-content">
+                    <h3>Adrenalinowe Zjeżdżalnie</h3>
+                    <p>Dla miłośników mocnych wrażeń! Nasze zjeżdżalnie dostarczą niezapomnianych emocji.</p>
+                    <div class="features-tags">
+                        <span class="feature-tag">Ekstremalne</span>
+                        <span class="feature-tag">Wysoka Prędkość</span>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Opening Hours</h3>
-                    <p>Monday - Friday: 10:00 AM - 10:00 PM</p>
-                    <p>Saturday - Sunday: 9:00 AM - 11:00 PM</p>
-                    <p>Holidays: Check our website</p>
+            </div>
+
+            <div class="attraction-card" id="kids-zone">
+                <div class="attraction-img">
+                    <img src="aquapark_kids_zone.jpg" alt="Raj dla Dzieci">
                 </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <a href="tel:+1234567890"><i class="fas fa-phone"></i> +1 234 567 890</a>
-                    <a href="mailto:info@aquaparadise.com"><i class="fas fa-envelope"></i> info@aquaparadise.com</a>
-                    <a href="#"><i class="fas fa-map-marker-alt"></i> 123 Aqua Lane, Paradise City</a>
+                <div class="attraction-content">
+                    <h3>Dziecięcy Raj Wodny</h3>
+                    <p>Bezpieczna strefa dla najmłodszych z mini zjeżdżalniami, brodzikami i fontannami.</p>
+                     <div class="features-tags">
+                        <span class="feature-tag">Dla Maluchów</span>
+                        <span class="feature-tag">Bezpieczna Zabawa</span>
+                    </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 AquaParadise. All rights reserved.</p>
+
+             <div class="attraction-card">
+                <div class="attraction-img">
+                    <img src="aquapark_spa.jpg" alt="Strefa Relaksu i Saun">
+                </div>
+                <div class="attraction-content">
+                    <h3>Strefa Relaksu i Saun</h3>
+                    <p>Po dniu pełnym wrażeń, zrelaksuj się w naszej strefie wellness z jacuzzi i saunami.</p>
+                     <div class="features-tags">
+                        <span class="feature-tag">Wyciszenie</span>
+                        <span class="feature-tag">Sauny</span>
+                        <span class="feature-tag">Jacuzzi</span>
+                    </div>
+                    </div>
             </div>
-        </footer>
+        </section>
+
+        <section class="stats-counter-grid">
+            <div class="counter-item">
+                <i class="fas fa-swimming-pool"></i>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Unikalnych Basenów</div>
+            </div>
+            <div class="counter-item">
+                <i class="fas fa-tint"></i>
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Zjeżdżalni Wodnych</div>
+            </div>
+            <div class="counter-item">
+                <i class="fas fa-child"></i>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Interaktywne Strefy Dziecięce</div>
+            </div>
+            <div class="counter-item">
+                <i class="fas fa-users"></i>
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Zadowolonych Gości Dziennie</div>
+            </div>
+        </section>
+
+        <section class="section-title-container" id="gallery">
+            <h2>Galeria Zdjęć z Aquaparku</h2>
+        </section>
+        <section class="gallery-grid">
+            <div class="gallery-item"><img src="aquapark_gallery2.jpg" alt="Zjeżdżalnie wodne"></div>
+            <div class="gallery-item"><img src="aquapark_gallery3.jpg" alt="Zabawa w strefie dla dzieci"></div>
+            <div class="gallery-item"><img src="aquapark_gallery4.jpg" alt="Basen z hydromasażem"></div>
+            <div class="gallery-item"><img src="aquapark_gallery6.jpg" alt="Wewnętrzna strefa relaksu"></div>
+            <div class="gallery-item"><img src="aquapark_wave_pool.jpg" alt="Akcja w basenie z falą"></div>
+            <div class="gallery-item"><img src="aquapark_slides.jpg" alt="Zjeżdżalnia z bliska"></div>
+        </section>
+
+        <section class="cta-section" id="contact-aquapark">
+            <a href="#" class="cta-button">Kup Bilety i Zaplanuj Przygodę! <i class="fas fa-ticket-alt"></i></a>
+        </section>
     </div>
+
+    <footer class="main-footer">
+        <div class="footer-inner-content">
+            <div class="footer-content-columns">
+                 <div>
+                    <h4>AquaParadise Aquapark</h4>
+                    <p>Centrum wodnej rozrywki dla każdego! Czekają na Ciebie niezapomniane atrakcje i mnóstwo radości.</p>
+                </div>
+                <div>
+                    <h4>Godziny Otwarcia Aquaparku</h4>
+                    <p><strong>Sezon letni (VI-VIII):</strong> 09:00 - 21:00</p>
+                    <p><strong>Poza sezonem:</strong> 10:00 - 20:00</p>
+                </div>
+                <div>
+                    <h4>Skontaktuj się z Nami</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:+48500100200">+48 500 100 200</a></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-social-icons">
+                <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+            </div>
+            <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -1,211 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaParadise Spa & Wellness</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
-            color: #004d40;
-        }
-        header {
-            background: url('spa_assets/back.jpg') center/cover no-repeat;
-            height: 80vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #e0f2f1;
-            animation: fadeIn 2s ease-in-out;
-        }
-        header::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 77, 64, 0.5);
-            z-index: 1;
-        }
-        header .content {
-            position: relative;
-            z-index: 2;
-        }
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 0.5em;
-            animation: slideDown 1.5s ease-out;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background: #b2dfdb;
-            padding: 1em;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        nav a {
-            margin: 0 1em;
-            text-decoration: none;
-            color: #004d40;
-            padding: 0.5em 1em;
-            border-radius: 20px;
-            transition: background 0.3s, transform 0.3s;
-        }
-        nav a:hover {
-            background: #e0f2f1;
-            transform: scale(1.1);
-            border: 2px solid #004d40;
-            border-radius: 20px;
-        }
-        .sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2em;
-            padding: 2em;
-        }
-        .card {
-            background: #e0f2f1;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 1.5em;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-        .cta {
-            text-align: center;
-            margin: 3em 0;
-        }
-        .cta button {
-            background: #004d40;
-            color: white;
-            padding: 1em 2em;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .cta button:hover {
-            background: #00251a;
-            transform: scale(1.1);
-        }
-        footer {
-            text-align: center;
-            padding: 2em;
-            background: #b2dfdb;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-    </style>
+    <title>AquaParadise - Spa & Wellness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+
+    <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('spa_assets/back.jpg');">
         <div class="content">
-            <h1>Welcome to AquaParadise Spa & Wellness</h1>
-            <p>Relax, rejuvenate, and restore your inner peace with our luxurious spa treatments.</p>
+            <h1>Oaza Relaksu: Spa & Wellness AquaParadise</h1>
+            <p>Zanurz się w świecie spokoju, odprężenia i regeneracji. Czekają na Ciebie luksusowe zabiegi i terapie.</p>
         </div>
     </header>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="aquapark.html">Aquapark</a>
-        <a href="hotel.html">Hotel</a>
-        <a href="spa.html">Spa & Wellness</a>
-        <a href="restaurant.html">Dining</a>
+    <nav class="main-nav">
+        <div class="nav-links">
+            <a href="index.html">Strona Główna</a>
+            <a href="aquapark.html">Aquapark</a>
+            <a href="hotel.html">Hotel</a>
+            <a href="spa.html" class="active">Spa & Wellness</a>
+            <a href="restaurant.html">Restauracja</a>
+        </div>
+        <div class="nav-auth">
+            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
+            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+        </div>
     </nav>
 
-    <section class="sections">
-        <div class="card">
-            <h3>Massage Therapy</h3>
-            <p>Experience ultimate relaxation with our range of massage therapies.</p>
-            <ul>
-                <li>Swedish Massage - $80</li>
-                <li>Deep Tissue Massage - $90</li>
-                <li>Hot Stone Massage - $100</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>Facial Treatments</h3>
-            <p>Rejuvenate your skin with our personalized facial treatments.</p>
-            <ul>
-                <li>Hydrating Facial - $70</li>
-                <li>Anti-Aging Facial - $85</li>
-                <li>Acne Treatment - $75</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>Body Treatments</h3>
-            <p>Indulge in our luxurious body scrubs and wraps for glowing skin.</p>
-            <ul>
-                <li>Sea Salt Scrub - $60</li>
-                <li>Detox Body Wrap - $90</li>
-                <li>Herbal Mud Wrap - $95</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>Wellness Packages</h3>
-            <p>Choose from our curated packages for a complete spa experience.</p>
-            <ul>
-                <li>Relaxation Package - $150</li>
-                <li>Rejuvenation Package - $200</li>
-                <li>Couples Retreat - $250</li>
-            </ul>
-        </div>
-    </section>
+    <div class="page-wrapper">
+        <section class="section-title-container">
+            <h2>Nasza Oferta Zabiegów Spa</h2>
+        </section>
 
-    <div class="cta">
-        <button onclick="location.href='spa_assets/spa_b.html'">Book Your Spa Day</button>
+        <section class="spa-sections cards-grid"> <div class="spa-service-card card"> <div class="spa-img card-image">
+                    <img src="spa_assets/massage.jpg" alt="Terapie Masażu">
+                </div>
+                <div class="spa-content card-content">
+                    <h3><i class="fas fa-hand-holding-heart"></i> Kojące Terapie Masażu</h3>
+                    <p>Odprężające masaże dostosowane do Twoich potrzeb, od klasycznych po egzotyczne rytuały.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-spa"></i>Masaż Relaksacyjny Klasyczny - 250 PLN</li>
+                        <li><i class="fas fa-spa"></i>Masaż Lomi Lomi Nui - 320 PLN</li>
+                        <li><i class="fas fa-spa"></i>Masaż Gorącymi Kamieniami Wulkanicznymi - 350 PLN</li>
+                    </ul>
+                    <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="spa-service-card card">
+                 <div class="spa-img card-image">
+                    <img src="spa_assets/facial.jpg" alt="Zabiegi na Twarz">
+                </div>
+                <div class="spa-content card-content">
+                    <h3><i class="fas fa-mask"></i> Odmładzające Zabiegi na Twarz</h3>
+                    <p>Profesjonalne zabiegi kosmetyczne przywracające skórze blask, nawilżenie i młody wygląd.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-spa"></i>Intensywnie Nawilżający Zabieg HydraBoost - 280 PLN</li>
+                        <li><i class="fas fa-spa"></i>Liftingujący Zabieg Anti-Aging Gold Therapy - 350 PLN</li>
+                        <li><i class="fas fa-spa"></i>Oczyszczający Zabieg dla Skóry Problematycznej - 260 PLN</li>
+                    </ul>
+                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="spa-service-card card">
+                <div class="spa-img card-image">
+                    <img src="spa_assets/body_wrap.jpg" alt="Zabiegi na Ciało">
+                </div>
+                <div class="spa-content card-content">
+                    <h3><i class="fas fa-leaf"></i> Luksusowe Zabiegi na Ciało</h3>
+                    <p>Peelingi, okłady i rytuały pielęgnacyjne, które odżywią Twoją skórę i zmysły.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-spa"></i>Aromatyczny Peeling Cukrowy Całego Ciała - 190 PLN</li>
+                        <li><i class="fas fa-spa"></i>Odżywczy Okład Czekoladowy - 330 PLN</li>
+                        <li><i class="fas fa-spa"></i>Detoksykujący Rytuał z Zieloną Herbatą - 380 PLN</li>
+                    </ul>
+                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="spa-service-card card">
+                 <div class="spa-img card-image">
+                    <img src="spa_assets/wellness_package.jpg" alt="Pakiety Wellness">
+                </div>
+                 <div class="spa-content card-content">
+                    <h3><i class="fas fa-gifts"></i> Ekskluzywne Pakiety Wellness</h3>
+                    <p>Kompleksowe pakiety łączące najlepsze zabiegi dla pełnej regeneracji i głębokiego relaksu.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-spa"></i>Pakiet "Harmonia Zmysłów" (Masaż + Zabieg na Twarz) - 500 PLN</li>
+                        <li><i class="fas fa-spa"></i>Pakiet "Królewski Relaks" (Peeling + Okład + Masaż) - 680 PLN</li>
+                        <li><i class="fas fa-spa"></i>Romantyczny Rytuał dla Dwojga - 850 PLN</li>
+                    </ul>
+                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <footer>
-        <p>&copy; 2025 AquaParadise | Designed for relaxation and wellness</p>
-        <div>
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-instagram"></i>
+    <section class="cta-section">
+        <a href="#" class="cta-button">Zarezerwuj Swój Zabieg Już Dziś <i class="far fa-calendar-check"></i></a>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-inner-content">
+            <div class="footer-content-columns">
+                 <div>
+                    <h4>AquaParadise Spa & Wellness</h4>
+                    <p>Twoja przystań spokoju i odnowy biologicznej. Pozwól nam zadbać o Twoje ciało i duszę.</p>
+                </div>
+                 <div>
+                    <h4>Godziny Otwarcia Spa</h4>
+                    <p><strong>Codziennie:</strong> 10:00 - 22:00</p>
+                    <p><small>Rezerwacja telefoniczna i online zalecana.</small></p>
+                </div>
+                 <div>
+                    <h4>Skontaktuj się z Nami</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:+48500100200">+48 500 100 200</a></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-social-icons">
+                <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+            </div>
+            <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
         </div>
     </footer>
 </body>

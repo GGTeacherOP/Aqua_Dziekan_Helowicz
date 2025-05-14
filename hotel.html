@@ -1,1103 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AquaParadise - Hotel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <style>
-        :root {
-            --primary: #007A50;        
-            --primary-dark: #00573A;   
-            --secondary: #009E74;      
-            --bg-very-dark: #0A1C16;   
-            --bg-dark: #142D24;        
-            --bg-medium: #204135;      
-            --bg-lighter-element: #E8F2EE; 
-            --bg-lightest-element: #FFFFFF; 
-            --text-dark: #050F0A;      
-            --text-medium: #345C4E;    
-            --text-light: #E6FFEB;     
-            --white: #ffffff;          
-            --accent-bright: #78F0A9;  
-            --accent-subtle: #B1E8CB;  
-            --primary-rgb: 0,122,80;
-            --primary-dark-rgb: 0,87,58;
-            --secondary-rgb: 0,158,116;
-            --bg-very-dark-rgb: 10,28,22;
-            --bg-dark-rgb: 20,45,36;
-            --bg-medium-rgb: 32,65,53;
-            --bg-lighter-element-rgb: 232,242,238;
-            --bg-lightest-element-rgb: 255,255,255;
-            --text-dark-rgb: 5,15,10;
-            --text-medium-rgb: 52,92,78;
-            --text-light-rgb: 230,255,235;
-            --white-rgb: 255,255,255;
-            --accent-bright-rgb: 120,240,169;
-            --accent-subtle-rgb: 177,232,203;
-            --facebook-color: #1877F2;
-            --instagram-color: #E4405F;
-            --twitter-color: #1DA1F2;
-            --transition-fast: all 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            --transition-medium: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            --transition-slow: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        @keyframes animatedBodyGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes floatBodyShape {
-            0% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; }
-            25% { transform: translate(5vw, 8vh) rotate(20deg) scale(1.1); opacity: 0.4; }
-            50% { transform: translate(-3vw, 12vh) rotate(-10deg) scale(0.9); opacity: 0.35; }
-            75% { transform: translate(2vw, -5vh) rotate(15deg) scale(1.05); opacity: 0.45; }
-            100% { transform: translate(0vw, 0vh) rotate(0deg) scale(1); opacity: 0.3; }
-        }
-        
-        @keyframes roomContentPulse {
-            0% { transform: scale(1); opacity: 0.28; }
-            50% { transform: scale(1.03); opacity: 0.42; }
-            100% { transform: scale(1); opacity: 0.28; }
-        }
-        
-        @keyframes roomContentHoverExplode {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0.6; }
-            100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes confirmationEnter {
-            0% { opacity: 0; transform: translate(-50%, -50px) scale(0.8) rotate(-5deg); }
-            60% { opacity: 1; transform: translate(-50%, 0) scale(1.05) rotate(3deg); }
-            100% { opacity: 1; transform: translate(-50%, 0) scale(1) rotate(0deg); }
-        }
-
-        @keyframes confirmationExit {
-            0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, 80px) scale(0.7) rotate(10deg); }
-        }
-
-        @keyframes confirmationPulse {
-            0% { box-shadow: 0 8px 25px rgba(var(--accent-bright-rgb), 0.5); }
-            50% { box-shadow: 0 12px 35px rgba(var(--accent-bright-rgb), 0.7); }
-            100% { box-shadow: 0 8px 25px rgba(var(--accent-bright-rgb), 0.5); }
-        }
-        
-        @keyframes hoverBurstEffect {
-            0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0.8; border-radius: 50%; }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); border-radius: 50%; }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); border-radius: 50%; }
-        }
-        
-        @keyframes float { /* Animacja dla .bg-shape */
-          0% { transform: translateY(0px) translateX(0px) scale(1) rotate(0deg); filter: blur(5px);}
-          50% { transform: translateY(-30px) translateX(20px) scale(1.1) rotate(180deg); filter: blur(10px);}
-          100% { transform: translateY(0px) translateX(0px) scale(1) rotate(360deg); filter: blur(5px);}
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-very-dark); 
-            background-image: linear-gradient(160deg,
-                var(--bg-medium) 0%,
-                var(--bg-dark) 40%,
-                var(--bg-very-dark) 70%,
-                var(--primary-dark) 100%
-            );
-            background-size: 250% 250%;
-            animation: animatedBodyGradient 22s ease infinite;
-            color: var(--text-light); 
-            overflow-x: hidden;
-            line-height: 1.65;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            position: relative;
-        }
-        
-        body::before, body::after { /* Istniejące, bardziej rozmyte kształty tła */
-            content: '';
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 140vmax; 
-            height: 140vmax;
-            transform-origin: center center;
-            z-index: -2; /* Te są GŁĘBIEJ niż nowe .bg-shapes */
-            pointer-events: none;
-            mix-blend-mode: screen; 
-            will-change: transform, opacity;
-            filter: blur(40px); 
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-        }
-
-        body::before {
-            background: radial-gradient(ellipse at center, hsla(120, 70%, 70%, 0.5) 0%, transparent 55%),
-                        radial-gradient(ellipse at 20% 80%, hsla(150, 75%, 65%, 0.45) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 30%, hsla(90, 80%, 65%, 0.45) 0%, transparent 55%);
-            animation: floatBodyShape 40s ease-in-out infinite alternate;
-        }
-
-        body::after {
-            width: 170vmax; height: 170vmax;
-            background: radial-gradient(ellipse at center, hsla(130, 70%, 65%, 0.4) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 70%, hsla(180, 80%, 75%, 0.3) 0%, transparent 50%),
-                        radial-gradient(ellipse at 30% 20%, hsla(60, 70%, 75%, 0.35) 0%, transparent 55%);
-            animation: floatBodyShape 50s ease-in-out infinite alternate-reverse;
-            filter: blur(50px);
-        }
-
-        /* DODANE KSZTAŁTY W TLE (z index.html) */
-        .bg-shapes {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100vh;
-          z-index: -1; /* NAD body::before i body::after, ale POD treścią strony */
-          overflow: hidden;
-          pointer-events: none;
-        }
-
-        .bg-shape {
-          position: absolute;
-          border-radius: 50%;
-          animation: float 20s infinite ease-in-out alternate;
-        }
-        /* Definicje kształtów dla hotel.html - DOSTOSOWANE KOLORY */
-        .bg-shape.shape1 {
-          width: 210px; height: 210px;
-          background: var(--primary); 
-          top: 12%; left: 10%;
-          animation-duration: 24s;
-          opacity: 0.08;
-        }
-        .bg-shape.shape2 {
-          width: 155px; height: 155px;
-          background: var(--accent-bright); 
-          top: 68%; left: 82%;
-          animation-duration: 27s;
-          animation-delay: -6s;
-          opacity: 0.1;
-        }
-        .bg-shape.shape3 {
-          width: 100px; height: 100px;
-          background: var(--secondary); 
-          top: 42%; left: 40%;
-          animation-duration: 20s;
-          animation-delay: -11s;
-          opacity: 0.11;
-        }
-         .bg-shape.shape4 {
-          width: 240px; height: 240px;
-          background: var(--accent-subtle); 
-          top: 78%; left: 15%;
-          animation-duration: 30s;
-          animation-delay: -1s;
-          opacity: 0.07;
-        }
-        .bg-shape.shape5 {
-          width: 140px; height: 140px;
-          background: var(--primary-dark); 
-          top: 10%; left: 68%;
-          animation-duration: 22s;
-          animation-delay: -8s;
-          opacity: 0.09;
-        }
-
-        .page-content-wrapper {
-            position: relative;
-            z-index: 1; /* Główna treść strony nad wszystkimi tłami */
-            background-color: transparent;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .hotel-header {
-            background: linear-gradient(rgba(var(--primary-dark-rgb), 0.75), rgba(var(--bg-dark-rgb), 0.88)),
-                url('hotel_header.jpg'); /* Upewnij się, że ścieżka do obrazka jest poprawna */
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-            height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-            border-bottom: 5px solid var(--primary);
-        }
-
-        .hotel-header::before {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(to top, var(--bg-very-dark) 0%, transparent 100%); 
-            z-index: 1;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 1.3s ease-out;
-            background: rgba(var(--bg-dark-rgb), 0.55); 
-            padding: 30px 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
-        }
-
-        .header-content h1 {
-            font-size: 4.2rem;
-            margin-bottom: 0.2em;
-            text-shadow: 3px 5px 12px rgba(0, 0, 0, 0.6);
-            letter-spacing: -1.5px;
-            font-weight: 700;
-        }
-
-        .header-content p {
-            font-size: 1.35rem;
-            max-width: 800px;
-            margin: 0 auto;
-            text-shadow: 1px 2px 7px rgba(0, 0, 0, 0.5);
-            opacity: 0.95;
-            line-height: 1.7;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background: rgba(var(--bg-medium-rgb), 0.7); 
-            backdrop-filter: blur(15px);
-            padding: 1.2em 1em;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border-bottom: 1px solid rgba(var(--text-light-rgb),0.15); 
-        }
-
-        nav a {
-            margin: 0 1em;
-            text-decoration: none;
-            color: var(--text-light); 
-            padding: 0.7em 1.4em;
-            border-radius: 30px;
-            transition: var(--transition-medium);
-            font-weight: 500;
-            letter-spacing: 0.6px;
-            position: relative;
-            overflow: hidden;
-        }
-        nav a::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent-bright), var(--accent-bright)); 
-            transition: left 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: -1;
-            opacity: 0.85;
-        }
-
-        nav a:hover::before {
-            left: 0;
-        }
-        nav a:hover {
-            color: var(--text-dark); /* Ciemniejszy tekst na jasnym tle hover */
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(var(--accent-bright-rgb), 0.45); 
-        }
-
-        nav a.active {
-            background: var(--accent-bright); 
-            color: var(--bg-very-dark); /* Ciemny tekst na aktywnym tle */
-            box-shadow: 0 5px 15px rgba(var(--accent-bright-rgb), 0.55);
-        }
-        nav a.active::before {
-            display: none;
-        }
-        nav a.active:hover{
-            color: var(--bg-very-dark);
-        }
-
-
-        .container {
-            max-width: 1200px;
-            margin: 3em auto;
-            padding: 0 2em;
-            flex: 1;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2.5em;
-        }
-
-        .section-title h2 {
-            font-size: 2.6rem;
-            color: var(--text-light); 
-            text-shadow: 0 0 12px rgba(var(--accent-bright-rgb), 0.7); 
-            position: relative;
-            display: inline-block;
-            padding-bottom: 0.4em;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: var(--accent-bright); 
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--accent-bright);
-        }
-
-        .rooms-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4em;
-            margin-bottom: 3em;
-            background-color: var(--bg-lighter-element); 
-            padding: 3em;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(var(--bg-dark-rgb), 0.1); 
-        }
-
-        .room-card {
-            display: flex;
-            background: var(--bg-lightest-element); 
-            border-radius: 25px;
-            box-shadow: 0 20px 50px rgba(var(--bg-dark-rgb),0.25), inset 0 0 18px rgba(var(--bg-medium-rgb),0.07);
-            overflow: visible; 
-            transition: transform 0.4s var(--transition-medium), box-shadow 0.4s var(--transition-medium);
-            align-items: stretch;
-            position: relative; 
-        }
-
-        .room-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 25px 60px rgba(var(--accent-bright-rgb), 0.35), inset 0 0 22px rgba(var(--text-light-rgb),0.12); 
-        }
-        
-        .room-card:nth-child(even) .room-img { order: 2; }
-        .room-card:nth-child(even) .room-content { order: 1; }
-
-        .room-img {
-            flex: 0 0 45%;
-            min-height: 340px;
-            position: relative;
-            z-index: 1;
-            border-radius: 20px 0 0 20px;
-            overflow: hidden;
-            box-shadow: 5px 0 15px rgba(var(--bg-dark-rgb),0.2); 
-        }
-        .room-card:nth-child(even) .room-img {
-            border-radius: 0 20px 20px 0;
-            box-shadow: -5px 0 15px rgba(var(--bg-dark-rgb),0.2); 
-        }
-
-        .room-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.6s ease;
-        }
-
-        .room-card:hover .room-img img {
-            transform: scale(1.15) rotate(2deg); 
-            filter: brightness(1.1) saturate(1.1);
-        }
-
-        .room-content {
-            flex: 1;
-            padding: 2.5em 3em;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; 
-            align-items: flex-start;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            color: var(--text-dark); 
-        }
-
-        .room-content::before,
-        .room-content::after {
-            content: "";
-            position: absolute;
-            border-radius: 30% 70% 60% 40% / 50% 60% 40% 50%;
-            opacity: 0.18;
-            z-index: 0;
-            pointer-events: none;
-            transition: transform 0.8s var(--transition-fast), opacity 0.6s var(--transition-fast), width 0.8s var(--transition-fast), height 0.8s var(--transition-fast), filter 0.8s var(--transition-fast);
-            filter: blur(10px);
-            animation: roomContentPulse 8s ease-in-out infinite alternate;
-        }
-
-        .room-content::before {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(ellipse at center, var(--accent-bright) 0%, transparent 70%); 
-            top: -50px;
-            left: -80px;
-            animation-delay: -2s;
-        }
-
-        .room-content::after {
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(ellipse at center, var(--accent-subtle) 0%, transparent 70%); 
-            bottom: -60px;
-            right: -90px;
-             animation-delay: -4s;
-        }
-        
-        .room-card:hover .room-content::before {
-            transform: translate(30px, 20px) scale(1.7) rotate(30deg);
-            opacity: 0.45; 
-            filter: blur(6px); 
-            animation-play-state: paused;
-        }
-        .room-card:hover .room-content::after {
-            transform: translate(-25px, -15px) scale(1.8) rotate(-25deg);
-            opacity: 0.4; 
-            filter: blur(8px);
-            animation-play-state: paused;
-        }
-        
-        .room-card::after { 
-            content: "";
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 10px; height: 10px;
-            background: var(--white);
-            border-radius: 50%;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0);
-            z-index: 2;
-            pointer-events: none;
-        }
-        .room-card:hover::after {
-            animation: roomContentHoverExplode 0.6s var(--transition-fast) forwards;
-        }
-
-        .room-content > *:not(.room-price-action) {
-            width: 100%; 
-            position: relative;
-            z-index: 1;
-        }
-        
-        .room-price-action {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto; 
-            padding-top: 1.2em; 
-            border-top: 1px solid rgba(var(--bg-medium-rgb),0.2); 
-        }
-
-        .room-content h3 {
-            font-size: 2rem; 
-            margin-bottom: 0.7em;
-            color: var(--primary-dark); 
-            text-shadow: 0 0 10px rgba(var(--accent-bright-rgb),0.8); 
-        }
-
-        .room-content p:not(.room-price) {
-            margin-bottom: 1.6em;
-            line-height: 1.75;
-            color: var(--text-medium); 
-            font-size: 1rem;
-        }
-
-        .room-features {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 0.6em; 
-            column-gap: 0.8em;
-            margin-bottom: 1.5em;
-        }
-
-        .feature-tag {
-            background: rgba(var(--bg-medium-rgb),0.15); 
-            color: var(--primary-dark); 
-            border: 1px solid rgba(var(--bg-dark-rgb),0.25); 
-            padding: 0.5em 1.1em;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: var(--transition-fast);
-            line-height: 1.4; 
-            text-align: center; 
-        }
-        .feature-tag:hover {
-            background-color: var(--accent-bright); 
-            color: var(--text-dark); /* Ciemny tekst na jasnym tle hover */
-            transform: scale(1.08) rotate(2deg);
-            border-color: var(--accent-bright);
-            box-shadow: 0 4px 12px rgba(var(--accent-bright-rgb),0.5);
-        }
-
-        .room-price {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary); 
-            text-shadow: 0 0 12px rgba(var(--accent-subtle-rgb),0.8); 
-        }
-        
-        .reserve-button {
-            display: inline-block;
-            background-color: var(--accent-bright); 
-            color: var(--text-dark); /* Ciemny tekst na przycisku */
-            padding: 0.8em 1.6em;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(var(--accent-bright-rgb), 0.4);
-            transition: var(--transition-medium);
-            border: none;
-            cursor: pointer;
-        }
-        .reserve-button:hover {
-            background-color: var(--primary-dark); 
-            color: var(--white);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 7px 20px rgba(var(--primary-dark-rgb), 0.5);
-        }
-        
-        .reserve-button.reserved {
-            background-color: #555; 
-            color: #aaa;
-            cursor: default;
-            pointer-events: none; 
-            box-shadow: none;
-            transform: none;
-            opacity: 0.7;
-        }
-
-        .amenities-dynamic-shapes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 2.5em;
-            margin-bottom: 4em;
-            padding: 0 1em;
-        }
-
-        .amenity-shape {
-            aspect-ratio: 1.1 / 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 1.8em;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
-                        box-shadow 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-                        filter 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-                        background 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            color: var(--text-light); 
-            cursor: pointer;
-            border-radius: 15px;
-            animation: pulseScale 3s infinite alternate cubic-bezier(0.4, 0, 0.6, 1),
-                       move1 7s infinite alternate-reverse linear;
-        }
-        .amenity-shape::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(var(--accent-bright-rgb), 0.8) 0%, transparent 70%); 
-            border-radius: 50%;
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0);
-        }
-        
-        .amenity-shape:nth-child(2) { animation: pulseScale 3.2s infinite alternate cubic-bezier(0.4, 0, 0.6, 1), move2 6.5s infinite alternate-reverse linear; }
-        .amenity-shape:nth-child(3) { animation: pulseScale 2.8s infinite alternate cubic-bezier(0.4, 0, 0.6, 1), move3 7.5s infinite alternate-reverse linear; }
-        .amenity-shape:nth-child(4) { animation: pulseScale 3.1s infinite alternate cubic-bezier(0.4, 0, 0.6, 1), move4 6.8s infinite alternate-reverse linear; }
-
-        .amenity-shape:hover {
-            transform: scale(1.35) rotate(7deg) translateY(-30px); 
-            box-shadow: 0 50px 120px rgba(var(--accent-bright-rgb), 0.9), inset 0 0 60px rgba(var(--accent-bright-rgb), 0.6); 
-            filter: brightness(1.4) saturate(1.6); 
-            z-index: 10;
-        }
-        .amenity-shape:hover::after {
-            animation: hoverBurstEffect 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
-        }
-        
-        .amenity-shape-1 { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
-        .amenity-shape-2 { background: linear-gradient(135deg, var(--accent-bright), var(--primary-dark)); }
-        .amenity-shape-3 { background: linear-gradient(135deg, var(--accent-subtle), var(--accent-bright)); }
-        .amenity-shape-4 { background: linear-gradient(135deg, var(--secondary), var(--accent-subtle)); }
-        
-        .amenity-shape-1:hover { background: linear-gradient(135deg, var(--accent-bright), var(--primary)); }
-        .amenity-shape-2:hover { background: linear-gradient(135deg, var(--accent-subtle), var(--accent-bright)); }
-        .amenity-shape-3:hover { background: linear-gradient(135deg, var(--primary-dark), var(--accent-subtle)); }
-        .amenity-shape-4:hover { background: linear-gradient(135deg, var(--primary), var(--accent-bright)); }
-
-        .amenity-shape i {
-            font-size: 2.8rem;
-            margin-bottom: 0.7em;
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            color: var(--white);
-            text-shadow: 0 0 8px rgba(0,0,0,0.5);
-        }
-        .amenity-shape:hover i {
-            transform: scale(1.4) rotate(15deg) translateY(-15px);
-        }
-
-        .amenity-shape span {
-            font-size: 1rem;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes pulseScale {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        @keyframes move1 {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(2px, -3px); }
-            50% { transform: translate(-3px, 2px); }
-            75% { transform: translate(3px, 3px); }
-        }
-        @keyframes move2 {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-3px, 2px); }
-            50% { transform: translate(2px, -3px); }
-            75% { transform: translate(-2px, -2px); }
-        }
-        @keyframes move3 {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(3px, 3px); }
-            50% { transform: translate(-2px, -3px); }
-            75% { transform: translate(-3px, 2px); }
-        }
-        @keyframes move4 {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-2px, -2px); }
-            50% { transform: translate(3px, 3px); }
-            75% { transform: translate(2px, -3px); }
-        }
-
-        footer {
-            background: linear-gradient(135deg, var(--bg-dark), var(--bg-medium)); 
-            color: var(--text-light); 
-            padding: 4em 0 2em;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: auto;
-            position: relative;
-            overflow: hidden;
-            border-top: 2px solid rgba(var(--text-light-rgb),0.1); 
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2em;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2em;
-            text-align: left;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1em;
-            position: relative;
-            display: inline-block;
-            color: var(--white); 
-            font-weight: 600;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--accent-bright); 
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            transition: var(--transition-fast);
-            border-radius: 1.5px;
-        }
-
-        .footer-column p, .footer-column a {
-            color: var(--text-light); 
-            opacity: 0.75;
-            line-height: 1.7;
-            transition: var(--transition-fast);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 0.5em;
-            font-size: 0.9rem;
-        }
-
-        .footer-column a:hover {
-            color: var(--accent-bright); 
-            transform: translateX(4px);
-            text-shadow: none;
-            opacity: 1;
-        }
-
-        .footer-column a i {
-            margin-right: 0.7em;
-            color: var(--secondary); 
-            transition: var(--transition-fast);
-            width: 20px;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .footer-column a:hover i {
-            color: var(--accent-bright); 
-            transform: none;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 0.8em;
-            margin-top: 1em;
-        }
-
-        .social-links a {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(var(--text-light-rgb), 0.08); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-medium);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            text-decoration: none;
-            padding: 0;
-        }
-
-        .social-links a i {
-            font-size: 1.1rem;
-            transition: var(--transition-fast);
-            line-height: normal;
-            display: block;
-            margin: 0;
-            padding: 0;
-            color: var(--text-light); 
-            opacity: 0.8;
-        }
-
-        .social-links a:hover {
-            background: var(--accent-bright); 
-            transform: translateY(-4px) scale(1.1);
-            box-shadow: 0 6px 12px rgba(var(--accent-bright-rgb), 0.4);
-        }
-        .social-links a:hover i {
-            color: var(--text-dark); /* Ciemny tekst na jasnym tle */
-            opacity: 1;
-            transform: rotate(5deg);
-        }
-
-
-        .copyright {
-            margin-top: 3em;
-            padding-top: 1.8em;
-            border-top: 1px solid rgba(var(--text-light-rgb),0.1); 
-            color: var(--text-light); 
-            opacity: 0.65;
-            font-size: 0.9rem;
-            position: relative; z-index: 1;
-        }
-        .copyright p { transition: color var(--transition-fast), opacity var(--transition-fast); }
-        .copyright:hover p { color: var(--white); opacity: 1; text-shadow: none; }
-
-        #reservation-confirmation {
-            position: fixed;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent-bright), var(--primary)); 
-            color: var(--text-dark); /* Ciemny tekst na jasnym tle */
-            padding: 25px 45px;
-            border-radius: 15px;
-            font-size: 1.4rem;
-            font-weight: 600;
-            z-index: 2000;
-            box-shadow: 0 8px 25px rgba(var(--accent-bright-rgb), 0.5);
-            text-align: center;
-            opacity: 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            visibility: hidden;
-        }
-        #reservation-confirmation.show {
-            visibility: visible;
-            animation: confirmationEnter 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, 
-                       confirmationPulse 1.5s ease-in-out 0.6s infinite alternate;
-        }
-        #reservation-confirmation.exit {
-            animation: confirmationExit 0.5s ease-in forwards;
-        }
-
-        #reservation-confirmation i {
-            font-size: 2rem;
-            margin-right: 5px;
-        }
-
-        @media (max-width: 992px) {
-            body::before, body::after { display: none; } 
-            .bg-shapes { 
-                display: none; 
-            }
-            .room-card, .room-card:nth-child(even) { flex-direction: column; }
-            .room-card:nth-child(even) .room-img { order: 0; }
-            .room-img { flex: 0 0 280px; }
-             .room-card:nth-child(even) .room-img, .room-img { border-radius: 20px 20px 0 0; }
-            .room-content { padding: 2em; align-items: center; text-align: center; } 
-             .room-price-action { flex-direction: column; align-items: center; gap: 1em; } 
-            .room-content h3 { font-size: 1.7rem; }
-            .amenities-dynamic-shapes { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2em;}
-            .amenity-shape i { font-size: 2.2rem; }
-            .amenity-shape span { font-size: 0.9rem; }
-        }
-
-        @media (max-width: 768px) {
-            .hotel-header h1 { font-size: 2.8rem; }
-            .hotel-header p { font-size: 1.15rem; }
-            .header-content { padding: 20px 25px; }
-            nav { flex-wrap: wrap; justify-content: center; padding: 0.8em; }
-            nav a { margin: 0.3em; font-size: 0.8rem; padding: 0.5em 1em; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; } 
-            .footer-column { margin-bottom: 1.5em; padding: 0.5em; }
-            .footer-column h3::after { left: 50%; transform: translateX(-50%); }
-            .social-links { justify-content: center; }
-            .room-content::before, .room-content::after, .room-card::after { display: none; }
-            .room-img { flex: 0 0 250px; }
-            .amenities-dynamic-shapes { grid-template-columns: repeat(2, 1fr); gap: 1.5em;}
-            #reservation-confirmation { font-size: 1.1rem; padding: 15px 25px; }
-            #reservation-confirmation i { font-size: 1.5rem; }
-        }
-
-         @media (max-width: 480px) {
-            .hotel-header h1 { font-size: 2.2rem; }
-            .header-content p { font-size: 1.05rem; }
-             .room-content h3 { font-size: 1.5rem; }
-            .room-content p:not(.room-price) { font-size: 0.9rem; }
-            .room-price { font-size: 1.3rem; }
-            .feature-tag { font-size: 0.75rem; padding: 0.35em 0.8em; line-height: 1.3; }
-            .room-img { flex: 0 0 220px; }
-            .amenities-dynamic-shapes { grid-template-columns: 1fr; }
-         }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="bg-shapes">
-        <div class="bg-shape shape1"></div>
-        <div class="bg-shape shape2"></div>
-        <div class="bg-shape shape3"></div>
-        <div class="bg-shape shape4"></div>
-        <div class="bg-shape shape5"></div>
+
+    <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('hotel_header.jpg');">
+        <div class="content">
+            <h1>Luksusowy Hotel AquaParadise</h1>
+            <p>Odkryj komfort i elegancję w sercu wodnego raju. Idealne miejsce na Twój wypoczynek.</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="nav-links">
+            <a href="index.html">Strona Główna</a>
+            <a href="aquapark.html">Aquapark</a>
+            <a href="hotel.html" class="active">Hotel</a>
+            <a href="spa.html">Spa & Wellness</a>
+            <a href="restaurant.html">Restauracja</a>
+        </div>
+        <div class="nav-auth">
+            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
+            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <section class="section-title-container">
+            <h2>Komfortowe Pokoje i Apartamenty</h2>
+        </section>
+
+        <section class="rooms-list">
+            <div class="room-card">
+                <div class="room-img">
+                    <img src="hotel_assets/standard.jpg" alt="Pokój Standardowy">
+                </div>
+                <div class="room-content">
+                    <h3>Pokój Standard</h3>
+                    <p>Elegancki i funkcjonalny pokój, zapewniający komfortowy wypoczynek po dniu pełnym wrażeń.</p>
+                    <div class="features-tags">
+                        <span class="feature-tag">Łóżko Małżeńskie</span>
+                        <span class="feature-tag">Widok na Ogród</span>
+                        <span class="feature-tag">Klimatyzacja</span>
+                        <span class="feature-tag">TV SAT</span>
+                    </div>
+                    <p><strong>Od 450 PLN / noc</strong></p>
+                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <div class="room-img">
+                    <img src="hotel_assets/deluxe.jpg" alt="Pokój Deluxe">
+                </div>
+                <div class="room-content">
+                    <h3>Pokój Deluxe z Balkonem</h3>
+                    <p>Przestronny pokój z prywatnym balkonem i zachwycającym widokiem, idealny dla wymagających gości.</p>
+                    <div class="features-tags">
+                        <span class="feature-tag">Balkon z Widokiem</span>
+                        <span class="feature-tag">Większa Przestrzeń</span>
+                        <span class="feature-tag">Minibar</span>
+                        <span class="feature-tag">Dostęp do Strefy Spa</span>
+                    </div>
+                     <p><strong>Od 650 PLN / noc</strong></p>
+                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                </div>
+            </div>
+
+            <div class="room-card">
+                <div class="room-img">
+                    <img src="hotel_assets/suite.jpg" alt="Apartament Luksusowy">
+                </div>
+                <div class="room-content">
+                    <h3>Apartament Luksusowy</h3>
+                    <p>Najwyższy standard komfortu: oddzielna sypialnia, przestronny salon oraz ekskluzywne wyposażenie.</p>
+                     <div class="features-tags">
+                        <span class="feature-tag">Oddzielny Salon</span>
+                        <span class="feature-tag">Wanna z Hydromasażem</span>
+                        <span class="feature-tag">Serwis Kawowy</span>
+                        <span class="feature-tag">Pełen Dostęp VIP</span>
+                    </div>
+                    <p><strong>Od 1200 PLN / noc</strong></p>
+                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                </div>
+            </div>
+
+            <div class="room-card family-room-card">
+                <div class="room-img">
+                    <img src="hotel_assets/family.jpg" alt="Pokój Rodzinny">
+                </div>
+                <div class="room-content">
+                    <h3>Pokój Rodzinny Superior</h3>
+                    <p>Dużo miejsca dla całej rodziny, z dodatkowymi udogodnieniami zapewniającymi komfortowy pobyt z dziećmi.</p>
+                     <div class="features-tags">
+                        <span class="feature-tag">Dwa Duże Łóżka</span>
+                        <span class="feature-tag">Kącik dla Dzieci</span>
+                        <span class="feature-tag">Możliwość Dostawki</span>
+                        <span class="feature-tag">Gry Planszowe</span>
+                    </div>
+                    <p><strong>Od 750 PLN / noc</strong></p>
+                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-title-container amenities-title-container"> 
+            <h2>Nasze Udogodnienia</h2>
+        </section>
+        <section class="amenities-grid">
+            <div class="amenity-card">
+                <i class="fas fa-concierge-bell"></i>
+                <h3>Obsługa Concierge</h3>
+            </div>
+            <div class="amenity-card">
+                <i class="fas fa-dumbbell"></i>
+                <h3>Centrum Fitness</h3>
+            </div>
+             <div class="amenity-card">
+                <i class="fas fa-wifi"></i>
+                <h3>Bezpłatne Wi-Fi</h3>
+            </div>
+        </section>
     </div>
 
-    <div class="page-content-wrapper">
-        <header class="hotel-header">
-            <div class="header-content">
-                <h1>AquaParadise Hotel</h1>
-                <p>Experience unparalleled luxury and comfort. Your perfect getaway awaits.</p>
-            </div>
-        </header>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="aquapark.html">Aquapark</a>
-    <a href="hotel.html">Hotel</a>
-    <a href="spa.html">Spa & Wellness</a>
-    <a href="restaurant.html">Dining</a>
-  </nav>
-
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Rooms</h2>
-            </div>
-
-            <div class="rooms-list"> 
-                <div class="room-card">
-                    <div class="room-img">
-                        <img src="hotel_assets/standard.jpg" alt="Standard Room">
-                    </div>
-                    <div class="room-content">
-                        <h3>Standard Room</h3>
-                        <p>Cozy and comfortable, perfect for a relaxing stay. Enjoy modern amenities and a serene ambiance designed for your ultimate comfort and tranquility.</p>
-                        <div class="room-features">
-                            <span class="feature-tag">King Bed</span>
-                            <span class="feature-tag">City View</span>
-                            <span class="feature-tag">Free Wi Fi</span> 
-                            <span class="feature-tag">Air Conditioning</span>
-                        </div>
-                        <div class="room-price-action">
-                            <p class="room-price">From $120 per night</p>
-                            <a href="#" class="reserve-button">Zarezerwuj</a>
-                        </div>
-                    </div>
+    <footer class="main-footer">
+        <div class="footer-inner-content">
+             <div class="footer-content-columns">
+                <div>
+                    <h4>AquaParadise Hotel & Resort</h4>
+                    <p>Miejsce, gdzie luksus spotyka się z przygodą. Zapraszamy do rezerwacji pobytu w naszym wyjątkowym hotelu.</p>
                 </div>
-
-                <div class="room-card">
-                    <div class="room-img">
-                        <img src="hotel_assets/deluxe.jpg" alt="Deluxe Room">
-                    </div>
-                    <div class="room-content">
-                        <h3>Deluxe Room</h3>
-                        <p>Spacious and elegant, offering a balcony with stunning views. Indulge in luxury and comfort, with premium furnishings and dedicated service.</p>
-                        <div class="room-features">
-                            <span class="feature-tag">Balcony</span>
-                            <span class="feature-tag">Ocean View</span>
-                            <span class="feature-tag">Sitting Area</span>
-                            <span class="feature-tag">Spa Access</span>
-                        </div>
-                        <div class="room-price-action">
-                            <p class="room-price">From $180 per night</p>
-                            <a href="#" class="reserve-button">Zarezerwuj</a>
-                        </div>
-                    </div>
+                <div>
+                    <h4>Dane Hotelu</h4>
+                    <p><strong>Zameldowanie:</strong> od 15:00</p>
+                    <p><strong>Wymeldowanie:</strong> do 12:00</p>
+                    <p><strong>Recepcja:</strong> czynna 24h</p>
                 </div>
-
-                <div class="room-card">
-                    <div class="room-img">
-                        <img src="hotel_assets/suite.jpg" alt="Suite">
+                <div>
+                    <h4>Skontaktuj się z Nami</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
                     </div>
-                    <div class="room-content">
-                        <h3>Suite</h3>
-                        <p>Experience the ultimate in luxury with our spacious suite. Featuring a separate living area, premium amenities, and breathtaking panoramic views.</p>
-                        <div class="room-features">
-                            <span class="feature-tag">Living Room</span>
-                            <span class="feature-tag">Jacuzzi</span>
-                            <span class="feature-tag">Butler Service</span>
-                            <span class="feature-tag">Kitchenette</span>
-                        </div>
-                         <div class="room-price-action">
-                            <p class="room-price">From $350 per night</p>
-                           <a href="#" class="reserve-button">Zarezerwuj</a>
-                        </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:+48500100200">+48 500 100 200</a></span>
                     </div>
-                </div>
-
-                <div class="room-card">
-                    <div class="room-img">
-                        <img src="hotel_assets/family.jpg" alt="Family Room">
-                    </div>
-                    <div class="room-content">
-                        <h3>Family Room</h3>
-                        <p>Perfect for families, offering ample space and amenities for a comfortable stay with children. Includes thoughtful touches for all ages.</p>
-                        <div class="room-features">
-                            <span class="feature-tag">Two Queen Beds</span>
-                            <span class="feature-tag">Kids Play Area</span>
-                            <span class="feature-tag">Connecting Rooms</span>
-                            <span class="feature-tag">Soundproof</span>
-                        </div>
-                         <div class="room-price-action">
-                            <p class="room-price">From $220 per night</p>
-                            <a href="#" class="reserve-button">Zarezerwuj</a>
-                        </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
                     </div>
                 </div>
             </div>
-
-            <div class="section-title">
-                <h2>Hotel Amenities</h2>
+            <div class="footer-social-icons">
+                <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
             </div>
-
-            <div class="amenities-dynamic-shapes">
-                 <div class="amenity-shape amenity-shape-1">
-                    <i class="fas fa-couch"></i>
-                    <span>Sitting Area</span>
-                </div>
-                <div class="amenity-shape amenity-shape-2">
-                    <i class="fas fa-wifi"></i>
-                    <span>Free Wi Fi</span>
-                </div>
-                <div class="amenity-shape amenity-shape-3">
-                    <i class="fas fa-tv"></i>
-                    <span>In Room TV</span>
-                </div>
-                <div class="amenity-shape amenity-shape-4">
-                    <i class="fas fa-concierge-bell"></i> 
-                    <span>Butler Service</span>
-                </div>
-            </div>
-
+            <p>© 2025 AquaParadise Hotel. Wszelkie prawa zastrzeżone.</p>
         </div>
-
-        <footer>
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>AquaParadise Hotel</h3>
-                    <p>Your gateway to luxury and relaxation. Experience world-class hospitality and unforgettable moments.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Hotel Hours</h3>
-                    <p>Check-in: 3:00 PM</p>
-                    <p>Check-out: 12:00 PM</p>
-                    <p>24/7 Front Desk</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <a href="tel:+1234567890"><i class="fas fa-phone"></i> +1 234 567 890</a>
-                    <a href="mailto:hotel@aquaparadise.com"><i class="fas fa-envelope"></i> hotel@aquaparadise.com</a>
-                    <a href="#"><i class="fas fa-map-marker-alt"></i> 123 Hotel Lane, Paradise City</a>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 AquaParadise Hotel. All rights reserved.</p>
-            </div>
-        </footer>
-    </div> 
-    
-    <div id="reservation-confirmation-placeholder"></div> 
-
-   
+    </footer>
 </body>
 </html>

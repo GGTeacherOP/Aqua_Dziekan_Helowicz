@@ -27,8 +27,8 @@
       <a href="restaurant.html">Restauracja</a>
     </div>
     <div class="nav-auth">
-      <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-      <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+      <a href="login.php" class="auth-button login-button">Zaloguj się</a>
+      <a href="signup.php" class="auth-button register-button">Zarejestruj się</a>
     </div>
   </nav>
 

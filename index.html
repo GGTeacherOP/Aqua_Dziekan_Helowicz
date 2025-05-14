@@ -27,8 +27,9 @@
       <a href="restaurant.html">Restauracja</a>
     </div>
     <div class="nav-auth">
-      <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-      <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+      <a href="login.html" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+      <a href="signup.html" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+      <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
     </div>
   </nav>
 
@@ -143,18 +144,6 @@
     </div>
   </footer>
 
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const hrefAttribute = this.getAttribute('href');
-            if (hrefAttribute.length > 1 && hrefAttribute.startsWith('#') && document.querySelector(hrefAttribute)) {
-                e.preventDefault();
-                document.querySelector(hrefAttribute).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

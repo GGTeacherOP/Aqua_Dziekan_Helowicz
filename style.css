@@ -245,6 +245,62 @@ body {
 .amenity-card i { font-size: 1.6rem; color: var(--primary-color); margin-right: 1em; margin-bottom: 0; }
 .amenity-card h3 { font-family: var(--font-family-sans-serif); font-size: 1rem; color: var(--text-color); margin-bottom: 0; font-weight: 500; }
 
+/* --- STYLE STRON LOGOWANIA I REJESTRACJI --- */
+.auth-page-container {
+    display: flex; flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--primary-very-light-color);
+}
+.return-button-container {
+    padding: 1.5em 2em; text-align: left;
+    width: 100%; max-width: var(--max-page-width); margin: 0 auto;
+}
+.return-button {
+    display: inline-flex; align-items: center; text-decoration: none;
+    color: var(--primary-dark-color); font-weight: 500; padding: 0.6em 1.2em;
+    border-radius: 50px; background-color: var(--white-color);
+    border: 2px solid var(--primary-light-color); transition: all 0.2s ease;
+}
+.return-button i { margin-right: 0.6em; }
+.return-button:hover {
+    background-color: var(--primary-very-light-color); border-color: var(--primary-color);
+    color: var(--primary-color); box-shadow: 0 2px 8px rgba(0, 86, 179, 0.1);
+}
+.form-container-wrapper {
+    display: flex; justify-content: center; align-items: center;
+    flex-grow: 1; padding: 2em 1em; 
+}
+.form-container.auth-form {
+    background-color: var(--white-color); padding: 2.5em 3em; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 86, 179, 0.12); width: 100%; max-width: 480px;
+    margin-top: 1em; margin-bottom: 3em;
+}
+.form-container.auth-form h2 {
+    font-family: var(--font-family-display); color: var(--primary-dark-color);
+    font-size: clamp(1.8rem, 3vw, 2.2rem); text-align: center; margin-bottom: 1.5em;
+}
+.form-group { margin-bottom: 1.5em; }
+.form-group label { display: block; font-weight: 500; color: var(--text-color); margin-bottom: 0.6em; font-size: 0.95rem; }
+.form-group label i { margin-right: 0.5em; color: var(--primary-color); }
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-group input[type="tel"] {
+    width: 100%; padding: 0.85em 1em; border: 1px solid var(--border-color);
+    border-radius: 8px; font-family: var(--font-family-sans-serif); font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="tel"]:focus {
+    border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15); outline: none;
+}
+.form-group small { display: block; font-size: 0.8rem; color: var(--text-muted-color); margin-top: 0.4em; }
+.form-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.8em; font-size: 0.9rem; }
+.checkbox-label { display: flex; align-items: center; cursor: pointer; color: var(--text-muted-color); }
+.checkbox-label input[type="checkbox"] { margin-right: 0.5em; accent-color: var(--primary-color); width: 16px; height: 16px; }
+.form-link { color: var(--primary-color); text-decoration: none; font-weight: 500; }
+.form-link:hover { text-decoration: underline; color: var(--primary-dark-color); }
+.form-submit-button { width: 100%; padding: 0.9em 1.5em; font-size: 1.1rem; letter-spacing: 0.5px; }
+.form-switch { text-align: center; margin-top: 2em; font-size: 0.95rem; color: var(--text-muted-color); }
+.checkbox-group { margin-bottom: 1em; }
+.checkbox-group .checkbox-label { font-size: 0.9rem; }
+
 /* --- STYLE RESPONSYWNE --- */
 @media (max-width: 1200px) {
   .attractions-list.horizontal-layout .attraction-card { flex-basis: 210px; }

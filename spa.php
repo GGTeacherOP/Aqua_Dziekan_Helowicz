@@ -20,15 +20,15 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html">Hotel</a>
-            <a href="spa.html" class="active">Spa & Wellness</a>
-            <a href="restaurant.html">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php">Hotel</a>
+            <a href="spa.php" class="active">Spa & Wellness</a>
+            <a href="restaurant.php">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
             <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
@@ -51,7 +51,7 @@
                         <li><i class="fas fa-spa"></i>Masaż Lomi Lomi Nui - 320 PLN</li>
                         <li><i class="fas fa-spa"></i>Masaż Gorącymi Kamieniami Wulkanicznymi - 350 PLN</li>
                     </ul>
-                    <a href="spa_assets/spa_b.html" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                    <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
                         <li><i class="fas fa-spa"></i>Liftingujący Zabieg Anti-Aging Gold Therapy - 350 PLN</li>
                         <li><i class="fas fa-spa"></i>Oczyszczający Zabieg dla Skóry Problematycznej - 260 PLN</li>
                     </ul>
-                     <a href="spa_assets/spa_b.html" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -83,7 +83,7 @@
                         <li><i class="fas fa-spa"></i>Odżywczy Okład Czekoladowy - 330 PLN</li>
                         <li><i class="fas fa-spa"></i>Detoksykujący Rytuał z Zieloną Herbatą - 380 PLN</li>
                     </ul>
-                     <a href="spa_assets/spa_b.html" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -99,14 +99,14 @@
                         <li><i class="fas fa-spa"></i>Pakiet "Królewski Relaks" (Peeling + Okład + Masaż) - 680 PLN</li>
                         <li><i class="fas fa-spa"></i>Romantyczny Rytuał dla Dwojga - 850 PLN</li>
                     </ul>
-                     <a href="spa_assets/spa_b.html" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
     </div>
 
     <section class="cta-section">
-        <a href="spa_assets/spa_b.html" class="cta-button">Zarezerwuj Swój Zabieg Już Dziś <i class="far fa-calendar-check"></i></a>
+        <a href="spa_assets/spa_b.php" class="cta-button">Zarezerwuj Swój Zabieg Już Dziś <i class="far fa-calendar-check"></i></a>
     </section>
 
     <footer class="main-footer">

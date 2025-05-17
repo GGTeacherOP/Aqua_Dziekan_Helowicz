@@ -20,15 +20,15 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html" class="active">Hotel</a>
-            <a href="spa.html">Spa & Wellness</a>
-            <a href="restaurant.html">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php" class="active">Hotel</a>
+            <a href="spa.php">Spa & Wellness</a>
+            <a href="restaurant.php">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
             <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
@@ -53,7 +53,7 @@
                         <span class="feature-tag">TV SAT</span>
                     </div>
                     <p><strong>Od 450 PLN / noc</strong></p>
-                    <a href="hotel_assets/hotel_b.html" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
                         <span class="feature-tag">Dostęp do Strefy Spa</span>
                     </div>
                      <p><strong>Od 650 PLN / noc</strong></p>
-                    <a href="hotel_assets/hotel_b.html" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
                         <span class="feature-tag">Pełen Dostęp VIP</span>
                     </div>
                     <p><strong>Od 1200 PLN / noc</strong></p>
-                    <a href="hotel_assets/hotel_b.html" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
@@ -107,7 +107,7 @@
                         <span class="feature-tag">Gry Planszowe</span>
                     </div>
                     <p><strong>Od 750 PLN / noc</strong></p>
-                    <a href="hotel_assets/hotel_b.html" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
         </section>

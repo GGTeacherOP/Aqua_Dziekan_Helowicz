@@ -11,7 +11,7 @@
 <body>
     <div class="auth-page-container">
         <div class="return-button-container">
-            <a href="index.html" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
+            <a href="index.php" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
         </div>
 
         <div class="form-container-wrapper">
@@ -35,7 +35,7 @@
                     </div>
                     <button type="submit" class="cta-button form-submit-button">Zaloguj się</button>
                 </form>
-                <p class="form-switch">Nie masz jeszcze konta? <a href="signup.html" class="form-link">Zarejestruj się tutaj!</a></p>
+                <p class="form-switch">Nie masz jeszcze konta? <a href="signup.php" class="form-link">Zarejestruj się tutaj!</a></p>
             </div>
         </div>
     </div>

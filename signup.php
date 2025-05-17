@@ -11,7 +11,7 @@
 <body>
     <div class="auth-page-container">
         <div class="return-button-container">
-            <a href="index.html" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
+            <a href="index.php" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
         </div>
 
         <div class="form-container-wrapper">
@@ -46,7 +46,7 @@
                     <div class="form-group checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="terms_agree" required>
-                            Akceptuję <a href="regulamin.html" target="_blank" class="form-link">regulamin serwisu</a>*
+                            Akceptuję <a href="regulamin.php" target="_blank" class="form-link">regulamin serwisu</a>*
                         </label>
                     </div>
                      <div class="form-group checkbox-group">
@@ -57,7 +57,7 @@
                     </div>
                     <button type="submit" class="cta-button form-submit-button">Zarejestruj się</button>
                 </form>
-                <p class="form-switch">Masz już konto? <a href="login.html" class="form-link">Zaloguj się!</a></p>
+                <p class="form-switch">Masz już konto? <a href="login.php" class="form-link">Zaloguj się!</a></p>
             </div>
         </div>
     </div>

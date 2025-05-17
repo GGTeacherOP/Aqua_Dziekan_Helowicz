@@ -20,15 +20,15 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html">Hotel</a>
-            <a href="spa.html">Spa & Wellness</a>
-            <a href="restaurant.html" class="active">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php">Hotel</a>
+            <a href="spa.php">Spa & Wellness</a>
+            <a href="restaurant.php" class="active">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
             <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
@@ -130,7 +130,7 @@
         </section>
 
         <section class="cta-section">
-            <a href="restaurant_assets/restaurant_b.html" class="cta-button">Zarezerwuj Stolik Online <i class="far fa-calendar-alt"></i></a>
+            <a href="restaurant_assets/restaurant_b.php" class="cta-button">Zarezerwuj Stolik Online <i class="far fa-calendar-alt"></i></a>
         </section>
     </div>
 

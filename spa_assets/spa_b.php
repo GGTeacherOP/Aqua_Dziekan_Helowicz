@@ -11,7 +11,7 @@
 <body>
     <div class="auth-page-container">
         <div class="return-button-container">
-            <a href="../index.html" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
+            <a href="../index.php" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
         </div>
 
         <div class="form-container-wrapper">

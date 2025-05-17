@@ -21,15 +21,15 @@
 
   <nav class="main-nav">
     <div class="nav-links">
-      <a href="index.html" class="active">Strona Główna</a>
-      <a href="aquapark.html">Aquapark</a>
-      <a href="hotel.html">Hotel</a>
-      <a href="spa.html">Spa & Wellness</a>
-      <a href="restaurant.html">Restauracja</a>
+      <a href="index.php" class="active">Strona Główna</a>
+      <a href="aquapark.php">Aquapark</a>
+      <a href="hotel.php">Hotel</a>
+      <a href="spa.php">Spa & Wellness</a>
+      <a href="restaurant.php">Restauracja</a>
     </div>
     <div class="nav-auth">
-      <a href="login.html" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-      <a href="signup.html" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+      <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+      <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
       <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
     </div>
   </nav>
@@ -104,7 +104,7 @@
     <section class="cta-section-main" id="contact">
       <h2>Gotowy na Przygodę Życia?</h2>
       <p>Zaplanuj swój pobyt w AquaParadise już dziś i stwórz wspomnienia, które zostaną z Tobą na zawsze. Czekamy na Ciebie!</p>
-      <a href="index_assets/przerwa.html" class="cta-button">Kup Bilety lub Zarezerwuj</a>
+      <a href="index_assets/przerwa.php" class="cta-button">Kup Bilety lub Zarezerwuj</a>
     </section>
   </div>
 

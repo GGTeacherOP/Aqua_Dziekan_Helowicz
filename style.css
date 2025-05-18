@@ -73,18 +73,173 @@ body {
 .header-content .subtitle, .page-header p { font-size: clamp(1.08rem, 2.45vw, 1.58rem); max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.65; opacity: 0.95; }
 
 /* --- NAWIGACJA --- */
-.main-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 3em; height: var(--nav-height); background-color: var(--white-color); box-shadow: 0 4px 15px rgba(0, 86, 179, 0.08); position: sticky; top: 0; z-index: 1000; }
-.main-nav .nav-links a { color: var(--primary-dark-color); margin: 0 1.3em; text-decoration: none; font-weight: 500; padding: 0.6em 0.3em; position: relative; transition: color 0.15s ease; letter-spacing: 0.5px; }
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+    height: var(--nav-height);
+    background-color: var(--white-color);
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav .nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .nav-links a {
+    color: var(--primary-dark-color);
+    margin: 0 1em;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.6em 0.3em;
+    position: relative;
+    transition: color 0.15s ease;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
 .main-nav .nav-links a:hover { color: var(--primary-color); }
-.main-nav .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%; transform: translateX(-50%); background-color: var(--primary-color); transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2px; }
+.main-nav .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+}
 .main-nav .nav-links a.active { color: var(--primary-color); }
 .main-nav .nav-links a:hover::after, .main-nav .nav-links a.active::after { width: 60%; }
-.main-nav .nav-auth { display: flex; align-items: center; }
-.auth-button { text-decoration: none; padding: 0.65em 1.4em; border-radius: 50px; font-weight: 500; transition: all 0.1s ease; margin-left: 1em; font-size: 0.88rem; border: 2px solid; letter-spacing: 0.3px; }
-.login-button { background-color: transparent; color: var(--primary-color); border-color: var(--primary-color); }
-.login-button:hover { background-color: var(--primary-color); color: var(--white-color); transform: scale(1.01); }
-.register-button { background-color: var(--primary-color); color: var(--text-light-color); border-color: var(--primary-color); }
-.register-button:hover { background-color: var(--primary-dark-color); border-color: var(--primary-dark-color); transform: scale(1.01); }
+
+.main-nav .nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Odstęp między wszystkimi elementami w .nav-auth */
+}
+
+.auth-button {
+    text-decoration: none;
+    padding: 0.65em 1.4em;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.1s ease;
+    font-size: 0.88rem;
+    border: 2px solid;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.login-button { /* Używane też dla "Wyloguj" */
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.login-button:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    transform: scale(1.01);
+}
+
+.register-button { /* Używane też dla "Zarejestruj się" i "Panel" */
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
+    border-color: var(--primary-color);
+}
+.register-button:hover {
+    background-color: var(--primary-dark-color);
+    border-color: var(--primary-dark-color);
+    transform: scale(1.01);
+}
+
+/* Nowe/zmodyfikowane style dla sekcji użytkownika w nawigacji */
+.nav-auth .user-nav-greeting {
+    display: flex;        /* Układa ikonę i tekst w jednej linii */
+    align-items: center;  /* Wyrównuje je pionowo do środka */
+    color: var(--text-color); /* Domyślny kolor tekstu */
+    padding: 0.3em 0.5em; /* Delikatny padding, jeśli potrzebny */
+    /* Usunięto margin-right, bo gap w .nav-auth załatwi odstępy */
+}
+
+.nav-auth .user-nav-greeting:hover { /* Zapobiega zmianom przy najechaniu */
+    background-color: transparent;
+    color: var(--text-color); /* Upewnij się, że kolor tekstu się nie zmienia jak link */
+    cursor: default; /* Kursor standardowy, nie wskazujący na link */
+}
+
+.nav-auth .user-greeting-icon {
+    font-size: 1.5em; /* Rozmiar ikony użytkownika */
+    color: var(--primary-dark-color); /* Kolor ikony */
+    margin-right: 8px; /* Odstęp między ikoną a tekstem */
+}
+.nav-auth .user-nav-greeting:hover .user-greeting-icon {
+    color: var(--primary-dark-color); /* Upewnij się, że ikona też się nie zmienia */
+}
+
+
+.nav-auth .user-greeting-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Usunięcie/modyfikacja starych styli, jeśli powodowały konflikt */
+/* Jeśli .user-profile-link było wcześniej linkiem z efektami :hover */
+.nav-auth .user-profile-link { /* Zakładając, że ta klasa była używana dla poprzedniego linku profilowego */
+    /* Usuń lub nadpisz style :hover, które nie są już potrzebne */
+    /* np. background-color: transparent !important; */
+    /* text-decoration: none !important; */
+}
+/* Usunięcie klasy user-profile-icon z .nav-links, jeśli istniała */
+/*
+.nav-links a.user-profile-icon {
+    display: none; // lub zakomentuj całą regułę
+}
+*/
+
+/* Dostosowanie przycisków Wyloguj i Panel Admina */
+.nav-auth .logout-button,
+.nav-auth .admin-panel-button {
+    padding: 0.6em 1.2em;
+    font-size: 0.85rem;
+}
+
+.nav-auth .admin-panel-button {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}
+.nav-auth .admin-panel-button:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+}
+
+/* Styl dla koszyka */
+.cart-button {
+    position: relative;
+    padding: 0.65em 1.2em;
+}
+.cart-button .fa-shopping-cart {
+    font-size: 1.1em;
+}
+.cart-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0.1em 0.4em;
+    font-size: 0.75em;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    border: 1px solid white;
+}
 
 /* --- TYTUŁY SEKCJI --- */
 .section-title-container { text-align: center; margin-bottom: 3.8em; margin-top: 2em; }
@@ -172,7 +327,6 @@ body {
 .spa-service-card.card .spa-content.card-content { padding: 1.5em 2em; }
 .spa-service-card.card .spa-content h3 { font-size: 1.3rem; margin-bottom: 0.5em; }
 .spa-service-card.card .spa-content p { font-size: 0.9rem; margin-bottom: 1em; }
-/* .spa-service-card.card .details-button jest teraz .cta-button.cta-button-small */
 
 /* --- SEKCJE CTA --- */
 .cta-section-main, .cta-section {
@@ -214,15 +368,13 @@ body {
     box-shadow: 0 2px 6px rgba(0,86,179,0.1);
 }
 
-/* NOWA KLASA DLA MNIEJSZYCH PRZYCISKÓW CTA */
 .cta-button.cta-button-small {
-    padding: 0.6em 1.5em; /* Mniejszy padding */
-    font-size: 0.9rem;   /* Mniejsza czcionka */
-    font-weight: 500;    /* Może być nieco lżejszy font */
+    padding: 0.6em 1.5em;
+    font-size: 0.9rem;
+    font-weight: 500;
     letter-spacing: 0.4px;
-    /* Dziedziczy gradient i hover z .cta-button */
 }
-.cta-button-small i { /* Mniejsza ikona w małym przycisku */
+.cta-button-small i {
     font-size: 0.85em;
     margin-left: 0.5em;
 }
@@ -747,6 +899,8 @@ body {
 
 /* --- STYLE RESPONSYWNE --- */
 @media (max-width: 1200px) {
+  .main-nav { padding: 0 1.5em; } /* Dostosowanie paddingu nawigacji */
+  .main-nav .nav-links a { margin: 0 0.8em; } /* Zmniejszenie marginesów linków */
   .attractions-list.horizontal-layout .attraction-card { flex-basis: 210px; }
   .attractions-list.horizontal-layout .attraction-card .attraction-img { height: 170px; }
   .rooms-list, .explore-worlds { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
@@ -764,6 +918,13 @@ body {
   }
 }
 @media (max-width: 992px) {
+  .main-nav { padding: 0 1em; }
+  .main-nav .nav-links a { margin: 0 0.6em; font-size: 0.95rem; }
+  .auth-button { padding: 0.6em 1.1em; font-size: 0.85rem; }
+  .nav-auth .user-profile-link .user-greeting-text { font-size: 0.85rem; }
+  .nav-auth .user-profile-link .fa-user-circle { font-size: 1.3em; }
+  .nav-auth .logout-button, .nav-auth .admin-panel-button { padding: 0.5em 0.9em; font-size: 0.8rem; }
+
   .attractions-list.horizontal-layout .attraction-card { flex-basis: 190px; }
   .attractions-list.horizontal-layout .attraction-card .attraction-img { height: 150px; }
   .rooms-list, .explore-worlds { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
@@ -781,11 +942,43 @@ body {
 @media (max-width: 768px) {
   body { line-height: 1.6; }
   .page-wrapper { padding: 2em 1em; margin: 1em; }
-  .main-nav { flex-direction: column; height: auto; padding: 1em; }
-  .main-nav .nav-links { margin-bottom: 1em; display: flex; flex-wrap: wrap; justify-content: center; width: 100%; }
-  .main-nav .nav-links a { margin: 0.5em 0.7em; }
-  .main-nav .nav-auth { margin-top: 1em; width: 100%; display: flex; justify-content: center; gap: 1em; }
-  .auth-button { flex-grow: 1; margin-left: 0; text-align: center; }
+
+  /* Poprawki dla nawigacji na małych ekranach */
+  .main-nav {
+      flex-direction: column;
+      height: auto;
+      padding: 1em;
+  }
+  .main-nav .nav-links {
+      margin-bottom: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      order: 2; /* Linki pod sekcją auth */
+  }
+  .main-nav .nav-links a {
+      margin: 0.5em 0.7em;
+  }
+  .main-nav .nav-auth {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; /* Rozciągnij koszyk i blok użytkownika */
+      align-items: center;
+      order: 1; /* Sekcja auth (koszyk, użytkownik) na górze */
+      margin-bottom: 1em; /* Dodaj odstęp pod sekcją auth */
+  }
+  .nav-auth .user-nav-info {
+      margin-left: auto; /* Przesuń blok użytkownika maksymalnie w prawo w ramach .nav-auth */
+  }
+  .auth-button {
+     /* Usunięto flex-grow: 1; aby przyciski nie rozciągały się nadmiernie w niektórych przypadkach */
+     margin-left: 0;
+     text-align: center;
+  }
+  /* Koniec poprawek dla nawigacji */
+
+
   .rooms-list, .explore-worlds, .menu-sections, .spa-sections.cards-grid { grid-template-columns: 1fr; gap: 1.5em; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .attractions-list.horizontal-layout .attraction-card { flex-basis: clamp(200px, 70vw, 250px); }
@@ -852,6 +1045,27 @@ body {
   .spa-package-category h4 { font-size: 1rem; }
   .spa-package-category .select-all-package-label { font-size: 0.85rem; }
   .spa-package-category .treatment-option-label { font-size: 0.8rem; }
+
+  /* Dalsze dostosowania nawigacji dla bardzo małych ekranów */
+  .main-nav .nav-auth {
+      flex-wrap: wrap; /* Pozwól elementom w .nav-auth zawijać się */
+      justify-content: center; /* Wycentruj, gdy się zawijają */
+      gap: 8px; /* Zmniejsz odstępy */
+  }
+  .cart-button {
+      order: 1; /* Koszyk jako pierwszy */
+  }
+  .nav-auth .user-nav-info {
+      order: 2; /* Blok użytkownika jako drugi */
+      width: 100%; /* Rozciągnij na całą szerokość, jeśli się zawinie */
+      justify-content: center; /* Wycentruj zawartość bloku użytkownika */
+      margin-top: 8px; /* Odstęp, jeśli się zawinie */
+  }
+  .nav-auth .login-button, .nav-auth .register-button {
+    flex-basis: calc(50% - 4px); /* Przyciski logowania/rejestracji po połowie szerokości */
+    margin-top: 8px;
+  }
+
 }
 
 @media (max-height: 650px) and (min-width: 500px) {
@@ -876,4 +1090,114 @@ body {
     .spa-package-category .select-all-package-label { font-size: 0.85rem; margin-bottom: 8px; padding: 4px;}
     .spa-package-category .treatment-option-label { font-size: 0.8rem; margin-bottom: 6px;}
     #confirmSpaSelection.cta-button { padding: 0.7em 1.5em; font-size: 0.9rem; margin-top: 15px;}
+}
+/* style dla wiadomosci po pomyslnym zalogowaniu */
+.flash-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+.flash-message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.flash-message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.flash-message.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.flash-message.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+/* --- STYLE DLA PROSTEGO MODALA WIADOMOŚCI --- */
+.simple-message-modal-overlay {
+    position: fixed; /* Pozycjonowanie względem viewportu */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
+    display: flex; /* Użyte do centrowania modal-content */
+    justify-content: center;
+    align-items: center;
+    z-index: 2050; /* Powinien być na wierzchu innych elementów */
+    opacity: 0; /* Początkowo niewidoczny dla animacji */
+    animation: fadeInOverlay 0.3s forwards;
+}
+
+@keyframes fadeInOverlay {
+    to { opacity: 1; }
+}
+
+.simple-message-modal-content {
+    background-color: var(--white-color);
+    padding: 25px 35px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    min-width: 300px;
+    max-width: 450px;
+    position: relative; /* Dla pozycjonowania przycisku zamknięcia */
+    transform: scale(0.9); /* Początkowy stan dla animacji */
+    animation: scaleInModal 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleInModal {
+    to { transform: scale(1); }
+}
+
+.simple-message-modal-content p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin: 0;
+    margin-bottom: 10px; /* Odstęp od przycisku, jeśli będzie */
+    line-height: 1.6;
+}
+
+/* Style dla różnych typów modali */
+.simple-message-modal-content.modal-type-success {
+    border-left: 5px solid #28a745; /* Zielony dla sukcesu */
+}
+.simple-message-modal-content.modal-type-success p {
+    color: #155724;
+}
+
+.simple-message-modal-content.modal-type-error {
+    border-left: 5px solid #dc3545; /* Czerwony dla błędu */
+}
+.simple-message-modal-content.modal-type-error p {
+    color: #721c24;
+}
+
+.simple-message-modal-content.modal-type-info {
+    border-left: 5px solid var(--primary-color); /* Niebieski dla info */
+}
+
+
+.simple-modal-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 1.8rem;
+    color: var(--text-muted-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+.simple-modal-close-btn:hover {
+    color: var(--text-color);
 }

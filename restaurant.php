@@ -1,15 +1,11 @@
+<?php
+// restaurant.php
+require_once __DIR__ . '/config/init.php';
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaParadise - Restauracja AquaTaste</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+$page_title = "Restauracja AquaTaste - AquaParadise"; // Ustaw tytuł strony
+
+include BASE_PATH . '/includes/header.php'; // Dołącz główny nagłówek
+?>
 
   <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('restaurant_assets/lounge.jpg');">
     <div class="content">
@@ -18,20 +14,10 @@
     </div>
   </header>
 
-    <nav class="main-nav">
-        <div class="nav-links">
-            <a href="index.php">Strona Główna</a>
-            <a href="aquapark.php">Aquapark</a>
-            <a href="hotel.php">Hotel</a>
-            <a href="spa.php">Spa & Wellness</a>
-            <a href="restaurant.php" class="active">Restauracja</a>
-        </div>
-        <div class="nav-auth">
-            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
-            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
-        </div>
-    </nav>
+<?php
+// Dołącz dynamiczną nawigację
+include BASE_PATH . '/includes/navigation.php';
+?>
 
     <div class="page-wrapper">
         <section class="section-title-container">
@@ -134,6 +120,7 @@
         </section>
     </div>
 
+<<<<<<< HEAD
 <footer class="main-footer">
     <div class="footer-inner-content">
         <div class="footer-content-columns">
@@ -173,3 +160,9 @@
 <script src="script.js"></script>
 </body>
 </html>
+=======
+<?php
+// Dołącz główną stopkę
+include BASE_PATH . '/includes/footer.php';
+?>
+>>>>>>> feature

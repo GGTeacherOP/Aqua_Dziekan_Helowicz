@@ -1,15 +1,11 @@
+<?php
+// index.php
+require_once __DIR__ . '/config/init.php';
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaParadise - Witaj w Raju!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+$page_title = "AquaParadise - Witaj w Raju!"; // Ustaw tytuł strony
+
+include BASE_PATH . '/includes/header.php'; // Dołącz główny nagłówek
+?>
 
   <header class="main-header">
     <div class="header-content">
@@ -19,20 +15,10 @@
     </div>
   </header>
 
-  <nav class="main-nav">
-    <div class="nav-links">
-      <a href="index.php" class="active">Strona Główna</a>
-      <a href="aquapark.php">Aquapark</a>
-      <a href="hotel.php">Hotel</a>
-      <a href="spa.php">Spa & Wellness</a>
-      <a href="restaurant.php">Restauracja</a>
-    </div>
-    <div class="nav-auth">
-      <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-      <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
-      <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
-    </div>
-  </nav>
+<?php
+// Dołącz dynamiczną nawigację
+include BASE_PATH . '/includes/navigation.php';
+?>
 
   <div class="page-wrapper" id="explore">
     <section class="section-title-container">
@@ -104,47 +90,11 @@
     <section class="cta-section-main" id="contact">
       <h2>Gotowy na Przygodę Życia?</h2>
       <p>Zaplanuj swój pobyt w AquaParadise już dziś i stwórz wspomnienia, które zostaną z Tobą na zawsze. Czekamy na Ciebie!</p>
-      <a href="index_assets/przerwa.php" class="cta-button">Kup Bilety lub Zarezerwuj</a>
+      <a href="aquapark.php#bilety" class="cta-button">Kup Bilety lub Zobacz Ofertę</a>
     </section>
   </div>
 
-  <footer class="main-footer">
-    <div class="footer-inner-content">
-        <div class="footer-content-columns">
-            <div>
-                <h4>O AquaParadise</h4>
-                <p>Twoja wymarzona destynacja pełna wodnych przygód i luksusowego relaksu. Stwórz niezapomniane wspomnienia z nami.</p>
-            </div>
-            <div>
-                <h4>Godziny Otwarcia Kompleksu</h4>
-                <p><strong>Poniedziałek - Piątek:</strong> 09:00 - 22:00</p>
-                <p><strong>Sobota - Niedziela:</strong> 08:00 - 23:00</p>
-            </div>
-            <div>
-                <h4>Skontaktuj się z Nami</h4>
-                <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <span><a href="tel:+48500100200">+48 500 100 200</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
-                </div>
-            </div>
-        </div>
-        <div class="footer-social-icons">
-            <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
-        </div>
-        <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<?php
+// Dołącz główną stopkę
+include BASE_PATH . '/includes/footer.php';
+?>

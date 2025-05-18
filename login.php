@@ -54,14 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container-wrapper">
             <div class="form-container auth-form">
                 <h2>Logowanie</h2>
-<<<<<<< HEAD
-                <?php if (!empty($error)): ?>
-                    <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
-                <?php endif; ?>
-                <form action="login.php" method="POST"> 
-=======
                 <form action="#" method="POST" id="loginForm"> 
->>>>>>> feature
                     <div class="form-group">
                         <label for="login-email"><i class="fas fa-envelope"></i> Adres Email</label>
                         <input type="email" id="login-email" name="email_login" required>

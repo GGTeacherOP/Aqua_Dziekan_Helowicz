@@ -28,14 +28,9 @@
       <a href="restaurant.php">Restauracja</a>
     </div>
     <div class="nav-auth">
-<<<<<<< HEAD
-      <a href="login.php" class="auth-button login-button">Zaloguj się</a>
-      <a href="signup.php" class="auth-button register-button">Zarejestruj się</a>
-=======
       <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
       <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
       <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
->>>>>>> feature
     </div>
   </nav>
 

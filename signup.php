@@ -1,49 +1,3 @@
-<<<<<<< HEAD
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "aquapark";
-
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
-    // Sanitize and validate input
-    $name = mysqli_real_escape_string($conn, trim($_POST['name']));
-    $surname = mysqli_real_escape_string($conn, trim($_POST['surname']));
-    $email = mysqli_real_escape_string($conn, trim($_POST['email']));
-    $password = mysqli_real_escape_string($conn, trim($_POST['password']));
-    $confirm_password = mysqli_real_escape_string($conn, trim($_POST['confirm_password']));
-    $phone = mysqli_real_escape_string($conn, trim($_POST['phone']));
-
-    // Check if passwords match
-    if ($password !== $confirm_password) {
-        echo "<script>alert('Hasła nie pasują do siebie.');</script>";
-    } else {
-        // Insert data into the database without hashing the password
-        $sql = "INSERT INTO users (imie, nazwisko, email, password, phone) 
-                VALUES ('$name', '$surname', '$email', '$password', '$phone')";
-
-        if (mysqli_query($conn, $sql)) {
-            // Redirect to login page
-            header("Location: login.php");
-            exit();
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
-    }
-
-    mysqli_close($conn);
-}
-?>
-=======
->>>>>>> feature
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -53,32 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-<<<<<<< HEAD
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            form.addEventListener("submit", function (event) {
-                let isValid = true;
-                const requiredFields = form.querySelectorAll("[required]");
-
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        isValid = false;
-                        field.style.border = "2px solid red";
-                    } else {
-                        field.style.border = "";
-                    }
-                });
-
-                if (!isValid) {
-                    event.preventDefault();
-                    alert("Proszę wypełnić wszystkie wymagane pola.");
-                }
-            });
-        });
-    </script>
-=======
->>>>>>> feature
 </head>
 <body>
     <div class="auth-page-container">
@@ -89,16 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container-wrapper">
             <div class="form-container auth-form">
                 <h2>Rejestracja</h2>
-<<<<<<< HEAD
-                <form action="signup.php" method="POST">
-                    <div class="form-group">
-                        <label for="register-name"><i class="fas fa-user"></i> Imię</label>
-                        <input type="text" id="register-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-surname"><i class="fas fa-user"></i> Nazwisko</label>
-                        <input type="text" id="register-surname" name="surname" required>
-=======
                 <form action="#" method="POST" id="signupForm">
                     <div class="form-group">
                         <label for="register-firstname"><i class="fas fa-user"></i> Imię</label>
@@ -107,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label for="register-lastname"><i class="fas fa-user-tag"></i> Nazwisko</label> 
                         <input type="text" id="register-lastname" name="lastname" required>
->>>>>>> feature
                     </div>
                     <div class="form-group">
                         <label for="register-email"><i class="fas fa-envelope"></i> Adres Email</label>
@@ -129,11 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="terms_agree" required>
-<<<<<<< HEAD
-                            Akceptuję <a href="#" class="form-link">regulamin serwisu</a>*
-=======
                             Akceptuję <a href="regulamin.php" target="_blank" class="form-link">regulamin serwisu</a>*
->>>>>>> feature
                         </label>
                     </div>
                      <div class="form-group checkbox-group">
@@ -148,9 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
     <script src="script.js"></script>
->>>>>>> feature
 </body>
 </html>

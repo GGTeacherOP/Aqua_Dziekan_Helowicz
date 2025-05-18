@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -19,15 +20,16 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html">Hotel</a>
-            <a href="spa.html" class="active">Spa & Wellness</a>
-            <a href="restaurant.html">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php">Hotel</a>
+            <a href="spa.php" class="active">Spa & Wellness</a>
+            <a href="restaurant.php">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
 
@@ -36,8 +38,10 @@
             <h2>Nasza Oferta Zabiegów Spa</h2>
         </section>
 
-        <section class="spa-sections cards-grid"> <div class="spa-service-card card"> <div class="spa-img card-image">
-                    <img src="spa_assets/massage.jpg" alt="Terapie Masażu">
+        <section class="spa-sections cards-grid">
+            <div class="spa-service-card card">
+                <div class="spa-img card-image">
+                    <img src="spa_assets/terapie_masazu.jpeg" alt="Terapie Masażu">
                 </div>
                 <div class="spa-content card-content">
                     <h3><i class="fas fa-hand-holding-heart"></i> Kojące Terapie Masażu</h3>
@@ -47,13 +51,13 @@
                         <li><i class="fas fa-spa"></i>Masaż Lomi Lomi Nui - 320 PLN</li>
                         <li><i class="fas fa-spa"></i>Masaż Gorącymi Kamieniami Wulkanicznymi - 350 PLN</li>
                     </ul>
-                    <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                    <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="spa-service-card card">
                  <div class="spa-img card-image">
-                    <img src="spa_assets/facial.jpg" alt="Zabiegi na Twarz">
+                    <img src="spa_assets/zabiegi_na_twarz.webp" alt="Zabiegi na Twarz">
                 </div>
                 <div class="spa-content card-content">
                     <h3><i class="fas fa-mask"></i> Odmładzające Zabiegi na Twarz</h3>
@@ -63,29 +67,29 @@
                         <li><i class="fas fa-spa"></i>Liftingujący Zabieg Anti-Aging Gold Therapy - 350 PLN</li>
                         <li><i class="fas fa-spa"></i>Oczyszczający Zabieg dla Skóry Problematycznej - 260 PLN</li>
                     </ul>
-                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="spa-service-card card">
                 <div class="spa-img card-image">
-                    <img src="spa_assets/body_wrap.jpg" alt="Zabiegi na Ciało">
+                    <img src="spa_assets/zabiegi_na_cialo.jpg" alt="Zabiegi na Ciało">
                 </div>
                 <div class="spa-content card-content">
-                    <h3><i class="fas fa-leaf"></i> Luksusowe Zabiegi na Ciało</h3>
+                    <h3><i class="fas fa-leaf"></i> Rozluźniające Zabiegi na Ciało</h3>
                     <p>Peelingi, okłady i rytuały pielęgnacyjne, które odżywią Twoją skórę i zmysły.</p>
                     <ul class="feature-list">
                         <li><i class="fas fa-spa"></i>Aromatyczny Peeling Cukrowy Całego Ciała - 190 PLN</li>
                         <li><i class="fas fa-spa"></i>Odżywczy Okład Czekoladowy - 330 PLN</li>
                         <li><i class="fas fa-spa"></i>Detoksykujący Rytuał z Zieloną Herbatą - 380 PLN</li>
                     </ul>
-                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="spa-service-card card">
                  <div class="spa-img card-image">
-                    <img src="spa_assets/wellness_package.jpg" alt="Pakiety Wellness">
+                    <img src="spa_assets/welness.jpg" alt="Pakiety Wellness">
                 </div>
                  <div class="spa-content card-content">
                     <h3><i class="fas fa-gifts"></i> Ekskluzywne Pakiety Wellness</h3>
@@ -95,14 +99,14 @@
                         <li><i class="fas fa-spa"></i>Pakiet "Królewski Relaks" (Peeling + Okład + Masaż) - 680 PLN</li>
                         <li><i class="fas fa-spa"></i>Romantyczny Rytuał dla Dwojga - 850 PLN</li>
                     </ul>
-                     <a href="#" class="details-button" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
+                     <a href="spa_assets/spa_b.php" class="cta-button cta-button-small" style="margin-top: auto; align-self: flex-start;">Szczegóły i Rezerwacja <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
     </div>
 
     <section class="cta-section">
-        <a href="#" class="cta-button">Zarezerwuj Swój Zabieg Już Dziś <i class="far fa-calendar-check"></i></a>
+        <a href="spa_assets/spa_b.php" class="cta-button">Zarezerwuj Swój Zabieg Już Dziś <i class="far fa-calendar-check"></i></a>
     </section>
 
     <footer class="main-footer">
@@ -121,7 +125,7 @@
                     <h4>Skontaktuj się z Nami</h4>
                     <div class="footer-contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
+                        <span><a href="https://maps.google.com/?q=ul.+S%C5%82oneczne+Wybrze%C5%BCe+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-phone-alt"></i>
@@ -141,5 +145,6 @@
             <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Database connection
@@ -41,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_close($conn);
 }
 ?>
+=======
+>>>>>>> feature
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -50,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+<<<<<<< HEAD
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector("form");
@@ -73,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
     </script>
+=======
+>>>>>>> feature
 </head>
 <body>
     <div class="auth-page-container">
@@ -83,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container-wrapper">
             <div class="form-container auth-form">
                 <h2>Rejestracja</h2>
+<<<<<<< HEAD
                 <form action="signup.php" method="POST">
                     <div class="form-group">
                         <label for="register-name"><i class="fas fa-user"></i> Imię</label>
@@ -91,6 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label for="register-surname"><i class="fas fa-user"></i> Nazwisko</label>
                         <input type="text" id="register-surname" name="surname" required>
+=======
+                <form action="#" method="POST" id="signupForm">
+                    <div class="form-group">
+                        <label for="register-firstname"><i class="fas fa-user"></i> Imię</label>
+                        <input type="text" id="register-firstname" name="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-lastname"><i class="fas fa-user-tag"></i> Nazwisko</label> 
+                        <input type="text" id="register-lastname" name="lastname" required>
+>>>>>>> feature
                     </div>
                     <div class="form-group">
                         <label for="register-email"><i class="fas fa-envelope"></i> Adres Email</label>
@@ -112,7 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="terms_agree" required>
+<<<<<<< HEAD
                             Akceptuję <a href="#" class="form-link">regulamin serwisu</a>*
+=======
+                            Akceptuję <a href="regulamin.php" target="_blank" class="form-link">regulamin serwisu</a>*
+>>>>>>> feature
                         </label>
                     </div>
                      <div class="form-group checkbox-group">
@@ -127,5 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+    <script src="script.js"></script>
+>>>>>>> feature
 </body>
 </html>

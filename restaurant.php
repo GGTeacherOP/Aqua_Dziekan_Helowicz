@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -19,15 +20,16 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html">Hotel</a>
-            <a href="spa.html">Spa & Wellness</a>
-            <a href="restaurant.html" class="active">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php">Hotel</a>
+            <a href="spa.php">Spa & Wellness</a>
+            <a href="restaurant.php" class="active">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
 
@@ -39,7 +41,7 @@
         <section class="menu-sections">
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/apple-appetizers-with-cheese.jpg" alt="Przystawki">
+                    <img src="restaurant_assets/przystawki.jfif" alt="Przystawki">
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-pepper-hot"></i> Wyśmienite Przystawki</h3>
@@ -54,7 +56,7 @@
 
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/partridge-in-cider-with-apples-celery-dd0f3c6.jpg" alt="Dania Główne">
+                    <img src="restaurant_assets/dania_glowne.jfif" alt="Dania Główne">
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-drumstick-bite"></i> Dania Główne Pełne Smaku</h3>
@@ -69,7 +71,7 @@
 
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/grass.jpg" alt="Opcje Wegetariańskie i Wegańskie">
+                    <img src="restaurant_assets/vegan_vege.jfif" alt="Opcje Wegetariańskie i Wegańskie">
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-seedling"></i> Wegetariańskie i Wegańskie Specjały</h3>
@@ -84,7 +86,7 @@
 
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/Tiramisu-Cheesecake-Dessert_EXPS_TOHD24_40878_EricKleinberg_9.jpg" alt="Słodkie Zakończenie - Desery">
+                    <img src="restaurant_assets/desery.jfif" alt="Słodkie Zakończenie - Desery">
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-ice-cream"></i> Słodkie Zakończenie - Desery</h3>
@@ -99,7 +101,7 @@
 
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/beverages-cover.jpg" alt="Napoje i Koktajle">
+                    <img src="restaurant_assets/napoje.jfif" alt="Napoje i Koktajle">
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-cocktail"></i> Napoje i Koktajle</h3>
@@ -114,7 +116,7 @@
             
             <div class="menu-card horizontal-card">
                 <div class="menu-img">
-                    <img src="restaurant_assets/kebab_przepis_4.jpg" alt="Dania Sezonowe"> 
+                    <img src="restaurant_assets/dania_sezonowe.jpg" alt="Dania Sezonowe"> 
                 </div>
                 <div class="menu-content">
                     <h3><i class="fas fa-star"></i> Dania Sezonowe Szefa Kuchni</h3>
@@ -128,7 +130,7 @@
         </section>
 
         <section class="cta-section">
-            <a href="#" class="cta-button">Zarezerwuj Stolik Online <i class="far fa-calendar-alt"></i></a>
+            <a href="restaurant_assets/restaurant_b.php" class="cta-button">Zarezerwuj Stolik Online <i class="far fa-calendar-alt"></i></a>
         </section>
     </div>
 
@@ -168,5 +170,6 @@
         <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
     </div>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>

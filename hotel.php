@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -19,15 +20,16 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html">Aquapark</a>
-            <a href="hotel.html" class="active">Hotel</a>
-            <a href="spa.html">Spa & Wellness</a>
-            <a href="restaurant.html">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php">Aquapark</a>
+            <a href="hotel.php" class="active">Hotel</a>
+            <a href="spa.php">Spa & Wellness</a>
+            <a href="restaurant.php">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
 
@@ -39,7 +41,7 @@
         <section class="rooms-list">
             <div class="room-card">
                 <div class="room-img">
-                    <img src="hotel_assets/standard.jpg" alt="Pokój Standardowy">
+                    <img src="hotel_assets/standard.webp" alt="Pokój Standardowy">
                 </div>
                 <div class="room-content">
                     <h3>Pokój Standard</h3>
@@ -51,13 +53,13 @@
                         <span class="feature-tag">TV SAT</span>
                     </div>
                     <p><strong>Od 450 PLN / noc</strong></p>
-                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
             <div class="room-card">
                 <div class="room-img">
-                    <img src="hotel_assets/deluxe.jpg" alt="Pokój Deluxe">
+                    <img src="hotel_assets/deluxe.webp" alt="Pokój Deluxe">
                 </div>
                 <div class="room-content">
                     <h3>Pokój Deluxe z Balkonem</h3>
@@ -69,13 +71,13 @@
                         <span class="feature-tag">Dostęp do Strefy Spa</span>
                     </div>
                      <p><strong>Od 650 PLN / noc</strong></p>
-                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
             <div class="room-card">
                 <div class="room-img">
-                    <img src="hotel_assets/suite.jpg" alt="Apartament Luksusowy">
+                    <img src="hotel_assets/apartament.webp" alt="Apartament Luksusowy">
                 </div>
                 <div class="room-content">
                     <h3>Apartament Luksusowy</h3>
@@ -87,13 +89,13 @@
                         <span class="feature-tag">Pełen Dostęp VIP</span>
                     </div>
                     <p><strong>Od 1200 PLN / noc</strong></p>
-                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
 
             <div class="room-card family-room-card">
                 <div class="room-img">
-                    <img src="hotel_assets/family.jpg" alt="Pokój Rodzinny">
+                    <img src="hotel_assets/rodzinny.jpg" alt="Pokój Rodzinny">
                 </div>
                 <div class="room-content">
                     <h3>Pokój Rodzinny Superior</h3>
@@ -105,7 +107,7 @@
                         <span class="feature-tag">Gry Planszowe</span>
                     </div>
                     <p><strong>Od 750 PLN / noc</strong></p>
-                    <a href="#" class="cta-button">Zarezerwuj Teraz</a>
+                    <a href="hotel_assets/hotel_b.php" class="cta-button">Zarezerwuj Teraz</a>
                 </div>
             </div>
         </section>
@@ -166,5 +168,6 @@
             <p>© 2025 AquaParadise Hotel. Wszelkie prawa zastrzeżone.</p>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

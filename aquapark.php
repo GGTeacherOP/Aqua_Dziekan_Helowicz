@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -19,15 +20,16 @@
 
     <nav class="main-nav">
         <div class="nav-links">
-            <a href="index.html">Strona Główna</a>
-            <a href="aquapark.html" class="active">Aquapark</a>
-            <a href="hotel.html">Hotel</a>
-            <a href="spa.html">Spa & Wellness</a>
-            <a href="restaurant.html">Restauracja</a>
+            <a href="index.php">Strona Główna</a>
+            <a href="aquapark.php" class="active">Aquapark</a>
+            <a href="hotel.php">Hotel</a>
+            <a href="spa.php">Spa & Wellness</a>
+            <a href="restaurant.php">Restauracja</a>
         </div>
         <div class="nav-auth">
-            <a href="login.html" class="auth-button login-button">Zaloguj się</a>
-            <a href="signup.html" class="auth-button register-button">Zarejestruj się</a>
+            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
         </div>
     </nav>
 
@@ -39,21 +41,21 @@
         <section class="attractions-list horizontal-layout">
             <div class="attraction-card">
                 <div class="attraction-img">
-                    <img src="aquapark_wave_pool.jpg" alt="Basen z Falą">
+                    <img src="aquapark_assets/fala.jpg" alt="Basen z Falą">
                 </div>
                 <div class="attraction-content">
                     <h3>Basen z Falą Morską</h3>
                     <p>Poczuj prawdziwą morską bryzę i daj się ponieść falom w naszym imponującym basenie.</p>
                     <div class="features-tags">
                         <span class="feature-tag">Dla Rodzin</span>
-                        <span class="feature-tag">Fale co 30 min</span>
+                        <span class="feature-tag">Fale co 10 min</span>
                     </div>
                     </div>
             </div>
 
             <div class="attraction-card">
                 <div class="attraction-img">
-                    <img src="aquapark_slides.jpg" alt="Ekscytujące Zjeżdżalnie">
+                    <img src="aquapark_assets/adrenalina.jfif" alt="Ekscytujące Zjeżdżalnie">
                 </div>
                 <div class="attraction-content">
                     <h3>Adrenalinowe Zjeżdżalnie</h3>
@@ -67,7 +69,7 @@
 
             <div class="attraction-card" id="kids-zone">
                 <div class="attraction-img">
-                    <img src="aquapark_kids_zone.jpg" alt="Raj dla Dzieci">
+                    <img src="aquapark_assets/raj.jfif" alt="Raj dla Dzieci">
                 </div>
                 <div class="attraction-content">
                     <h3>Dziecięcy Raj Wodny</h3>
@@ -81,7 +83,7 @@
 
              <div class="attraction-card">
                 <div class="attraction-img">
-                    <img src="aquapark_spa.jpg" alt="Strefa Relaksu i Saun">
+                    <img src="aquapark_assets/sauna.jpg" alt="Strefa Relaksu i Saun">
                 </div>
                 <div class="attraction-content">
                     <h3>Strefa Relaksu i Saun</h3>
@@ -131,7 +133,7 @@
         </section>
 
         <section class="cta-section" id="contact-aquapark">
-            <a href="#" class="cta-button">Kup Bilety i Zaplanuj Przygodę! <i class="fas fa-ticket-alt"></i></a>
+            <a href="index_assets/przerwa.php" class="cta-button">Kup Bilety i Zaplanuj Przygodę! <i class="fas fa-ticket-alt"></i></a>
         </section>
     </div>
 
@@ -151,7 +153,7 @@
                     <h4>Skontaktuj się z Nami</h4>
                     <div class="footer-contact-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
+                        <span><a href="https://maps.google.com/?q=ul.+S%C5%82oneczne+Wybrze%C5%BCe+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
                     </div>
                     <div class="footer-contact-item">
                         <i class="fas fa-phone-alt"></i>
@@ -171,5 +173,6 @@
             <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

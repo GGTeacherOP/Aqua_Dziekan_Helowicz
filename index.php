@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -20,15 +21,21 @@
 
   <nav class="main-nav">
     <div class="nav-links">
-      <a href="index.html" class="active">Strona Główna</a>
-      <a href="aquapark.html">Aquapark</a>
-      <a href="hotel.html">Hotel</a>
-      <a href="spa.html">Spa & Wellness</a>
-      <a href="restaurant.html">Restauracja</a>
+      <a href="index.php" class="active">Strona Główna</a>
+      <a href="aquapark.php">Aquapark</a>
+      <a href="hotel.php">Hotel</a>
+      <a href="spa.php">Spa & Wellness</a>
+      <a href="restaurant.php">Restauracja</a>
     </div>
     <div class="nav-auth">
+<<<<<<< HEAD
       <a href="login.php" class="auth-button login-button">Zaloguj się</a>
       <a href="signup.php" class="auth-button register-button">Zarejestruj się</a>
+=======
+      <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
+      <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
+      <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
+>>>>>>> feature
     </div>
   </nav>
 
@@ -60,7 +67,7 @@
 
       <div class="world-card">
         <div class="world-card-image">
-          <img src="index_assets/spa.jpg" alt="Strefa Spa & Wellness">
+          <img src="index_assets/spa.webp" alt="Strefa Spa & Wellness">
         </div>
         <div class="world-card-content">
           <h3><i class="fas fa-spa"></i> Strefa Spa & Wellness</h3>
@@ -70,7 +77,7 @@
       
       <div class="world-card">
         <div class="world-card-image">
-          <img src="index_assets/lounge.jpg" alt="Wyjątkowe Restauracje">
+          <img src="index_assets/restauracja.jpg" alt="Wyjątkowe Restauracje">
         </div>
         <div class="world-card-content">
           <h3><i class="fas fa-utensils"></i> Wyjątkowa Restauracja</h3>
@@ -102,7 +109,7 @@
     <section class="cta-section-main" id="contact">
       <h2>Gotowy na Przygodę Życia?</h2>
       <p>Zaplanuj swój pobyt w AquaParadise już dziś i stwórz wspomnienia, które zostaną z Tobą na zawsze. Czekamy na Ciebie!</p>
-      <a href="#" class="cta-button">Kup Bilety lub Zarezerwuj</a>
+      <a href="index_assets/przerwa.php" class="cta-button">Kup Bilety lub Zarezerwuj</a>
     </section>
   </div>
 
@@ -143,18 +150,6 @@
     </div>
   </footer>
 
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const hrefAttribute = this.getAttribute('href');
-            if (hrefAttribute.length > 1 && hrefAttribute.startsWith('#') && document.querySelector(hrefAttribute)) {
-                e.preventDefault();
-                document.querySelector(hrefAttribute).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

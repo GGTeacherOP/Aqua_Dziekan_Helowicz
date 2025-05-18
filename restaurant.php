@@ -1,15 +1,11 @@
+<?php
+// restaurant.php
+require_once __DIR__ . '/config/init.php';
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaParadise - Restauracja AquaTaste</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+$page_title = "Restauracja AquaTaste - AquaParadise"; // Ustaw tytuł strony
+
+include BASE_PATH . '/includes/header.php'; // Dołącz główny nagłówek
+?>
 
   <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('restaurant_assets/lounge.jpg');">
     <div class="content">
@@ -18,20 +14,10 @@
     </div>
   </header>
 
-    <nav class="main-nav">
-        <div class="nav-links">
-            <a href="index.php">Strona Główna</a>
-            <a href="aquapark.php">Aquapark</a>
-            <a href="hotel.php">Hotel</a>
-            <a href="spa.php">Spa & Wellness</a>
-            <a href="restaurant.php" class="active">Restauracja</a>
-        </div>
-        <div class="nav-auth">
-            <a href="login.php" class="auth-button login-button" id="loginButton">Zaloguj się</a>
-            <a href="signup.php" class="auth-button register-button" id="registerButton">Zarejestruj się</a>
-            <a href="#" class="auth-button login-button" id="logoutButton" style="display:none;">Wyloguj się</a>
-        </div>
-    </nav>
+<?php
+// Dołącz dynamiczną nawigację
+include BASE_PATH . '/includes/navigation.php';
+?>
 
     <div class="page-wrapper">
         <section class="section-title-container">
@@ -134,42 +120,7 @@
         </section>
     </div>
 
-<footer class="main-footer">
-    <div class="footer-inner-content">
-        <div class="footer-content-columns">
-            <div>
-                <h4>Restauracja AquaTaste</h4>
-                <p>Miejsce, gdzie smak spotyka się z elegancją. Zapraszamy na niezapomnianą podróż kulinarną.</p>
-            </div>
-            <div>
-                <h4>Godziny Otwarcia Restauracji</h4>
-                <p><strong>Codziennie:</strong> 13:00 - 23:00</p>
-                <p><strong>Bar:</strong> 11:00 - 00:00</p>
-            </div>
-            <div>
-                <h4>Rezerwacje</h4>
-                 <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <span><a href="tel:+48500100200">+48 500 100 200</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                     <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
-                </div>
-            </div>
-        </div>
-        <div class="footer-social-icons">
-        <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a> 
-        </div>
-        <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
-    </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
+<?php
+// Dołącz główną stopkę
+include BASE_PATH . '/includes/footer.php';
+?>

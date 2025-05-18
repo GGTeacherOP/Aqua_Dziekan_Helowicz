@@ -120,49 +120,7 @@ include BASE_PATH . '/includes/navigation.php';
         </section>
     </div>
 
-<<<<<<< HEAD
-<footer class="main-footer">
-    <div class="footer-inner-content">
-        <div class="footer-content-columns">
-            <div>
-                <h4>Restauracja AquaTaste</h4>
-                <p>Miejsce, gdzie smak spotyka się z elegancją. Zapraszamy na niezapomnianą podróż kulinarną.</p>
-            </div>
-            <div>
-                <h4>Godziny Otwarcia Restauracji</h4>
-                <p><strong>Codziennie:</strong> 13:00 - 23:00</p>
-                <p><strong>Bar:</strong> 11:00 - 00:00</p>
-            </div>
-            <div>
-                <h4>Rezerwacje</h4>
-                 <div class="footer-contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span><a href="https://maps.google.com/?q=ul.+Słoneczne+Wybrzeże+7,+00-123+Rajskie+Miasto" target="_blank" rel="noopener noreferrer">ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-phone-alt"></i>
-                    <span><a href="tel:+48500100200">+48 500 100 200</a></span>
-                </div>
-                <div class="footer-contact-item">
-                    <i class="fas fa-envelope"></i>
-                     <span><a href="mailto:kontakt@aquaparadise.pl">kontakt@aquaparadise.pl</a></span>
-                </div>
-            </div>
-        </div>
-        <div class="footer-social-icons">
-        <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a> 
-        </div>
-        <p>© 2025 AquaParadise. Wszelkie prawa zastrzeżone.</p>
-    </div>
-</footer>
-<script src="script.js"></script>
-</body>
-</html>
-=======
 <?php
 // Dołącz główną stopkę
 include BASE_PATH . '/includes/footer.php';
 ?>
->>>>>>> feature

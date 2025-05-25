@@ -1,11 +1,14 @@
 <?php
 // includes/footer.php
-// Upewnij się, że ścieżki do map Google i linki mailto/tel są poprawne.
-// Adres i dane kontaktowe mogą być również pobierane z konfiguracji lub bazy danych.
-$contact_address = "ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto";
+$contact_address_display = "ul. Słoneczne Wybrzeże 7, <br>00-123 Rajskie Miasto";
+$contact_address_map = "ul. Słoneczne Wybrzeże 7, 00-123 Rajskie Miasto"; // For map query
 $contact_phone = "+48 500 100 200";
-$contact_email = "kontakt@aquaparadise.pl";
-$Maps_link = "https://maps.google.com/?q=Rajskie+Miasto,+Słoneczne+Wybrzeże+7"; // Przykładowy link
+$contact_email = "kontakt@aquaparadise.pl"; //
+
+$terms_link = (defined('BASE_URL') ? BASE_URL : '') . 'regulamin.php';
+// Corrected Google Maps link
+$maps_link = "https://www.google.com/maps/search/?api=1&query=" . urlencode(strip_tags($contact_address_map));
+
 ?>
 <footer class="main-footer">
     <div class="footer-inner-content">
@@ -23,15 +26,15 @@ $Maps_link = "https://maps.google.com/?q=Rajskie+Miasto,+Słoneczne+Wybrzeże+7"
                 <h4>Skontaktuj się z Nami</h4>
                 <div class="footer-contact-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span><a href="<?php echo e($Maps_link); ?>" target="_blank" rel="noopener noreferrer"><?php echo $contact_address; ?></a></span>
+                    <span><a href="<?php echo htmlspecialchars($maps_link, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer"><?php echo $contact_address_display; ?></a></span>
                 </div>
                 <div class="footer-contact-item">
                     <i class="fas fa-phone-alt"></i>
-                    <span><a href="tel:<?php echo e(str_replace(' ', '', $contact_phone)); ?>"><?php echo e($contact_phone); ?></a></span>
+                    <span><a href="tel:<?php echo htmlspecialchars(str_replace([' ', '(', ')', '-'], '', $contact_phone), ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($contact_phone, ENT_QUOTES, 'UTF-8'); ?></a></span>
                 </div>
                 <div class="footer-contact-item">
                     <i class="fas fa-envelope"></i>
-                    <span><a href="mailto:<?php echo e($contact_email); ?>"><?php echo e($contact_email); ?></a></span>
+                    <span><a href="mailto:<?php echo htmlspecialchars($contact_email, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($contact_email, ENT_QUOTES, 'UTF-8'); ?></a></span>
                 </div>
             </div>
         </div>
@@ -40,11 +43,16 @@ $Maps_link = "https://maps.google.com/?q=Rajskie+Miasto,+Słoneczne+Wybrzeże+7"
             <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
             <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
         </div>
-        <p>© <?php echo date("Y"); ?> AquaParadise. Wszelkie prawa zastrzeżone. <a href="regulamin.php" style="color: var(--primary-light-color); text-decoration: underline;">Regulamin</a></p>
+        <p>© <?php echo date("Y"); ?> AquaParadise. Wszelkie prawa zastrzeżone. <a href="<?php echo htmlspecialchars($terms_link, ENT_QUOTES, 'UTF-8'); ?>" style="color: var(--primary-light-color); text-decoration: underline;">Regulamin</a></p>
     </div>
 </footer>
 
-<?php include BASE_PATH . '/includes/modals.php'; // Modal logowania/gościa (jeśli nie jest już w header) ?>
-<script src="<?php echo defined('BASE_URL') ? BASE_URL : ''; ?>script.js"></script>
+<?php
+// Modal logowania/gościa (authGuestModalContainer)
+if (file_exists(__DIR__ . '/modals.php')) {
+    include __DIR__ . '/modals.php';
+}
+?>
+<script src="<?php echo defined('BASE_URL') ? BASE_URL : ''; ?>script.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -1,39 +1,36 @@
 <?php
 // login.php
-require_once __DIR__ . '/config/init.php'; // Ładuje $pdo, session_start(), funkcje
+require_once __DIR__ . '/config/init.php'; 
 
-$page_title = "Logowanie - AquaParadise"; // Tytuł dla <title>
+$page_title = "Logowanie - AquaParadise"; 
 
 $error_message = '';
-$success_message = ''; // Możesz używać do komunikatów po np. rejestracji
+$success_message = ''; 
 
-// Sprawdź, czy są jakieś komunikaty z innych stron (np. po rejestracji)
 if (isset($_SESSION['success_message'])) {
     $success_message = $_SESSION['success_message'];
     unset($_SESSION['success_message']);
 }
 
-// Przekierowania po zalogowaniu
-$redirect_url = $_GET['redirect'] ?? 'index.php'; // Domyślnie na stronę główną
+$redirect_url = $_GET['redirect'] ?? 'index.php'; 
 $action_after_login = $_GET['action'] ?? null;
 $product_id_after_login = isset($_GET['product_id']) ? (int)$_GET['product_id'] : null;
-$details_after_login_json = $_GET['details'] ?? null; // Oczekujemy JSON string
+$details_after_login_json = $_GET['details'] ?? null; 
 
 if (isset($_SESSION['user_id'])) {
-    // Jeśli użytkownik jest już zalogowany, przekieruj go
     header("Location: " . $redirect_url);
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_login = trim($_POST['email_login'] ?? '');
-    $password = $_POST['password'] ?? ''; // Hasło w czystym tekście z formularza
+    $password_input = $_POST['password'] ?? ''; 
 
-    if (empty($email_login) || empty($password)) {
+    if (empty($email_login) || empty($password_input)) {
         $error_message = "Proszę wypełnić wszystkie pola.";
     } else {
         try {
-            $stmt = $pdo->prepare("SELECT u.user_id, u.first_name, u.password_hash, r.role_name
+            $stmt = $pdo->prepare("SELECT u.user_id, u.first_name, u.last_name, u.email, u.password_hash, r.role_name, r.role_id
                                    FROM Users u
                                    JOIN Roles r ON u.role_id = r.role_id
                                    WHERE u.email = :email_login");
@@ -41,52 +38,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $user = $stmt->fetch();
 
-            // =========== POCZĄTEK ZMIANY (Logowanie z czystym tekstem) ===========
-            if ($user && $password === $user['password_hash']) {
-                // $password to hasło z formularza (czysty tekst)
-                // $user['password_hash'] to hasło z bazy (teraz też czysty tekst)
-            // =========== KONIEC ZMIANY (Logowanie z czystym tekstem) ===========
+            if ($user && $password_input === $user['password_hash']) { // Porównanie hasła w czystym tekście
                 session_regenerate_id(true); 
 
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['user_first_name'] = $user['first_name'];
+                $_SESSION['user_last_name'] = $user['last_name']; 
+                $_SESSION['user_email'] = $user['email'];       
+                $_SESSION['user_role_id'] = (int)$user['role_id']; 
                 $_SESSION['user_role_name'] = $user['role_name'];
 
                 $_SESSION['flash_message'] = ['type' => 'success', 'text' => 'Pomyślnie zalogowano. Witaj, ' . htmlspecialchars($user['first_name']) . '!'];
-
-                // Przeniesienie koszyka gościa do koszyka użytkownika
+                
+                // Przeniesienie koszyka gościa (jeśli istnieje)
                 $guest_php_session_id = session_id(); 
                 $stmt_guest_cart = $pdo->prepare("SELECT cart_id FROM Carts WHERE session_id = :session_id AND user_id IS NULL");
                 $stmt_guest_cart->bindParam(':session_id', $guest_php_session_id, PDO::PARAM_STR);
                 $stmt_guest_cart->execute();
-                $guest_cart = $stmt_guest_cart->fetch();
+                $guest_cart_data = $stmt_guest_cart->fetch();
 
-                if ($guest_cart) {
-                    $guest_cart_id = $guest_cart['cart_id'];
-
+                if ($guest_cart_data) {
+                    $guest_cart_id = $guest_cart_data['cart_id'];
                     $stmt_user_cart = $pdo->prepare("SELECT cart_id FROM Carts WHERE user_id = :user_id");
                     $stmt_user_cart->bindParam(':user_id', $user['user_id'], PDO::PARAM_INT);
                     $stmt_user_cart->execute();
-                    $user_cart = $stmt_user_cart->fetch();
+                    $user_cart_data = $stmt_user_cart->fetch();
 
-                    if ($user_cart) { 
-                        $user_db_cart_id = $user_cart['cart_id'];
+                    if ($user_cart_data) { 
+                        $user_db_cart_id = $user_cart_data['cart_id'];
                         if ($user_db_cart_id != $guest_cart_id) { 
                             $stmt_merge = $pdo->prepare("UPDATE CartItems SET cart_id = :user_cart_id WHERE cart_id = :guest_cart_id");
-                            $stmt_merge->bindParam(':user_cart_id', $user_db_cart_id, PDO::PARAM_INT);
-                            $stmt_merge->bindParam(':guest_cart_id', $guest_cart_id, PDO::PARAM_INT);
-                            $stmt_merge->execute();
+                            $stmt_merge->execute([':user_cart_id' => $user_db_cart_id, ':guest_cart_id' => $guest_cart_id]);
                             $pdo->prepare("DELETE FROM Carts WHERE cart_id = :guest_cart_id")->execute([':guest_cart_id' => $guest_cart_id]);
                         }
                     } else { 
                         $stmt_assign = $pdo->prepare("UPDATE Carts SET user_id = :user_id, session_id = NULL WHERE cart_id = :guest_cart_id");
-                        $stmt_assign->bindParam(':user_id', $user['user_id'], PDO::PARAM_INT);
-                        $stmt_assign->bindParam(':guest_cart_id', $guest_cart_id, PDO::PARAM_INT);
-                        $stmt_assign->execute();
+                        $stmt_assign->execute([':user_id' => $user['user_id'], ':guest_cart_id' => $guest_cart_id]);
                     }
                 }
-                unset($_SESSION['guest_cart_session_id']);
-                unset($_SESSION['guest_cart_assigned_db_id']);
+                unset($_SESSION['guest_cart_id']); 
+
 
                 $pdo->prepare("UPDATE Users SET last_login = CURRENT_TIMESTAMP WHERE user_id = ?")->execute([$user['user_id']]);
 
@@ -157,11 +148,8 @@ include BASE_PATH . '/includes/header.php';
                     <input type="password" id="login-password" name="password" required>
                 </div>
                 <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="remember_me">
-                        Zapamiętaj mnie (funkcjonalność do zaimplementowania)
-                    </label>
-                    <a href="#" class="form-link">Nie pamiętam hasła (do zaimplementowania)</a>
+                    <span></span> 
+                    <a href="forgot_password.php" class="form-link">Nie pamiętam hasła</a>
                 </div>
                 <button type="submit" class="cta-button form-submit-button">Zaloguj się</button>
             </form>

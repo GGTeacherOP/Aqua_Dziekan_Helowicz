@@ -122,7 +122,7 @@ body {
 .main-nav .nav-auth {
     display: flex;
     align-items: center;
-    gap: 12px; /* Odstęp między wszystkimi elementami w .nav-auth */
+    gap: 12px;
 }
 
 .auth-button {
@@ -137,7 +137,7 @@ body {
     white-space: nowrap;
 }
 
-.login-button { /* Używane też dla "Wyloguj" */
+.login-button {
     background-color: transparent;
     color: var(--primary-color);
     border-color: var(--primary-color);
@@ -148,7 +148,7 @@ body {
     transform: scale(1.01);
 }
 
-.register-button { /* Używane też dla "Zarejestruj się" i "Panel" */
+.register-button {
     background-color: var(--primary-color);
     color: var(--text-light-color);
     border-color: var(--primary-color);
@@ -159,30 +159,27 @@ body {
     transform: scale(1.01);
 }
 
-/* Nowe/zmodyfikowane style dla sekcji użytkownika w nawigacji */
 .nav-auth .user-nav-greeting {
-    display: flex;        /* Układa ikonę i tekst w jednej linii */
-    align-items: center;  /* Wyrównuje je pionowo do środka */
-    color: var(--text-color); /* Domyślny kolor tekstu */
-    padding: 0.3em 0.5em; /* Delikatny padding, jeśli potrzebny */
-    /* Usunięto margin-right, bo gap w .nav-auth załatwi odstępy */
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 0.3em 0.5em;
 }
 
-.nav-auth .user-nav-greeting:hover { /* Zapobiega zmianom przy najechaniu */
+.nav-auth .user-nav-greeting:hover {
     background-color: transparent;
-    color: var(--text-color); /* Upewnij się, że kolor tekstu się nie zmienia jak link */
-    cursor: default; /* Kursor standardowy, nie wskazujący na link */
+    color: var(--text-color);
+    cursor: default;
 }
 
 .nav-auth .user-greeting-icon {
-    font-size: 1.5em; /* Rozmiar ikony użytkownika */
-    color: var(--primary-dark-color); /* Kolor ikony */
-    margin-right: 8px; /* Odstęp między ikoną a tekstem */
+    font-size: 1.5em;
+    color: var(--primary-dark-color);
+    margin-right: 8px;
 }
 .nav-auth .user-nav-greeting:hover .user-greeting-icon {
-    color: var(--primary-dark-color); /* Upewnij się, że ikona też się nie zmienia */
+    color: var(--primary-dark-color);
 }
-
 
 .nav-auth .user-greeting-text {
     font-size: 0.9rem;
@@ -190,21 +187,6 @@ body {
     white-space: nowrap;
 }
 
-/* Usunięcie/modyfikacja starych styli, jeśli powodowały konflikt */
-/* Jeśli .user-profile-link było wcześniej linkiem z efektami :hover */
-.nav-auth .user-profile-link { /* Zakładając, że ta klasa była używana dla poprzedniego linku profilowego */
-    /* Usuń lub nadpisz style :hover, które nie są już potrzebne */
-    /* np. background-color: transparent !important; */
-    /* text-decoration: none !important; */
-}
-/* Usunięcie klasy user-profile-icon z .nav-links, jeśli istniała */
-/*
-.nav-links a.user-profile-icon {
-    display: none; // lub zakomentuj całą regułę
-}
-*/
-
-/* Dostosowanie przycisków Wyloguj i Panel Admina */
 .nav-auth .logout-button,
 .nav-auth .admin-panel-button {
     padding: 0.6em 1.2em;
@@ -221,7 +203,6 @@ body {
     border-color: #e0a800;
 }
 
-/* Styl dla koszyka */
 .cart-button {
     position: relative;
     padding: 0.65em 1.2em;
@@ -379,7 +360,6 @@ body {
     margin-left: 0.5em;
 }
 
-
 /* --- STOPKA --- */
 .main-footer {
   text-align: center; padding: 0;
@@ -470,17 +450,21 @@ body {
     padding: 0;
 }
 
-.form-container.auth-form { /* Dotyczy też .booking-form i .summary-container */
+.form-container.auth-form,
+.form-container.opinion-form-container-new
+{
     background-color: var(--white-color);
     padding: var(--form-container-padding);
     border-radius: 10px;
     box-shadow: 0 8px 25px rgba(0, 86, 179, 0.1);
     width: 100%;
     max-width: 580px;
-    margin: 0;
+    margin: 0 auto;
 }
 
-.form-container.auth-form h2 {
+.form-container.auth-form h2,
+.form-container.opinion-form-container-new h2
+{
     font-family: var(--font-family-display);
     color: var(--primary-dark-color);
     font-size: var(--form-h2-font-size);
@@ -644,11 +628,11 @@ body {
     position: relative;
 }
 
-.modal-content.wide-modal { /* Dla modala SPA */
+.modal-content.wide-modal {
     max-width: 1200px;
 }
 
-.payment-modal-content { /* Dla modala płatności */
+.payment-modal-content {
     max-width: 550px;
 }
 .payment-modal-content h3 i {
@@ -750,7 +734,6 @@ body {
     font-size: 1rem;
 }
 
-/* --- STYLE DLA STRONY PODSUMOWANIA ZAMÓWIENIA (przerwa.html) --- */
 .summary-container h2 i {
     margin-right: 10px;
     color: var(--primary-color);
@@ -826,7 +809,6 @@ body {
     margin-top: 1.5em;
 }
 
-/* --- STYLE DLA STRONY REGULAMINU (regulamin.html) --- */
 .static-page-container {
     width: 80%;
     max-width: 900px;
@@ -897,10 +879,393 @@ body {
 }
 
 
+/* === NOWE STYLE DLA STRONY OPINII (LISTA + POKAŻ WIĘCEJ) === */
+
+.opinions-page-wrapper-new {
+    max-width: 850px;
+    margin: 2em auto;
+    padding: 20px;
+}
+
+.opinions-list-new {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.opinion-card-new {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+.opinion-card-new:hover {
+    box-shadow: 0 6px 18px rgba(0, 86, 179, 0.12);
+}
+
+.opinion-card-new .opinion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #dfe4ea;
+}
+
+.opinion-card-new .opinion-author {
+    font-weight: 600;
+    color: var(--primary-dark-color);
+    font-size: 1.1em;
+}
+.opinion-card-new .opinion-author i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.opinion-card-new .opinion-date {
+    font-size: 0.85em;
+    color: var(--text-muted-color);
+}
+
+.opinion-card-new .opinion-rating-display {
+    margin-bottom: 12px;
+    font-size: 1.15em;
+    color: #e4e7eb;
+}
+.opinion-card-new .opinion-rating-display .fas.fa-star {
+    margin-right: 3px;
+}
+.opinion-card-new .opinion-rating-display .fas.fa-star.filled {
+    color: #ffc107;
+}
+
+.opinion-card-new .opinion-product {
+    font-size: 0.9em;
+    color: var(--text-muted-color);
+    margin-bottom: 10px;
+    font-style: italic;
+}
+.opinion-card-new .opinion-product strong {
+    color: var(--text-color);
+    font-style: normal;
+}
+
+.opinion-card-new .opinion-comment-text {
+    margin-bottom: 15px;
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--text-color);
+    white-space: pre-wrap;
+}
+.opinion-card-new .opinion-comment-text::before {
+    content: open-quote;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-light-color);
+    margin-right: 2px;
+    line-height: 0;
+}
+.opinion-card-new .opinion-comment-text::after {
+    content: close-quote;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-light-color);
+    margin-left: 2px;
+    line-height: 0;
+    vertical-align: sub;
+}
+
+.opinion-card-new .admin-reply {
+    margin-top: 18px;
+    padding: 15px 20px;
+    background-color: #f0f6ff;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+}
+.opinion-card-new .admin-reply p {
+    font-size: 0.95em;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    line-height: 1.6;
+}
+.opinion-card-new .admin-reply p:last-child {
+    margin-bottom: 0;
+}
+.opinion-card-new .admin-reply strong {
+    color: var(--primary-dark-color);
+    font-weight: 600;
+}
+.opinion-card-new .admin-reply strong i {
+    margin-right: 6px;
+}
+
+.no-opinions-new {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--text-muted-color);
+    padding: 30px 20px;
+    background-color: #f8f9fa;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.show-more-opinions-container {
+    text-align: center;
+    margin: 30px 0;
+}
+#loadMoreOpinionsBtn {
+    padding: 0.8em 1.8em;
+    font-size: 1rem;
+}
+#loadMoreOpinionsBtn i {
+    margin-right: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+#loadMoreOpinionsBtn:hover i {
+    transform: translateY(2px);
+}
+
+.add-opinion-section-new {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+}
+
+#toggleAddOpinionFormBtn {
+    margin-bottom: 25px;
+}
+#toggleAddOpinionFormBtn i {
+    margin-right: 8px;
+}
+
+.form-container.opinion-form-container-new {
+    max-width: 700px;
+    text-align: left;
+    margin-top: 0;
+}
+.add-opinion-title-new {
+    margin-top: 0;
+}
+.add-opinion-title-new h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2rem);
+    margin-bottom: 1.2em;
+}
+.add-opinion-title-new h2::after {
+    width: 60px;
+}
+
+/* --- STYLE GWIAZDEK W FORMULARZU OPINII - POPRAWIONE (białe wypełnienie, niebieski kontur) --- */
+.rating-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.rating-stars-form {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin: 5px auto 25px auto;
+    width: fit-content;
+}
+
+.rating-stars-form input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.rating-stars-form .star-label {
+    font-size: 2.3em;
+    color: var(--white-color); /* Domyślny kolor wypełnienia - biały (lub przezroczysty jeśli tło kontenera jest białe) */
+    -webkit-text-stroke-width: 1.5px; /* Grubość konturu */
+    -webkit-text-stroke-color: var(--primary-color); /* Kolor konturu - niebieski */
+    cursor: pointer;
+    padding: 0 0.18em;
+    transition: color 0.2s ease-in-out, transform 0.1s ease, -webkit-text-stroke-color 0.2s ease-in-out;
+    line-height: 1;
+}
+
+.rating-stars-form .star-label i { /* Ikona wewnątrz */
+    display: block;
+    transition: inherit;
+    color: inherit; /* Dziedziczy kolor (wypełnienie) z .star-label */
+}
+
+/* Efekt hover: gwiazdki (i te po lewej) zmieniają kolor WYPEŁNIENIA na niebieski */
+.rating-stars-form .star-label:hover,
+.rating-stars-form .star-label:hover ~ .star-label {
+    color: var(--primary-color); /* Kolor WYPEŁNIENIA przy najechaniu (niebieski) */
+    -webkit-text-stroke-color: var(--primary-dark-color); /* Ciemniejszy kontur przy najechaniu */
+    transform: scale(1.12);
+}
+
+/* Zaznaczone gwiazdki: zmiana koloru WYPEŁNIENIA na niebieski */
+.rating-stars-form input[type="radio"]:checked ~ .star-label {
+    color: var(--primary-color); /* Kolor WYPEŁNIENIA zaznaczonych gwiazdek (niebieski) */
+    -webkit-text-stroke-color: var(--primary-dark-color); /* Ciemniejszy kontur dla zaznaczonych */
+}
+
+.rating-stars-form input[type="radio"]:focus-visible + .star-label {
+    outline: 2px solid var(--primary-light-color);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+/* --- Pozostałe style (flash-message, modals, payment, etc.) --- */
+.flash-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+}
+.flash-message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.flash-message.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.flash-message.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.flash-message.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.simple-message-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2050;
+    opacity: 0;
+    animation: fadeInOverlay 0.3s forwards;
+}
+
+@keyframes fadeInOverlay {
+    to { opacity: 1; }
+}
+
+.simple-message-modal-content {
+    background-color: var(--white-color);
+    padding: 25px 35px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    min-width: 300px;
+    max-width: 450px;
+    position: relative;
+    transform: scale(0.9);
+    animation: scaleInModal 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleInModal {
+    to { transform: scale(1); }
+}
+
+.simple-message-modal-content p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin: 0;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.simple-message-modal-content.modal-type-success {
+    border-left: 5px solid #28a745;
+}
+.simple-message-modal-content.modal-type-success p {
+    color: #155724;
+}
+
+.simple-message-modal-content.modal-type-error {
+    border-left: 5px solid #dc3545;
+}
+.simple-message-modal-content.modal-type-error p {
+    color: #721c24;
+}
+
+.simple-message-modal-content.modal-type-info {
+    border-left: 5px solid var(--primary-color);
+}
+
+.simple-modal-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 1.8rem;
+    color: var(--text-muted-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+.simple-modal-close-btn:hover {
+    color: var(--text-color);
+}
+
+.payment-fields {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: #fdfdfd;
+}
+
+.payment-fields h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--primary-dark-color);
+}
+
+.payment-modal-content h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: var(--primary-dark-color);
+    border-bottom: 1px solid var(--primary-very-light-color);
+    padding-bottom: 5px;
+}
+
+#paymentResponseMessage.flash-message {
+    font-size: 1em;
+    text-align: center;
+}
+
+
 /* --- STYLE RESPONSYWNE --- */
 @media (max-width: 1200px) {
-  .main-nav { padding: 0 1.5em; } /* Dostosowanie paddingu nawigacji */
-  .main-nav .nav-links a { margin: 0 0.8em; } /* Zmniejszenie marginesów linków */
+  .main-nav { padding: 0 1.5em; }
+  .main-nav .nav-links a { margin: 0 0.8em; }
   .attractions-list.horizontal-layout .attraction-card { flex-basis: 210px; }
   .attractions-list.horizontal-layout .attraction-card .attraction-img { height: 170px; }
   .rooms-list, .explore-worlds { grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
@@ -921,8 +1286,8 @@ body {
   .main-nav { padding: 0 1em; }
   .main-nav .nav-links a { margin: 0 0.6em; font-size: 0.95rem; }
   .auth-button { padding: 0.6em 1.1em; font-size: 0.85rem; }
-  .nav-auth .user-profile-link .user-greeting-text { font-size: 0.85rem; }
-  .nav-auth .user-profile-link .fa-user-circle { font-size: 1.3em; }
+  .nav-auth .user-nav-greeting .user-greeting-text { font-size: 0.85rem; }
+  .nav-auth .user-nav-greeting .user-greeting-icon { font-size: 1.3em; }
   .nav-auth .logout-button, .nav-auth .admin-panel-button { padding: 0.5em 0.9em; font-size: 0.8rem; }
 
   .attractions-list.horizontal-layout .attraction-card { flex-basis: 190px; }
@@ -937,13 +1302,14 @@ body {
   .cta-section-main, .cta-section { max-width: 100%; margin-left: 1em; margin-right: 1em; }
   .menu-card.horizontal-card { flex-direction: column; align-items: stretch; }
   .menu-card.horizontal-card .menu-img { width: 100%; height: var(--card-image-height-restaurant); flex-basis: auto; }
-  .form-container.auth-form { max-width: 500px; }
+  .form-container.auth-form, .form-container.opinion-form-container-new { max-width: 500px; }
 }
 @media (max-width: 768px) {
   body { line-height: 1.6; }
   .page-wrapper { padding: 2em 1em; margin: 1em; }
+  .opinions-page-wrapper-new { padding: 1em; }
 
-  /* Poprawki dla nawigacji na małych ekranach */
+
   .main-nav {
       flex-direction: column;
       height: auto;
@@ -955,7 +1321,7 @@ body {
       flex-wrap: wrap;
       justify-content: center;
       width: 100%;
-      order: 2; /* Linki pod sekcją auth */
+      order: 2;
   }
   .main-nav .nav-links a {
       margin: 0.5em 0.7em;
@@ -963,21 +1329,15 @@ body {
   .main-nav .nav-auth {
       width: 100%;
       display: flex;
-      justify-content: space-between; /* Rozciągnij koszyk i blok użytkownika */
+      justify-content: space-between;
       align-items: center;
-      order: 1; /* Sekcja auth (koszyk, użytkownik) na górze */
-      margin-bottom: 1em; /* Dodaj odstęp pod sekcją auth */
+      order: 1;
+      margin-bottom: 1em;
   }
-  .nav-auth .user-nav-info {
-      margin-left: auto; /* Przesuń blok użytkownika maksymalnie w prawo w ramach .nav-auth */
-  }
-  .auth-button {
-     /* Usunięto flex-grow: 1; aby przyciski nie rozciągały się nadmiernie w niektórych przypadkach */
+   .auth-button {
      margin-left: 0;
      text-align: center;
   }
-  /* Koniec poprawek dla nawigacji */
-
 
   .rooms-list, .explore-worlds, .menu-sections, .spa-sections.cards-grid { grid-template-columns: 1fr; gap: 1.5em; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -994,20 +1354,14 @@ body {
   .return-button-container { top:10px; left: 10px; }
   .return-button {padding: 0.5em 1em; font-size: 0.9rem;}
 
-  .form-container.auth-form {
-      padding: var(--form-container-padding, 1.5em 1.2em);
+  .form-container.auth-form, .form-container.opinion-form-container-new {
+      padding: 1.5em 1.2em;
       max-width: 95%;
       margin-top: 50px;
   }
-   :root {
-        --form-input-padding: 0.6em 0.7em;
-        --form-group-margin-bottom: 0.7em;
-        --form-label-font-size: 0.8rem;
-        --form-label-margin-bottom: 0.3em;
-        --form-input-font-size: 0.85rem;
-        --form-h2-font-size: clamp(1.4rem, 2.2vw, 1.7rem);
-        --form-h2-margin-bottom: 0.8em;
-    }
+  .form-container.opinion-form-container-new { margin-top: 1em; }
+
+
   .modal-content.wide-modal {
       max-width: 95%;
       margin-top: 5%;
@@ -1046,39 +1400,28 @@ body {
   .spa-package-category .select-all-package-label { font-size: 0.85rem; }
   .spa-package-category .treatment-option-label { font-size: 0.8rem; }
 
-  /* Dalsze dostosowania nawigacji dla bardzo małych ekranów */
   .main-nav .nav-auth {
-      flex-wrap: wrap; /* Pozwól elementom w .nav-auth zawijać się */
-      justify-content: center; /* Wycentruj, gdy się zawijają */
-      gap: 8px; /* Zmniejsz odstępy */
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
   }
   .cart-button {
-      order: 1; /* Koszyk jako pierwszy */
+      order: 1;
   }
-  .nav-auth .user-nav-info {
-      order: 2; /* Blok użytkownika jako drugi */
-      width: 100%; /* Rozciągnij na całą szerokość, jeśli się zawinie */
-      justify-content: center; /* Wycentruj zawartość bloku użytkownika */
-      margin-top: 8px; /* Odstęp, jeśli się zawinie */
+  .nav-auth .user-nav-greeting {
+      order: 2;
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
   }
   .nav-auth .login-button, .nav-auth .register-button {
-    flex-basis: calc(50% - 4px); /* Przyciski logowania/rejestracji po połowie szerokości */
+    flex-basis: calc(50% - 4px);
     margin-top: 8px;
   }
-
+  .rating-stars-form .star-label { font-size: 2em; }
 }
 
 @media (max-height: 650px) and (min-width: 500px) {
-    :root {
-        --form-input-padding: 0.5em 0.6em;
-        --form-group-margin-bottom: 0.6em;
-        --form-label-font-size: 0.75rem;
-        --form-label-margin-bottom: 0.25em;
-        --form-input-font-size: 0.8rem;
-        --form-h2-font-size: clamp(1.3rem, 2vw, 1.5rem);
-        --form-h2-margin-bottom: 0.7em;
-        --form-container-padding: 1.2em 1.5em;
-    }
     .form-submit-button.cta-button { padding: 0.6em 1.2em; font-size: 0.9rem;}
     #spaPackageButton.cta-button.secondary-cta { padding: 0.5em 1em; font-size: 0.8rem; }
     .selected-treatments-display { font-size: 0.75rem; padding: 4px 6px; }
@@ -1091,113 +1434,201 @@ body {
     .spa-package-category .treatment-option-label { font-size: 0.8rem; margin-bottom: 6px;}
     #confirmSpaSelection.cta-button { padding: 0.7em 1.5em; font-size: 0.9rem; margin-top: 15px;}
 }
-/* style dla wiadomosci po pomyslnym zalogowaniu */
-.flash-message {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: 500;
-}
-.flash-message.success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
-.flash-message.error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-.flash-message.warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-}
-.flash-message.info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-}
 
-/* --- STYLE DLA PROSTEGO MODALA WIADOMOŚCI --- */
-.simple-message-modal-overlay {
-    position: fixed; /* Pozycjonowanie względem viewportu */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
-    display: flex; /* Użyte do centrowania modal-content */
-    justify-content: center;
+ /* Style koszyka - można je przenieść do głównego style.css */
+    .cart-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 0.95em; }
+    .cart-table th, .cart-table td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: middle; }
+    .cart-table th { background-color: var(--primary-very-light-color); font-weight: 600; }
+    .cart-table .logo-cell { width: 80px; text-align: center; }
+    .html-logo { width: 60px; height: 60px; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 1.3em; margin: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .html-logo i { margin-bottom: 2px; }
+    .html-logo span { font-size: 0.45em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.4px; }
+    .logo-aquapark { background-color: #00aeff; } .logo-hotel { background-color: #28a745; } .logo-spa { background-color: #6f42c1; } .logo-restaurant { background-color: #fd7e14; } .logo-default { background-color: #6c757d; }
+    .product-image-cart.fallback-image { max-width: 70px; max-height: 70px; object-fit: contain; border-radius: 4px;}
+    .cart-table .item-details-list { font-size: 0.8em; color: var(--text-muted-color); list-style: none; padding-left: 0; margin-top: 4px;}
+    .cart-table input[type="number"] { width: 50px; padding: 4px; text-align: center; border-radius: 4px; border: 1px solid var(--border-color); font-size:0.9em; }
+    .cart-table .update-btn, .cart-table .remove-btn { padding: 5px 8px; font-size: 0.8em; border-radius: 4px; cursor: pointer; border: 1px solid transparent; }
+    .cart-table .update-btn { background-color: var(--primary-light-color); color: var(--primary-dark-color); border-color: var(--primary-light-color); margin-left: 4px;}
+    .cart-table .remove-btn { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+    .cart-summary { text-align: right; margin-bottom: 20px; } .cart-summary h3 { font-size: 1.4em; color: var(--primary-dark-color); margin-bottom: 20px; }
+    .cart-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px;}
+    .empty-cart-message { padding: 30px 20px; text-align: center; background-color: #fff; border: 1px solid var(--border-color); border-radius: 8px; margin: 30px auto; max-width: 500px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .empty-cart-message i.fa-shopping-cart { font-size: 3.5em; margin-bottom: 20px; color: var(--primary-light-color); }
+    .empty-cart-message p { font-size: 1.1em; color: var(--text-color); margin-bottom: 15px; }
+    .empty-cart-message p:last-of-type { margin-bottom: 25px; } .empty-cart-message .cta-button { font-size: 1em; }
+
+    /* Style dla modala płatności */
+    #paymentCheckoutModal { display: none; position: fixed; z-index: 1050; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.65); align-items: center; justify-content: center; padding: 15px; box-sizing: border-box; }
+    .modal-content.payment-modal-content { background-color: var(--white-color); padding: 25px 30px; border: 1px solid var(--border-color); border-radius: 10px; max-width: 600px; width: 100%; box-shadow: 0 5px 25px rgba(0,0,0,0.2); position: relative; max-height: 90vh; overflow-y: auto; text-align: left; }
+    .payment-modal-content h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 1.2em; text-align: center; color: var(--primary-dark-color); }
+    .payment-modal-content h3 i { margin-right: 10px; }
+    .payment-modal-content h4 { font-size: 1.1rem; margin-top: 20px; margin-bottom: 15px; color: var(--primary-dark-color); border-bottom: 1px solid var(--primary-light-color); padding-bottom: 8px;}
+    .payment-modal-content .form-group { margin-bottom: 15px; }
+    .payment-method-selection label { display: block; margin-bottom: 10px; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; background-color: #fdfdfd; }
+    .payment-method-selection label:hover { background-color: #f0f6ff; border-color: var(--primary-light-color); }
+    .payment-method-selection input[type="radio"] { margin-right: 12px; vertical-align: middle; transform: scale(1.1); }
+    .payment-method-selection input[type="radio"]:checked + span { font-weight: 600; color: var(--primary-color); }
+    .payment-method-selection i { margin-right: 8px; width: 1.2em; text-align: center; }
+    .payment-details-fields { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
+    .payment-details-fields .form-group { margin-bottom: 15px; }
+    .payment-transfer-info { padding: 15px; background-color: #f0f4f8; border: 1px solid #d0d9e3; border-radius: 5px; margin-top:10px; font-size: 0.95em; }
+    .payment-transfer-info p { margin-bottom: 8px; line-height: 1.5; }
+    .payment-transfer-info strong { color: var(--primary-dark-color); }
+    .payment-transfer-info #orderIdForTransfer { font-weight: bold; color: var(--primary-color); }
+    .payment-modal-content .close-button { position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; color: #aaa; background: none; border: none; line-height: 1; padding: 0; cursor: pointer; }
+    .payment-modal-content .close-button:hover { color: #333; }
+    #paymentResponseMessage { margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; text-align: center; }
+
+    /* === NOWE STYLE DLA CSS-LOGO W KOSZYKU === */
+.cart-item-logo-css-wrapper {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    z-index: 2050; /* Powinien być na wierzchu innych elementów */
-    opacity: 0; /* Początkowo niewidoczny dla animacji */
-    animation: fadeInOverlay 0.3s forwards;
-}
-
-@keyframes fadeInOverlay {
-    to { opacity: 1; }
-}
-
-.simple-message-modal-content {
-    background-color: var(--white-color);
-    padding: 25px 35px;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    margin-right: 15px;
+    color: var(--white-color);
+    font-weight: bold;
     text-align: center;
-    min-width: 300px;
-    max-width: 450px;
-    position: relative; /* Dla pozycjonowania przycisku zamknięcia */
-    transform: scale(0.9); /* Początkowy stan dla animacji */
-    animation: scaleInModal 0.3s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 5px;
+    box-sizing: border-box;
+    line-height: 1.1; 
+    overflow: hidden; 
+}
+.cart-item-logo-css-wrapper .logo-icon {
+    font-size: 1.9em; 
+    display: block;
+    margin-bottom: 2px; 
+}
+.cart-item-logo-css-wrapper .logo-text {
+    font-size: 0.6em; 
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.2px; 
+    word-wrap: break-word; 
+}
+.default-logo-bg { background-color: #777777 !important; }
+.restaurant-logo-bg { background-color: #E67E22 !important; }
+.spa-logo-bg { background-color: #8E44AD !important; }
+.hotel-logo-bg { background-color: #2ECC71 !important; }
+.aquapark-logo-bg { background-color: #3498DB !important; }
+
+.cart-table td > div:first-child:has(.cart-item-logo-css-wrapper) {
+    display: flex;
+    align-items: center;
 }
 
-@keyframes scaleInModal {
-    to { transform: scale(1); }
+/* === STYLE DLA SEKCJI BILETÓW (z aquapark.php) === */
+.tickets-section { 
+    padding: 2em; 
+    background-color: #f9f9f9; 
+    border-radius: 8px; 
+    margin-top: 30px; 
+    margin-bottom: 30px;
 }
-
-.simple-message-modal-content p {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    margin: 0;
-    margin-bottom: 10px; /* Odstęp od przycisku, jeśli będzie */
-    line-height: 1.6;
+.ticket-card { 
+    border: 1px solid var(--border-color); 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border-radius: 8px; 
+    background-color: white; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-
-/* Style dla różnych typów modali */
-.simple-message-modal-content.modal-type-success {
-    border-left: 5px solid #28a745; /* Zielony dla sukcesu */
+.ticket-card h4 { 
+    margin-top: 0; 
+    color: var(--primary-dark-color); 
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
 }
-.simple-message-modal-content.modal-type-success p {
-    color: #155724;
+.ticket-card .price { 
+    font-size: 1.5em; 
+    font-weight: bold; 
+    color: var(--primary-color); 
+    margin: 10px 0; 
 }
-
-.simple-message-modal-content.modal-type-error {
-    border-left: 5px solid #dc3545; /* Czerwony dla błędu */
-}
-.simple-message-modal-content.modal-type-error p {
-    color: #721c24;
-}
-
-.simple-message-modal-content.modal-type-info {
-    border-left: 5px solid var(--primary-color); /* Niebieski dla info */
-}
-
-
-.simple-modal-close-btn {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 1.8rem;
+.ticket-card p {
+    flex-grow: 1; 
+    margin-bottom: 15px; 
+    font-size: 0.9em;
     color: var(--text-muted-color);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
 }
-.simple-modal-close-btn:hover {
-    color: var(--text-color);
+.ticket-card .add-to-cart-form { 
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+.ticket-card .add-to-cart-form label { 
+    margin-right: 5px; 
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+.ticket-card .add-to-cart-form input[type="number"] { 
+    width: 60px; 
+    padding: 8px; 
+    text-align: center; 
+    border: 1px solid var(--border-color); 
+    border-radius: 4px;
+}
+.ticket-card .add-to-cart-form .cta-button-small {
+    padding: 0.6em 1.2em;
+    font-size: 0.85em;
+}
+
+/* === NOWE STYLE DLA CSS-LOGO W KOSZYKU === */
+.cart-item-logo-css-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 65px;  /* Zmieniono na 65px */
+    height: 65px; /* Zmieniono na 65px */
+    border-radius: 8px;
+    margin-right: 15px;
+    color: var(--white-color);
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    line-height: 1.1; 
+    overflow: hidden; 
+}
+.cart-item-logo-css-wrapper .logo-icon {
+    font-size: 1.9em; 
+    display: block;
+    margin-bottom: 2px; 
+}
+.cart-item-logo-css-wrapper .logo-text {
+    font-size: 0.6em; 
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.2px; 
+    word-wrap: break-word; 
+}
+.default-logo-bg { background-color: #777777 !important; }
+.restaurant-logo-bg { background-color: #E67E22 !important; }
+.spa-logo-bg { background-color: #8E44AD !important; }
+.hotel-logo-bg { background-color: #2ECC71 !important; }
+.aquapark-logo-bg { background-color: #3498DB !important; }
+
+/* Dodatkowe style dla tabeli koszyka, jeśli były w cart_view.php */
+.cart-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 0.95em; }
+.cart-table th, .cart-table td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; vertical-align: middle; }
+.cart-table th { background-color: var(--primary-very-light-color); font-weight: 600; }
+.cart-table .logo-cell { width: 85px; text-align: center; padding-right: 0;} /* Dostosuj szerokość komórki logo */
+.cart-table .item-details-list { font-size: 0.8em; color: var(--text-muted-color); list-style: none; padding-left: 0; margin-top: 4px;}
+.cart-table input[type="number"].cart-quantity-input { width: 60px; padding: 8px; text-align: center; border-radius: 4px; border: 1px solid var(--border-color); font-size:0.9em; }
+.cart-table .action-btn.update-btn { background-color: var(--primary-light-color); color: var(--primary-dark-color); border-color: var(--primary-light-color); }
+.cart-table .action-btn.remove-btn { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+.cart-summary { text-align: right; margin-bottom: 20px; } .cart-summary h3 { font-size: 1.4em; color: var(--primary-dark-color); margin-bottom: 20px; }
+.cart-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px;}
+.empty-cart-message { padding: 30px 20px; text-align: center; background-color: #fff; border: 1px solid var(--border-color); border-radius: 8px; margin: 30px auto; max-width: 500px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.empty-cart-message i.fa-shopping-cart { font-size: 3.5em; margin-bottom: 20px; color: var(--primary-light-color); }
+.empty-cart-message p { font-size: 1.1em; color: var(--text-color); margin-bottom: 15px; }
+.empty-cart-message p:last-of-type { margin-bottom: 25px; } .empty-cart-message .cta-button { font-size: 1em; }
+/* ... (reszta stylów dla modala płatności, jeśli tam były) ... */

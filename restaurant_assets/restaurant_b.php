@@ -1,38 +1,68 @@
 <?php
-require_once __DIR__ . '/../config/init.php'; 
+// restaurant_assets/restaurant_b.php
+require_once dirname(__DIR__) . '/config/init.php';
+
 $page_title = "Rezerwacja Stolika - AquaParadise";
 
-include BASE_PATH . '/includes/header.php';
 ?>
-<title><?php echo e($page_title); ?></title>
-<link rel="stylesheet" href="../style.css"> 
-
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8') : 'AquaParadise'; ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <?php
+   
+    $css_path = "../style.css"; // Ścieżka względna z restaurant_assets do głównego katalogu
+    if (defined('BASE_URL')) { // Jeśli BASE_URL jest zdefiniowane i poprawne, można go użyć
+    }
+    ?>
+    <link rel="stylesheet" href="<?php echo $css_path; ?>?v=<?php echo time(); ?>">
+    <script>
+        var isLoggedInFromPHP = <?php echo (isset($_SESSION['user_id']) ? 'true' : 'false'); ?>;
+        var basePathJS = '<?php echo defined('BASE_URL') ? addslashes(BASE_URL) : "/"; ?>';
+        var currentUserFirstNameFromPHP = '<?php echo addslashes($_SESSION['user_first_name'] ?? ''); ?>';
+        var currentUserLastNameFromPHP = '<?php echo addslashes($_SESSION['user_last_name'] ?? ''); ?>';
+        var currentUserEmailFromPHP = '<?php echo addslashes($_SESSION['user_email'] ?? ''); ?>';
+    </script>
+</head>
+<body>
 <div class="auth-page-container">
     <div class="return-button-container">
-        <a href="../index.php" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
+        <a href="<?php echo BASE_URL; ?>index.php" class="return-button"><i class="fas fa-arrow-left"></i> Powrót do strony głównej</a>
     </div>
 
     <div class="form-container-wrapper">
         <div class="form-container auth-form booking-form">
             <h2>Rezerwacja Stolika w Restauracji</h2>
-            <?php
-            if (function_exists('display_flash_message')) {
-                display_flash_message();
-            }
-            ?>
-            <form action="../cart_actions.php" method="POST" id="restaurantReservationForm">
+            <?php /* Reszta formularza bez zmian, jak w poprzedniej odpowiedzi */ ?>
+            <form action="<?php echo BASE_URL; ?>cart_actions.php" method="POST" id="restaurantReservationForm">
                 <input type="hidden" name="action" value="add_to_cart">
                 <?php
                     $reservationProductId = null;
+                    $reservationProductName = 'Rezerwacja Stolika w Restauracji';
                     if(isset($pdo)){
-                        $stmtResProd = $pdo->prepare("SELECT product_id FROM Products WHERE name LIKE 'Rezerwacja Stolika%' LIMIT 1");
-                        $stmtResProd->execute();
-                        $resProd = $stmtResProd->fetch();
-                        if($resProd) $reservationProductId = $resProd['product_id'];
-                        else error_log("Produkt 'Rezerwacja Stolika' nie znaleziony w bazie.");
+                        try {
+                            $stmtResProd = $pdo->prepare("SELECT product_id FROM Products WHERE name = :name LIMIT 1");
+                            $stmtResProd->bindParam(':name', $reservationProductName, PDO::PARAM_STR);
+                            $stmtResProd->execute();
+                            $resProd = $stmtResProd->fetch();
+                            if($resProd) {
+                                $reservationProductId = $resProd['product_id'];
+                            } else {
+                                error_log("restaurant_b.php: Produkt placeholder '" . $reservationProductName . "' nie został znaleziony w bazie danych.");
+                            }
+                        } catch (PDOException $e) {
+                            error_log("restaurant_b.php: Błąd pobierania ID produktu rezerwacji restauracji: " . $e->getMessage());
+                        }
+                    } else {
+                         error_log("restaurant_b.php: Krytyczny błąd - brak obiektu PDO.");
                     }
                 ?>
-                <input type="hidden" name="product_id" value="<?php echo e($reservationProductId ?? '0'); ?>"> <?php // Użyj ID produktu "Rezerwacja" lub 0/null jeśli obsługa inna ?>
+                <input type="hidden" name="product_id" value="<?php echo e($reservationProductId ?? ''); ?>">
                 <input type="hidden" name="quantity" value="1">
                 <input type="hidden" name="item_details[reservation_type]" value="restaurant_table">
 
@@ -65,11 +95,13 @@ include BASE_PATH . '/includes/header.php';
                     <textarea id="res_notes" name="item_details[notes]" rows="2" placeholder="Specjalne życzenia, alergie itp."></textarea>
                 </div>
 
-                <button type="submit" class="cta-button form-submit-button">Zarezerwuj Stolik</button>
+                <button type="submit" class="cta-button form-submit-button" <?php if(empty($reservationProductId)) echo 'disabled title="Produkt rezerwacji nie jest dostępny"'; ?>>
+                    <?php echo empty($reservationProductId) ? 'Rezerwacja chwilowo niedostępna' : 'Zarezerwuj Stolik'; ?>
+                </button>
+                <?php if(empty($reservationProductId)): ?>
+                    <p style="color:red; text-align:center; margin-top:10px;">Formularz rezerwacji jest tymczasowo nieaktywny z powodu braku konfiguracji produktu rezerwacyjnego.</p>
+                <?php endif; ?>
             </form>
         </div>
     </div>
 </div>
-<script src="../script.js"></script> 
-</body>
-</html>

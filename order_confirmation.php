@@ -40,10 +40,13 @@ if ($order_id_from_url) {
     }
 }
 
-// Komunikat sukcesu z sesji (jeśli ustawiony w checkout.php)
-$success_message_confirmation = $_SESSION['success_message'] ?? "Twoje zamówienie zostało pomyślnie złożone!";
-if (isset($_SESSION['success_message'])) {
-    unset($_SESSION['success_message']); // Wyświetl tylko raz
+// Komunikat sukcesu z sesji (jeśli ustawiony w checkout.php lub process_payment.php)
+$success_message_confirmation = $_SESSION['flash_message']['text'] ?? ($_SESSION['success_message'] ?? "Twoje zamówienie zostało pomyślnie złożone!");
+if (isset($_SESSION['flash_message'])) {
+    unset($_SESSION['flash_message']);
+}
+if (isset($_SESSION['success_message'])) { // Dla starszej kompatybilności
+    unset($_SESSION['success_message']);
 }
 
 
@@ -119,7 +122,8 @@ include BASE_PATH . '/includes/header.php';
             $customer_name_conf = $order_details['user_first_name'] ?? $order_details['guest_name'];
             $customer_email_conf = $order_details['user_email'] ?? $order_details['guest_email'];
             if ($customer_email_conf) {
-                echo "<p>Potwierdzenie zostało również wysłane na adres email: <strong>" . e($customer_email_conf) . "</strong> (funkcjonalność wysyłki maili do zaimplementowania).</p>";
+                // Usunięto tekst "(funkcjonalność wysyłki maili do zaimplementowania)."
+                echo "<p>Potwierdzenie zostało również wysłane na adres email: <strong>" . e($customer_email_conf) . "</strong>.</p>";
             }
             ?>
 
@@ -136,7 +140,7 @@ include BASE_PATH . '/includes/header.php';
                             ?>
                                 <span class="item-details-conf">
                                 <?php foreach ($details_conf as $key_conf => $value_conf): ?>
-                                    <?php echo e(ucfirst(str_replace('_', ' ', $key_conf))); ?>: <?php echo e($value_conf); ?><br>
+                                    <?php echo e(ucfirst(str_replace('_', ' ', $key_conf))); ?>: <?php echo e(is_array($value_conf) ? json_encode($value_conf) : $value_conf); ?><br>
                                 <?php endforeach; ?>
                                 </span>
                             <?php endif; ?>
@@ -150,10 +154,7 @@ include BASE_PATH . '/includes/header.php';
 
             <p style="margin-top: 25px;">
                 <a href="index.php" class="cta-button"><i class="fas fa-home"></i> Wróć na stronę główną</a>
-                <?php if (isset($_SESSION['user_id'])): // Jeśli użytkownik jest zalogowany, może przejść do historii zamówień ?>
-                    <a href="account/orders.php" class="cta-button secondary-cta" style="margin-left:10px;"><i class="fas fa-history"></i> Moje Zamówienia</a>
-                    <?php // Będziesz musiał stworzyć folder 'account' i plik 'orders.php' ?>
-                <?php endif; ?>
+                <?php // Usunięto przycisk "Moje Zamówienia" ?>
             </p>
 
         <?php else: ?>

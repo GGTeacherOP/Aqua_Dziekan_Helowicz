@@ -118,12 +118,12 @@ include BASE_PATH . '/includes/navigation.php';
     <section class="gallery-grid">
         <?php
         $gallery_images = [
-            "aquapark_gallery2.jpg" => "Zjeżdżalnie wodne",
-            "aquapark_gallery3.jpg" => "Zabawa w strefie dla dzieci",
-            "aquapark_gallery4.jpg" => "Basen z hydromasażem",
-            "aquapark_gallery6.jpg" => "Wewnętrzna strefa relaksu",
-            "aquapark_wave_pool.jpg" => "Akcja w basenie z falą",
-            "aquapark_slides.jpg" => "Zjeżdżalnia z bliska"
+            "aquapark_assets/aquapark_gallery2.jpg" => "Zjeżdżalnie wodne",
+            "aquapark_assets/aquapark_gallery3.jpg" => "Zabawa w strefie dla dzieci",
+            "aquapark_assets/aquapark_gallery4.jpg" => "Basen z hydromasażem",
+            "aquapark_assets/aquapark_gallery6.jpg" => "Wewnętrzna strefa relaksu",
+            "aquapark_assets/aquapark_wave_pool.jpg" => "Akcja w basenie z falą",
+            "aquapark_assets/aquapark_slides.jpg" => "Zjeżdżalnia z bliska"
         ];
         foreach ($gallery_images as $img_file => $alt_text):
         ?>

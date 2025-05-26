@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Maj 18, 2025 at 07:54 PM
+-- Generation Time: Maj 26, 2025 at 05:00 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -42,9 +42,12 @@ CREATE TABLE `cartitems` (
 --
 
 INSERT INTO `cartitems` (`cart_item_id`, `cart_id`, `product_id`, `quantity`, `price_at_addition`, `item_details`, `added_at`) VALUES
-(1, 1, 1, 2, 90.00, NULL, '2025-05-18 14:36:59'),
+(1, 1, 1, 2, 90.00, '', '2025-05-18 14:36:59'),
 (2, 1, 5, 1, 450.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"check_in_date\":\"2025-05-20\",\"check_out_date\":\"2025-05-21\",\"notes\":\"Prosze czarn\\u0105 po\\u015bciel\",\"num_guests\":\"1\",\"reservation_type\":\"hotel_room\"}', '2025-05-18 14:41:24'),
-(3, 1, 15, 1, 0.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"notes\":\"Oby syn\",\"reservation_type\":\"spa_booking\",\"selected_treatments_ids_string\":\"12\",\"treatment_date\":\"2025-05-28\",\"treatment_time\":\"15:00\"}', '2025-05-18 15:54:53');
+(3, 1, 15, 1, 0.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"notes\":\"Oby syn\",\"reservation_type\":\"spa_booking\",\"selected_treatments_ids_string\":\"12\",\"treatment_date\":\"2025-05-28\",\"treatment_time\":\"15:00\"}', '2025-05-18 15:54:53'),
+(5, 14, 3, 1, 220.00, NULL, '2025-05-21 18:37:03'),
+(6, 18, 2, 1, 70.00, NULL, '2025-05-22 17:05:05'),
+(17, 15, 1, 1, 90.00, NULL, '2025-05-23 10:29:32');
 
 -- --------------------------------------------------------
 
@@ -65,7 +68,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`cart_id`, `user_id`, `session_id`, `created_at`, `updated_at`) VALUES
-(1, 6, NULL, '2025-05-18 14:36:14', '2025-05-18 14:36:14'),
+(1, 6, '', '2025-05-18 14:36:14', '2025-05-18 14:36:14'),
 (2, NULL, 'rs5qipm8e8rur2n9cpcnpa1qch', '2025-05-18 15:46:11', '2025-05-18 15:46:11'),
 (3, NULL, 'o31qujudt2il4iarcvk0qlr992', '2025-05-18 17:37:57', '2025-05-18 17:37:57'),
 (4, 2, NULL, '2025-05-18 17:49:38', '2025-05-18 17:49:38'),
@@ -77,7 +80,24 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `session_id`, `created_at`, `updated_
 (10, 4, NULL, '2025-05-18 17:51:52', '2025-05-18 17:51:52'),
 (11, NULL, 'ri5ji2ni1i1oht6k7gpooajk5h', '2025-05-18 17:51:58', '2025-05-18 17:51:58'),
 (12, 5, NULL, '2025-05-18 17:52:19', '2025-05-18 17:52:19'),
-(13, NULL, 'p2aoj07qhdedvdreqhjb16u6l3', '2025-05-18 17:52:26', '2025-05-18 17:52:26');
+(13, NULL, 'p2aoj07qhdedvdreqhjb16u6l3', '2025-05-18 17:52:26', '2025-05-18 17:52:26'),
+(14, NULL, '9hs64jpocbguo2s60se7f0mueh', '2025-05-21 18:35:20', '2025-05-21 18:35:20'),
+(15, 7, NULL, '2025-05-21 18:38:06', '2025-05-21 18:38:06'),
+(16, NULL, 'kr4fcslcagr5831ilk0tah6dag', '2025-05-21 18:38:15', '2025-05-21 18:38:15'),
+(17, NULL, '25htkcs38esej13k1lr18dm1rc', '2025-05-21 18:39:22', '2025-05-21 18:39:22'),
+(18, NULL, '6ghu6f1dgtajc0a1c1p76vk60b', '2025-05-22 17:04:53', '2025-05-22 17:04:53'),
+(19, NULL, 's0ivnp9v5pb65fkj5sb78tgllp', '2025-05-22 18:28:15', '2025-05-22 18:28:15'),
+(20, NULL, '6mrmcmiloqj9ptcae9l8ud1j9q', '2025-05-23 07:52:41', '2025-05-23 07:52:41'),
+(21, NULL, '3huj6b5kh9f8tcjjq2kuo6el1v', '2025-05-23 10:30:45', '2025-05-23 10:30:45'),
+(22, NULL, 'f7l5u35bq1oudqnthtisjj9o31', '2025-05-23 10:31:10', '2025-05-23 10:31:10'),
+(23, NULL, '7rn3cpe620i4mdcve5rkjkgpp9', '2025-05-25 11:19:52', '2025-05-25 11:19:52'),
+(24, NULL, 'd8aqobksva5c9ns74etnr0s7au', '2025-05-25 14:27:40', '2025-05-25 14:27:40'),
+(25, NULL, 'ngkstnrm7qmp5gmvsurenjej1l', '2025-05-25 15:55:40', '2025-05-25 15:55:40'),
+(26, NULL, 'ere0qvd9krdv8i509u915l2hrd', '2025-05-25 18:28:16', '2025-05-25 18:28:16'),
+(27, NULL, 'cung5oid1ruke8c8abnttud159', '2025-05-25 18:30:49', '2025-05-25 18:30:49'),
+(28, NULL, '41pv3hus2qo4e9opk7lj5ra1uu', '2025-05-25 18:31:06', '2025-05-25 18:31:06'),
+(29, NULL, '12tcl1dj8bl39b98gmodfampop', '2025-05-25 18:34:51', '2025-05-25 18:34:51'),
+(30, NULL, 'igdfcs65kg28dgl7pebn8iv0p4', '2025-05-25 18:38:53', '2025-05-25 18:38:53');
 
 -- --------------------------------------------------------
 
@@ -129,8 +149,11 @@ CREATE TABLE `opinions` (
 INSERT INTO `opinions` (`opinion_id`, `user_id`, `guest_name`, `product_id`, `rating`, `comment`, `status`, `created_at`, `admin_comment`) VALUES
 (1, 1, NULL, 6, 5, 'Wspaniały pobyt, pokój z pięknym widokiem! Czysto i komfortowo. Obsługa hotelowa bardzo miła i pomocna. Na pewno wrócimy!', 'Zaakceptowana', '2025-05-18 14:07:58', 'Dziękujemy za miłe słowa i zapraszamy ponownie! Cieszymy się, że pobyt się udał.'),
 (2, 2, NULL, 9, 4, 'Bardzo przyjemny masaż, terapeutka profesjonalna. Czułam się odprężona. Może trochę za głośna muzyka w tle, ale ogólnie polecam.', 'Zaakceptowana', '2025-05-18 14:07:58', NULL),
-(3, NULL, NULL, 17, 5, 'Pyszny łosoś, najlepszy jaki jadłem! Idealnie wypieczony, sos rewelacyjny. Obsługa w restauracji również na wysokim poziomie.', 'Oczekująca', '2025-05-18 14:07:58', NULL),
-(4, 1, NULL, 1, 3, 'Aquapark jest duży, ale w weekendy straszne tłumy. Na niektóre zjeżdżalnie trzeba było długo czekać. Czystość OK.', 'Zaakceptowana', '2025-05-18 14:07:58', 'Dziękujemy za opinię. Staramy się zarządzać przepływem gości, szczególnie w popularne dni. Zapraszamy w tygodniu dla większego komfortu.');
+(3, NULL, NULL, 17, 5, 'Pyszny łosoś, najlepszy jaki jadłem! Idealnie wypieczony, sos rewelacyjny. Obsługa w restauracji również na wysokim poziomie.', 'Zaakceptowana', '2025-05-18 14:07:58', 'zajebiscie dzieki'),
+(4, 1, NULL, 1, 3, 'Aquapark jest duży, ale w weekendy straszne tłumy. Na niektóre zjeżdżalnie trzeba było długo czekać. Czystość OK.', 'Zaakceptowana', '2025-05-18 14:07:58', 'Dziękujemy za opinię. Staramy się zarządzać przepływem gości, szczególnie w popularne dni. Zapraszamy w tygodniu dla większego komfortu.'),
+(5, NULL, 'Janusz', NULL, 4, 'spoko', 'Zaakceptowana', '2025-05-25 14:31:07', 'cos wiecej bys dodal'),
+(6, 5, NULL, NULL, 4, 'okej', 'Zaakceptowana', '2025-05-25 15:47:19', 'git'),
+(7, NULL, 'Anonimowy', NULL, 3, 'slabo ogolnie drogo posilki zimne', 'Zaakceptowana', '2025-05-25 15:57:26', 'a chcesz w ryj');
 
 -- --------------------------------------------------------
 
@@ -147,6 +170,21 @@ CREATE TABLE `orderitems` (
   `item_details` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
+--
+-- Dumping data for table `orderitems`
+--
+
+INSERT INTO `orderitems` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price_per_item`, `item_details`) VALUES
+(1, 1, 1, 1, 90.00, NULL),
+(2, 2, 4, 1, 270.00, NULL),
+(3, 3, 1, 1, 90.00, NULL),
+(4, 4, 2, 1, 70.00, '0'),
+(5, 5, 1, 1, 90.00, '0'),
+(6, 5, 7, 1, 1200.00, '{\"booking_email\":\"superadmin@aquaparadise.pl\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_phone\":\"555000111\",\"check_in_date\":\"2025-05-28\",\"check_out_date\":\"2025-05-31\",\"notes\":\"\",\"num_guests\":\"1\",\"reservation_type\":\"hotel_room\"}'),
+(7, 5, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_phone\":\"555000111\",\"booking_email\":\"superadmin@aquaparadise.pl\",\"reservation_date\":\"2025-06-03\",\"reservation_time\":\"00:25\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(8, 5, 15, 1, 930.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_email\":\"superadmin@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"treatment_date\":\"2025-05-29\",\"treatment_time\":\"20:31\",\"selected_treatments_ids_string\":\"10,13,21\",\"total_price_for_selected_spa\":\"930.00\",\"notes\":\"\"}'),
+(9, 6, 2, 1, 70.00, '0');
+
 -- --------------------------------------------------------
 
 --
@@ -158,16 +196,55 @@ CREATE TABLE `orders` (
   `user_id` int(11) DEFAULT NULL,
   `guest_email` varchar(255) DEFAULT NULL,
   `guest_name` varchar(200) DEFAULT NULL,
+  `billing_name` varchar(255) DEFAULT NULL,
+  `billing_email` varchar(255) DEFAULT NULL,
+  `billing_address_street` varchar(255) DEFAULT NULL,
+  `billing_address_city` varchar(100) DEFAULT NULL,
+  `billing_address_postal_code` varchar(20) DEFAULT NULL,
+  `billing_address_country` varchar(100) DEFAULT NULL,
   `total_amount` decimal(10,2) NOT NULL,
-  `order_status` varchar(50) DEFAULT 'Oczekujące',
-  `payment_method` varchar(50) DEFAULT NULL,
-  `payment_status` varchar(50) DEFAULT 'Nieopłacone',
+  `order_status` varchar(50) DEFAULT 'Oczekujące na płatność',
+  `payment_method` varchar(50) DEFAULT NULL COMMENT 'np. Karta, Blik, Przelew',
+  `payment_status` varchar(50) DEFAULT 'Oczekuje' COMMENT 'np. Oczekuje, Zakończona, Nieudana, Zwrócona',
   `payment_transaction_id` varchar(255) DEFAULT NULL,
   `promo_code_used` varchar(100) DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `guest_email`, `guest_name`, `billing_name`, `billing_email`, `billing_address_street`, `billing_address_city`, `billing_address_postal_code`, `billing_address_country`, `total_amount`, `order_status`, `payment_method`, `payment_status`, `payment_transaction_id`, `promo_code_used`, `notes`, `created_at`, `updated_at`) VALUES
+(1, NULL, NULL, NULL, 'Gość', NULL, NULL, NULL, NULL, NULL, 90.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 08:33:51', '2025-05-23 08:33:51'),
+(2, 7, NULL, NULL, 'Wikor Tak', 'wiktor@gmail.com', NULL, NULL, NULL, NULL, 270.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 08:34:50', '2025-05-23 08:34:50'),
+(3, 7, NULL, NULL, 'Wikor Tak', 'wiktor@gmail.com', NULL, NULL, NULL, NULL, 90.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 10:17:58', '2025-05-23 10:17:58'),
+(4, 7, NULL, NULL, 'Wikor Tak', 'wiktor@gmail.com', NULL, NULL, NULL, NULL, 70.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 10:24:19', '2025-05-23 10:24:19'),
+(5, 5, NULL, NULL, 'Krzysztof Adminowski', 'superadmin@aquaparadise.pl', NULL, NULL, NULL, NULL, 2220.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748199280', NULL, NULL, '2025-05-25 18:54:40', '2025-05-25 18:54:40'),
+(6, 5, NULL, NULL, 'Krzysztof Adminowski', 'superadmin@aquaparadise.pl', NULL, NULL, NULL, NULL, 70.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748199416', NULL, NULL, '2025-05-25 18:56:56', '2025-05-25 18:56:56');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`id`, `email`, `token`, `expires_at`, `created_at`) VALUES
+(1, 'wiktor@gmail.com', '$2y$10$J7f6Q4QchQos0tgYuisMzOdLtKpeZPCX6OwalhdvqAfYC9XuYQA2O', '2025-05-25 21:35:24', '2025-05-25 18:35:24');
 
 -- --------------------------------------------------------
 
@@ -199,7 +276,8 @@ INSERT INTO `permissions` (`permission_id`, `permission_name`, `description`) VA
 (11, 'access_vip_employee_module_hotel', 'Dostęp do modułu VIP pracownika hotelu'),
 (12, 'access_vip_employee_module_spa', 'Dostęp do modułu VIP pracownika SPA'),
 (13, 'access_vip_employee_module_aquapark', 'Dostęp do modułu VIP pracownika aquaparku'),
-(14, 'access_vip_employee_module_restaurant', 'Dostęp do modułu VIP pracownika restauracji');
+(14, 'access_vip_employee_module_restaurant', 'Dostęp do modułu VIP pracownika restauracji'),
+(15, 'manage_salaries', 'Zarządzanie wynagrodzeniami pracowników');
 
 -- --------------------------------------------------------
 
@@ -248,7 +326,8 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `description`, `pri
 (23, 8, 'Odżywczy Okład Czekoladowy', 'Luksusowy okład na ciało na bazie prawdziwej czekolady, który głęboko nawilża, odżywia i poprawia nastrój.', 330.00, 'spa_assets/zabiegi_na_cialo.jpg', '{\"type\": \"spa_treatment\", \"duration_minutes\": 75, \"focus_area\": \"full_body\"}', 1),
 (24, 8, 'Detoksykujący Rytuał z Zieloną Herbatą', 'Kompleksowy rytuał oczyszczający z peelingiem, maską i masażem na bazie zielonej herbaty, wspomagający usuwanie toksyn.', 380.00, 'spa_assets/zabiegi_na_cialo.jpg', '{\"type\": \"spa_treatment\", \"duration_minutes\": 90, \"focus_area\": \"full_body\"}', 1),
 (25, 5, 'Pakiet \"Królewski Relaks\" (Peeling + Okład + Masaż)', 'Kompletna regeneracja: peeling, odżywczy okład na ciało i relaksujący masaż.', 680.00, 'spa_assets/welness.jpg', '{\"type\": \"spa_package\", \"duration_minutes\": 150, \"includes_treatments_description\": \"Peeling, Okład, Masaż\"}', 1),
-(26, 5, 'Romantyczny Rytuał dla Dwojga', 'Wyjątkowy pakiet dla par, obejmujący wspólny masaż i czas w strefie relaksu.', 850.00, 'spa_assets/welness.jpg', '{\"type\": \"spa_package\", \"duration_minutes\": 120, \"for_two\": true}', 1);
+(26, 5, 'Romantyczny Rytuał dla Dwojga', 'Wyjątkowy pakiet dla par, obejmujący wspólny masaż i czas w strefie relaksu.', 850.00, 'spa_assets/welness.jpg', '{\"type\": \"spa_package\", \"duration_minutes\": 120, \"for_two\": true}', 1),
+(28, 1, 'Rezerwacja Stolika w Restauracji', 'Rezerwacja stolika. Szczegóły w item_details zamówienia.', 0.00, NULL, '{\"type\": \"reservation_service\", \"area\": \"restaurant\"}', 1);
 
 -- --------------------------------------------------------
 
@@ -282,6 +361,7 @@ INSERT INTO `rolepermissions` (`role_id`, `permission_id`) VALUES
 (6, 7),
 (6, 8),
 (6, 10),
+(6, 15),
 (7, 1),
 (7, 2),
 (7, 3),
@@ -295,7 +375,8 @@ INSERT INTO `rolepermissions` (`role_id`, `permission_id`) VALUES
 (7, 11),
 (7, 12),
 (7, 13),
-(7, 14);
+(7, 14),
+(7, 15);
 
 -- --------------------------------------------------------
 
@@ -320,7 +401,43 @@ INSERT INTO `roles` (`role_id`, `role_name`, `description`) VALUES
 (4, 'Pracownik SPA', 'Pracownik obsługujący moduł SPA.'),
 (5, 'Pracownik Restauracja', 'Pracownik obsługujący moduł Restauracji.'),
 (6, 'Administrator', 'Pracownik z rozszerzonymi uprawnieniami zarządzania.'),
-(7, 'SuperAdmin', 'Główny administrator systemu z pełnym dostępem.');
+(7, 'SuperAdmin', 'Główny administrator systemu z pełnym dostępem.'),
+(8, 'Recepcjonista', 'Pracownik obsługujący recepcję główną i hotelową.'),
+(9, 'Kierownik Zmiany Aquapark', 'Osoba odpowiedzialna za nadzór nad pracą Aquaparku na danej zmianie.'),
+(10, 'Specjalista ds. Marketingu', 'Osoba odpowiedzialna za działania marketingowe kompleksu.'),
+(11, 'Pracownik Techniczny', 'Osoba odpowiedzialna za utrzymanie techniczne obiektów.');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `salaries`
+--
+
+CREATE TABLE `salaries` (
+  `salary_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'ID pracownika (z tabeli users)',
+  `amount` decimal(10,2) NOT NULL COMMENT 'Kwota wynagrodzenia',
+  `pay_frequency` enum('miesięcznie','godzinowo','projektowo','jednorazowo') NOT NULL DEFAULT 'miesięcznie' COMMENT 'Częstotliwość wypłaty',
+  `effective_date` date NOT NULL COMMENT 'Data, od której obowiązuje wynagrodzenie',
+  `contract_type` varchar(100) DEFAULT NULL COMMENT 'Typ umowy (np. UoP, B2B, Zlecenie)',
+  `notes` text DEFAULT NULL COMMENT 'Dodatkowe uwagi',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci COMMENT='Tabela przechowująca informacje o wynagrodzeniach pracowników';
+
+--
+-- Dumping data for table `salaries`
+--
+
+INSERT INTO `salaries` (`salary_id`, `user_id`, `amount`, `pay_frequency`, `effective_date`, `contract_type`, `notes`, `created_at`, `updated_at`) VALUES
+(1, 8, 4500.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Wynagrodzenie zasadnicze', '2025-05-25 16:39:51', '2025-05-25 16:39:51'),
+(2, 9, 6200.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Wynagrodzenie kierownicze', '2025-05-25 16:39:51', '2025-05-25 16:39:51'),
+(3, 10, 5800.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Specjalista ds. marketingu, dział promocji', '2025-05-25 16:39:51', '2025-05-25 16:39:51'),
+(4, 11, 5100.00, 'miesięcznie', '2025-05-20', 'Umowa zlecenie', 'Stawka początkowa, dział techniczny', '2025-05-25 16:39:51', '2025-05-25 16:39:51'),
+(5, 8, 4500.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Wynagrodzenie zasadnicze dla Recepcjonistki', '2025-05-25 16:40:49', '2025-05-25 16:40:49'),
+(6, 9, 6200.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Wynagrodzenie dla Kierownika Zmiany Aquapark', '2025-05-25 16:40:49', '2025-05-25 16:40:49'),
+(7, 10, 5800.00, 'miesięcznie', '2025-06-01', 'Umowa o pracę', 'Wynagrodzenie dla Specjalisty ds. Marketingu', '2025-05-25 16:40:49', '2025-05-25 16:40:49'),
+(8, 11, 5100.00, 'miesięcznie', '2025-05-20', 'Umowa zlecenie', 'Stawka początkowa dla Pracownika Technicznego', '2025-05-25 16:40:49', '2025-05-25 16:40:49');
 
 -- --------------------------------------------------------
 
@@ -347,11 +464,16 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password_hash`, `phone`, `role_id`, `is_vip_customer`, `created_at`, `last_login`) VALUES
 (1, 'Jan', 'Kowalski', 'jan.kowalski@example.com', 'Kowalski123', '123456789', 1, 0, '2025-05-18 14:07:58', '2025-05-18 17:51:17'),
-(2, 'Anna', 'Nowak', 'anna.nowak@example.com', 'Nowak456', '987654321', 1, 1, '2025-05-18 14:07:58', '2025-05-18 17:49:38'),
+(2, 'Anna', 'Nowak', 'anna.nowak@example.com', 'Nowak456', '987654321', 1, 1, '2025-05-18 14:07:58', '2025-05-21 18:39:16'),
 (3, 'Piotr', 'Zieliński', 'piotr.zielinski@aquaparadise.pl', 'Piotrek789', '555111222', 6, 0, '2025-05-18 14:07:58', '2025-05-18 17:50:15'),
 (4, 'Ewa', 'Lewandowska', 'ewa.lewandowska@aquaparadise.pl', 'EwaHot012', '555333444', 3, 0, '2025-05-18 14:07:58', '2025-05-18 17:51:50'),
-(5, 'Krzysztof', 'Adminowski', 'superadmin@aquaparadise.pl', 'SuperAdminHaslo', '555000111', 7, 0, '2025-05-18 14:07:58', '2025-05-18 17:52:18'),
-(6, 'Maniek', 'Wielki', 'wielkimaniek@gmail.com', 'Maniek111', '927957284', 1, 0, '2025-05-18 14:36:00', '2025-05-18 15:47:26');
+(5, 'Krzysztof', 'Adminowski', 'superadmin@aquaparadise.pl', 'SuperAdminHaslo', '555000111', 7, 0, '2025-05-18 14:07:58', '2025-05-25 18:43:39'),
+(6, 'Maniek', 'Wielki', 'wielkimaniek@gmail.com', 'Maniek111', '927957284', 1, 0, '2025-05-18 14:36:00', '2025-05-18 15:47:26'),
+(7, 'Wikor', 'Tak', 'wiktor@gmail.com', 'balwan123', NULL, 1, 0, '2025-05-21 18:38:06', '2025-05-23 10:31:09'),
+(8, 'Zofia', 'Bąk', 'zofia.bak@aquaparadise.pl', 'Zofia123', '555123001', 8, 0, '2025-05-25 16:39:51', NULL),
+(9, 'Marek', 'Cichy', 'marek.cichy@aquaparadise.pl', 'Marek123', '555123002', 9, 0, '2025-05-25 16:39:51', NULL),
+(10, 'Patrycja', 'Duda', 'patrycja.duda@aquaparadise.pl', 'Patrycja123', '555123003', 10, 0, '2025-05-25 16:39:51', NULL),
+(11, 'Grzegorz', 'Wilk', 'grzegorz.wilk@aquaparadise.pl', 'Grzes123', '555123004', 11, 0, '2025-05-25 16:39:51', NULL);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -404,6 +526,14 @@ ALTER TABLE `orders`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indeksy dla tabeli `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_password_resets_token` (`token`),
+  ADD KEY `idx_password_resets_email` (`email`);
+
+--
 -- Indeksy dla tabeli `permissions`
 --
 ALTER TABLE `permissions`
@@ -432,6 +562,13 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `role_name` (`role_name`);
 
 --
+-- Indeksy dla tabeli `salaries`
+--
+ALTER TABLE `salaries`
+  ADD PRIMARY KEY (`salary_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
@@ -447,61 +584,73 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `opinions`
 --
 ALTER TABLE `opinions`
-  MODIFY `opinion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `opinion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `salaries`
+--
+ALTER TABLE `salaries`
+  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -552,6 +701,12 @@ ALTER TABLE `products`
 ALTER TABLE `rolepermissions`
   ADD CONSTRAINT `rolepermissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `rolepermissions_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `salaries`
+--
+ALTER TABLE `salaries`
+  ADD CONSTRAINT `salaries_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`

@@ -39,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $stmt->fetch();
 
             if ($user && $password_input === $user['password_hash']) { // Porównanie hasła w czystym tekście
+                
+                $guest_php_session_id_before_regenerate = session_id(); // Pobierz ID sesji gościa PRZED regeneracją
+
                 session_regenerate_id(true); 
 
                 $_SESSION['user_id'] = $user['user_id'];
@@ -51,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['flash_message'] = ['type' => 'success', 'text' => 'Pomyślnie zalogowano. Witaj, ' . htmlspecialchars($user['first_name']) . '!'];
                 
                 // Przeniesienie koszyka gościa (jeśli istnieje)
-                $guest_php_session_id = session_id(); 
+                // Używamy $guest_php_session_id_before_regenerate
                 $stmt_guest_cart = $pdo->prepare("SELECT cart_id FROM Carts WHERE session_id = :session_id AND user_id IS NULL");
-                $stmt_guest_cart->bindParam(':session_id', $guest_php_session_id, PDO::PARAM_STR);
+                $stmt_guest_cart->bindParam(':session_id', $guest_php_session_id_before_regenerate, PDO::PARAM_STR);
                 $stmt_guest_cart->execute();
                 $guest_cart_data = $stmt_guest_cart->fetch();
 
@@ -76,7 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt_assign->execute([':user_id' => $user['user_id'], ':guest_cart_id' => $guest_cart_id]);
                     }
                 }
-                unset($_SESSION['guest_cart_id']); 
+                // Usunięcie specyficznych zmiennych sesyjnych, jeśli były używane do śledzenia koszyka gościa
+                unset($_SESSION['guest_cart_id']); // Jeśli używałeś tej zmiennej
+                // unset($_SESSION['guest_cart_session_id']); // Jeśli używałeś tej zmiennej
+                // unset($_SESSION['guest_cart_assigned_db_id']); // Jeśli używałeś tej zmiennej
 
 
                 $pdo->prepare("UPDATE Users SET last_login = CURRENT_TIMESTAMP WHERE user_id = ?")->execute([$user['user_id']]);

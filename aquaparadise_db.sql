@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Maj 26, 2025 at 05:00 PM
+-- Generation Time: Maj 26, 2025 at 08:28 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -20,6 +20,44 @@ SET time_zone = "+00:00";
 --
 -- Database: `aquaparadise_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `booking_id` int(11) NOT NULL,
+  `order_item_id` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `guest_name` varchar(255) DEFAULT NULL,
+  `guest_email` varchar(255) DEFAULT NULL,
+  `resource_type` enum('hotel_room','restaurant_table','spa_slot') NOT NULL,
+  `start_datetime` datetime NOT NULL,
+  `end_datetime` datetime NOT NULL,
+  `quantity_booked` int(11) NOT NULL DEFAULT 1,
+  `booking_status` varchar(50) DEFAULT 'confirmed',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`booking_id`, `order_item_id`, `product_id`, `user_id`, `guest_name`, `guest_email`, `resource_type`, `start_datetime`, `end_datetime`, `quantity_booked`, `booking_status`, `created_at`, `updated_at`) VALUES
+(1, 19, 5, 6, NULL, NULL, 'hotel_room', '2025-05-20 14:00:00', '2025-05-21 12:00:00', 1, 'confirmed', '2025-05-26 17:14:20', '2025-05-26 17:14:20'),
+(2, 20, 15, 6, NULL, NULL, 'spa_slot', '2025-05-28 15:00:00', '2025-05-28 16:00:00', 1, 'confirmed', '2025-05-26 17:14:20', '2025-05-26 17:14:20'),
+(3, 21, 5, 11, NULL, NULL, 'hotel_room', '2025-06-02 14:00:00', '2025-06-03 12:00:00', 1, 'confirmed', '2025-05-26 18:00:13', '2025-05-26 18:00:13'),
+(4, 22, 5, 11, NULL, NULL, 'hotel_room', '2025-06-02 14:00:00', '2025-06-03 12:00:00', 1, 'confirmed', '2025-05-26 18:01:10', '2025-05-26 18:01:10'),
+(5, 23, 5, 11, NULL, NULL, 'hotel_room', '2025-06-02 14:00:00', '2025-06-03 12:00:00', 1, 'confirmed', '2025-05-26 18:02:05', '2025-05-26 18:02:05'),
+(6, 24, 14, 11, NULL, NULL, 'spa_slot', '2025-05-26 13:30:00', '2025-05-26 15:30:00', 1, 'confirmed', '2025-05-26 18:05:01', '2025-05-26 18:05:01'),
+(7, 25, 15, 11, NULL, NULL, 'spa_slot', '2025-05-26 13:30:00', '2025-05-26 15:00:00', 1, 'confirmed', '2025-05-26 18:05:46', '2025-05-26 18:05:46'),
+(8, 26, 14, 11, NULL, NULL, 'spa_slot', '2025-05-26 13:30:00', '2025-05-26 15:30:00', 1, 'confirmed', '2025-05-26 18:06:55', '2025-05-26 18:06:55'),
+(9, 27, 28, 11, NULL, NULL, 'restaurant_table', '2025-05-26 09:00:00', '2025-05-26 11:00:00', 1, 'confirmed', '2025-05-26 18:09:20', '2025-05-26 18:09:20'),
+(10, 28, 28, 11, NULL, NULL, 'restaurant_table', '2025-05-26 09:00:00', '2025-05-26 11:00:00', 1, 'confirmed', '2025-05-26 18:09:42', '2025-05-26 18:09:42');
 
 -- --------------------------------------------------------
 
@@ -42,12 +80,10 @@ CREATE TABLE `cartitems` (
 --
 
 INSERT INTO `cartitems` (`cart_item_id`, `cart_id`, `product_id`, `quantity`, `price_at_addition`, `item_details`, `added_at`) VALUES
-(1, 1, 1, 2, 90.00, '', '2025-05-18 14:36:59'),
-(2, 1, 5, 1, 450.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"check_in_date\":\"2025-05-20\",\"check_out_date\":\"2025-05-21\",\"notes\":\"Prosze czarn\\u0105 po\\u015bciel\",\"num_guests\":\"1\",\"reservation_type\":\"hotel_room\"}', '2025-05-18 14:41:24'),
-(3, 1, 15, 1, 0.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"notes\":\"Oby syn\",\"reservation_type\":\"spa_booking\",\"selected_treatments_ids_string\":\"12\",\"treatment_date\":\"2025-05-28\",\"treatment_time\":\"15:00\"}', '2025-05-18 15:54:53'),
 (5, 14, 3, 1, 220.00, NULL, '2025-05-21 18:37:03'),
 (6, 18, 2, 1, 70.00, NULL, '2025-05-22 17:05:05'),
-(17, 15, 1, 1, 90.00, NULL, '2025-05-23 10:29:32');
+(17, 15, 1, 1, 90.00, NULL, '2025-05-23 10:29:32'),
+(38, 12, 3, 1, 220.00, NULL, '2025-05-26 15:36:53');
 
 -- --------------------------------------------------------
 
@@ -97,7 +133,10 @@ INSERT INTO `carts` (`cart_id`, `user_id`, `session_id`, `created_at`, `updated_
 (27, NULL, 'cung5oid1ruke8c8abnttud159', '2025-05-25 18:30:49', '2025-05-25 18:30:49'),
 (28, NULL, '41pv3hus2qo4e9opk7lj5ra1uu', '2025-05-25 18:31:06', '2025-05-25 18:31:06'),
 (29, NULL, '12tcl1dj8bl39b98gmodfampop', '2025-05-25 18:34:51', '2025-05-25 18:34:51'),
-(30, NULL, 'igdfcs65kg28dgl7pebn8iv0p4', '2025-05-25 18:38:53', '2025-05-25 18:38:53');
+(30, NULL, 'igdfcs65kg28dgl7pebn8iv0p4', '2025-05-25 18:38:53', '2025-05-25 18:38:53'),
+(31, NULL, '18mspesd1te2tmvtqr5hua01ot', '2025-05-26 15:02:01', '2025-05-26 15:02:01'),
+(32, 11, NULL, '2025-05-26 15:05:33', '2025-05-26 15:31:06'),
+(33, 12, NULL, '2025-05-26 15:31:13', '2025-05-26 15:34:18');
 
 -- --------------------------------------------------------
 
@@ -183,7 +222,26 @@ INSERT INTO `orderitems` (`order_item_id`, `order_id`, `product_id`, `quantity`,
 (6, 5, 7, 1, 1200.00, '{\"booking_email\":\"superadmin@aquaparadise.pl\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_phone\":\"555000111\",\"check_in_date\":\"2025-05-28\",\"check_out_date\":\"2025-05-31\",\"notes\":\"\",\"num_guests\":\"1\",\"reservation_type\":\"hotel_room\"}'),
 (7, 5, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_phone\":\"555000111\",\"booking_email\":\"superadmin@aquaparadise.pl\",\"reservation_date\":\"2025-06-03\",\"reservation_time\":\"00:25\",\"num_guests\":\"1\",\"notes\":\"\"}'),
 (8, 5, 15, 1, 930.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Krzysztof Adminowski\",\"booking_email\":\"superadmin@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"treatment_date\":\"2025-05-29\",\"treatment_time\":\"20:31\",\"selected_treatments_ids_string\":\"10,13,21\",\"total_price_for_selected_spa\":\"930.00\",\"notes\":\"\"}'),
-(9, 6, 2, 1, 70.00, '0');
+(9, 6, 2, 1, 70.00, '0'),
+(10, 7, 4, 1, 270.00, '0'),
+(11, 7, 8, 1, 750.00, '{\"reservation_type\":\"hotel_room\",\"booking_name\":\"Bogdan Wielki\",\"booking_email\":\"bogdanwielki@gmail.com\",\"booking_phone\":\"101101101\",\"check_in_date\":\"2025-05-29\",\"check_out_date\":\"2025-06-08\",\"num_guests\":\"4\",\"notes\":\"\"}'),
+(12, 7, 26, 1, 850.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Bogdan Wielki\",\"booking_email\":\"bogdanwielki@gmail.com\",\"booking_phone\":\"101101101\",\"treatment_date\":\"2025-06-01\",\"treatment_time\":\"20:30\",\"selected_treatments_ids_string\":\"26\",\"total_price_for_selected_spa\":\"850.00\",\"notes\":\"\"}'),
+(13, 7, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Bogdan Wielki\",\"booking_phone\":\"101101101\",\"booking_email\":\"bogdanwielki@gmail.com\",\"reservation_date\":\"2025-05-31\",\"reservation_time\":\"21:00\",\"num_guests\":\"4\",\"notes\":\"\"}'),
+(14, 8, 1, 1, 90.00, '0'),
+(15, 8, 5, 1, 450.00, '{\"reservation_type\":\"hotel_room\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555123004\",\"check_in_date\":\"2025-05-27\",\"check_out_date\":\"2025-06-14\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(16, 8, 25, 1, 680.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555123004\",\"treatment_date\":\"2025-06-05\",\"treatment_time\":\"21:00\",\"selected_treatments_ids_string\":\"25\",\"total_price_for_selected_spa\":\"680.00\",\"notes\":\"Prosze panią\"}'),
+(17, 8, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Grzegorz Wilk\",\"booking_phone\":\"555000111\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"reservation_date\":\"2025-05-30\",\"reservation_time\":\"19:30\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(18, 9, 1, 2, 90.00, ''),
+(19, 9, 5, 1, 450.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"check_in_date\":\"2025-05-20\",\"check_out_date\":\"2025-05-21\",\"notes\":\"Prosze czarn\\u0105 po\\u015bciel\",\"num_guests\":\"1\",\"reservation_type\":\"hotel_room\"}'),
+(20, 9, 15, 1, 0.00, '{\"booking_email\":\"wielkimaniek@gmail.com\",\"booking_name\":\"Maniek Wielki\",\"booking_phone\":\"927957284\",\"notes\":\"Oby syn\",\"reservation_type\":\"spa_booking\",\"selected_treatments_ids_string\":\"12\",\"treatment_date\":\"2025-05-28\",\"treatment_time\":\"15:00\"}'),
+(21, 10, 5, 1, 450.00, '{\"reservation_type\":\"hotel_room\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"check_in_date\":\"2025-06-02\",\"check_out_date\":\"2025-06-03\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(22, 11, 5, 1, 450.00, '{\"reservation_type\":\"hotel_room\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"check_in_date\":\"2025-06-02\",\"check_out_date\":\"2025-06-03\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(23, 12, 5, 1, 450.00, '{\"reservation_type\":\"hotel_room\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"check_in_date\":\"2025-06-02\",\"check_out_date\":\"2025-06-03\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(24, 13, 14, 1, 500.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"treatment_date\":\"2025-05-26\",\"treatment_time\":\"13:30\",\"selected_treatments_ids_string\":\"14\",\"total_price_for_selected_spa\":\"500.00\",\"notes\":\"\"}'),
+(25, 14, 15, 1, 280.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"treatment_date\":\"2025-05-26\",\"treatment_time\":\"13:30\",\"selected_treatments_ids_string\":\"12\",\"total_price_for_selected_spa\":\"280.00\",\"notes\":\"\"}'),
+(26, 15, 14, 1, 500.00, '{\"reservation_type\":\"spa_booking\",\"placeholder_spa_product_id\":\"15\",\"booking_name\":\"Grzegorz Wilk\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"booking_phone\":\"555000111\",\"treatment_date\":\"2025-05-26\",\"treatment_time\":\"13:30\",\"selected_treatments_ids_string\":\"14\",\"total_price_for_selected_spa\":\"500.00\",\"notes\":\"\"}'),
+(27, 16, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Grzegorz Wilk\",\"booking_phone\":\"555000111\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"reservation_date\":\"2025-05-26\",\"reservation_time\":\"09:00\",\"num_guests\":\"1\",\"notes\":\"\"}'),
+(28, 17, 28, 1, 0.00, '{\"reservation_type\":\"restaurant_table\",\"booking_name\":\"Grzegorz Wilk\",\"booking_phone\":\"555000111\",\"booking_email\":\"grzegorz.wilk@aquaparadise.pl\",\"reservation_date\":\"2025-05-26\",\"reservation_time\":\"09:00\",\"num_guests\":\"1\",\"notes\":\"\"}');
 
 -- --------------------------------------------------------
 
@@ -223,7 +281,18 @@ INSERT INTO `orders` (`order_id`, `user_id`, `guest_email`, `guest_name`, `billi
 (3, 7, NULL, NULL, 'Wikor Tak', 'wiktor@gmail.com', NULL, NULL, NULL, NULL, 90.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 10:17:58', '2025-05-23 10:17:58'),
 (4, 7, NULL, NULL, 'Wikor Tak', 'wiktor@gmail.com', NULL, NULL, NULL, NULL, 70.00, 'Zrealizowane', 'Blik', 'Zakończona', NULL, NULL, NULL, '2025-05-23 10:24:19', '2025-05-23 10:24:19'),
 (5, 5, NULL, NULL, 'Krzysztof Adminowski', 'superadmin@aquaparadise.pl', NULL, NULL, NULL, NULL, 2220.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748199280', NULL, NULL, '2025-05-25 18:54:40', '2025-05-25 18:54:40'),
-(6, 5, NULL, NULL, 'Krzysztof Adminowski', 'superadmin@aquaparadise.pl', NULL, NULL, NULL, NULL, 70.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748199416', NULL, NULL, '2025-05-25 18:56:56', '2025-05-25 18:56:56');
+(6, 5, NULL, NULL, 'Krzysztof Adminowski', 'superadmin@aquaparadise.pl', NULL, NULL, NULL, NULL, 70.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748199416', NULL, NULL, '2025-05-25 18:56:56', '2025-05-25 18:56:56'),
+(7, 12, NULL, NULL, 'Bogdan Wielki', 'bogdanwielki@gmail.com', NULL, NULL, NULL, NULL, 1870.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748273669', NULL, NULL, '2025-05-26 15:34:29', '2025-05-26 15:34:29'),
+(8, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 1220.00, 'Zrealizowane', 'Karta', 'Zakończona', 'SIMULATED_KARTA_1748273763', NULL, NULL, '2025-05-26 15:36:03', '2025-05-26 15:36:03'),
+(9, 6, NULL, NULL, 'Maniek Wielki', 'wielkimaniek@gmail.com', NULL, NULL, NULL, NULL, 630.00, 'Zrealizowane', 'Karta', 'Zakończona', 'SIMULATED_KARTA_1748279660', NULL, NULL, '2025-05-26 17:14:20', '2025-05-26 17:14:20'),
+(10, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 450.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282413', NULL, NULL, '2025-05-26 18:00:13', '2025-05-26 18:00:13'),
+(11, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 450.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282470', NULL, NULL, '2025-05-26 18:01:10', '2025-05-26 18:01:10'),
+(12, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 450.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282525', NULL, NULL, '2025-05-26 18:02:05', '2025-05-26 18:02:05'),
+(13, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 500.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282701', NULL, NULL, '2025-05-26 18:05:01', '2025-05-26 18:05:01'),
+(14, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 280.00, 'Zrealizowane', 'Karta', 'Zakończona', 'SIMULATED_KARTA_1748282746', NULL, NULL, '2025-05-26 18:05:46', '2025-05-26 18:05:46'),
+(15, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 500.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282815', NULL, NULL, '2025-05-26 18:06:55', '2025-05-26 18:06:55'),
+(16, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 0.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282960', NULL, NULL, '2025-05-26 18:09:20', '2025-05-26 18:09:20'),
+(17, 11, NULL, NULL, 'Grzegorz Wilk', 'grzegorz.wilk@aquaparadise.pl', NULL, NULL, NULL, NULL, 0.00, 'Zrealizowane', 'Blik', 'Zakończona', 'SIMULATED_BLIK_1748282982', NULL, NULL, '2025-05-26 18:09:42', '2025-05-26 18:09:42');
 
 -- --------------------------------------------------------
 
@@ -467,17 +536,27 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password_ha
 (2, 'Anna', 'Nowak', 'anna.nowak@example.com', 'Nowak456', '987654321', 1, 1, '2025-05-18 14:07:58', '2025-05-21 18:39:16'),
 (3, 'Piotr', 'Zieliński', 'piotr.zielinski@aquaparadise.pl', 'Piotrek789', '555111222', 6, 0, '2025-05-18 14:07:58', '2025-05-18 17:50:15'),
 (4, 'Ewa', 'Lewandowska', 'ewa.lewandowska@aquaparadise.pl', 'EwaHot012', '555333444', 3, 0, '2025-05-18 14:07:58', '2025-05-18 17:51:50'),
-(5, 'Krzysztof', 'Adminowski', 'superadmin@aquaparadise.pl', 'SuperAdminHaslo', '555000111', 7, 0, '2025-05-18 14:07:58', '2025-05-25 18:43:39'),
-(6, 'Maniek', 'Wielki', 'wielkimaniek@gmail.com', 'Maniek111', '927957284', 1, 0, '2025-05-18 14:36:00', '2025-05-18 15:47:26'),
+(5, 'Krzysztof', 'Adminowski', 'superadmin@aquaparadise.pl', 'SuperAdminHaslo', '555000111', 7, 0, '2025-05-18 14:07:58', '2025-05-26 15:52:40'),
+(6, 'Maniek', 'Wielki', 'wielkimaniek@gmail.com', 'Maniek111', '927957284', 1, 0, '2025-05-18 14:36:00', '2025-05-26 17:09:40'),
 (7, 'Wikor', 'Tak', 'wiktor@gmail.com', 'balwan123', NULL, 1, 0, '2025-05-21 18:38:06', '2025-05-23 10:31:09'),
 (8, 'Zofia', 'Bąk', 'zofia.bak@aquaparadise.pl', 'Zofia123', '555123001', 8, 0, '2025-05-25 16:39:51', NULL),
 (9, 'Marek', 'Cichy', 'marek.cichy@aquaparadise.pl', 'Marek123', '555123002', 9, 0, '2025-05-25 16:39:51', NULL),
 (10, 'Patrycja', 'Duda', 'patrycja.duda@aquaparadise.pl', 'Patrycja123', '555123003', 10, 0, '2025-05-25 16:39:51', NULL),
-(11, 'Grzegorz', 'Wilk', 'grzegorz.wilk@aquaparadise.pl', 'Grzes123', '555123004', 11, 0, '2025-05-25 16:39:51', NULL);
+(11, 'Grzegorz', 'Wilk', 'grzegorz.wilk@aquaparadise.pl', 'Grzes123', '555123004', 11, 0, '2025-05-25 16:39:51', '2025-05-26 17:16:28'),
+(12, 'Bogdan', 'Wielki', 'bogdanwielki@gmail.com', 'bogus123', '101101101', 1, 0, '2025-05-26 15:34:18', NULL);
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`booking_id`),
+  ADD KEY `order_item_id` (`order_item_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indeksy dla tabeli `cartitems`
@@ -581,16 +660,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -608,13 +693,13 @@ ALTER TABLE `opinions`
 -- AUTO_INCREMENT for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `password_resets`
@@ -650,11 +735,19 @@ ALTER TABLE `salaries`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`order_item_id`) REFERENCES `orderitems` (`order_item_id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `cartitems`

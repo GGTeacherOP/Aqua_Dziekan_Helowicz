@@ -15,8 +15,8 @@ $current_cart_id = null;
 if (isset($pdo) && function_exists('get_current_cart_id')) {
     $current_cart_id = get_current_cart_id($pdo);
 } else {
-    error_log("process_payment.php: PDO lub get_current_cart_id nie jest dostępne.");
-    if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Błąd konfiguracji serwera.']); }
+    error_log("process_payment.php: Kluczowe funkcje lub obiekt PDO nie są dostępne.");
+    if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Błąd konfiguracji serwera (brak PDO lub funkcji).']); }
     exit;
 }
 
@@ -47,99 +47,78 @@ foreach ($cart_items as $item) {
     $total_amount += $item['price_at_addition'] * $item['quantity'];
 }
 
-$payment_method = trim($_POST['payment_method'] ?? $_POST['payment_method_choice'] ?? 'Nieznana'); // payment_method_choice z modala
+$payment_method = trim($_POST['payment_method'] ?? 'Nieznana'); // Nazwa z 'payment_method_choice' jest zmieniana na 'payment_method' w JS
 
 $user_id = $_SESSION['user_id'] ?? null;
 
-// Inicjalizacja zmiennych dla danych billingowych/gościa
-$db_guest_name = null;
-$db_guest_email = null;
+// Inicjalizacja zmiennych
 $db_billing_name = null;
 $db_billing_email = null;
 $db_billing_address_street = null;
 $db_billing_address_city = null;
 $db_billing_address_postal_code = null;
 $db_billing_address_country = null;
-$db_notes = $_POST['notes'] ?? null; // Jeśli masz pole notes w formularzu modala
+$db_guest_name = null;             // Dla kolumny guest_name w Orders
+$db_guest_email = null;            // Dla kolumny guest_email w Orders
+$db_notes = $_POST['notes'] ?? null; // Jeśli pole 'notes' jest wysyłane z modala
 
 if ($user_id) {
-    // Zalogowany użytkownik - pobierz jego dane jako domyślne billingowe
+    // Użytkownik zalogowany
     $stmt_user = $pdo->prepare("SELECT first_name, last_name, email FROM Users WHERE user_id = :user_id");
     $stmt_user->execute([':user_id' => $user_id]);
     $user_data = $stmt_user->fetch();
     if ($user_data) {
         $db_billing_name = trim(($user_data['first_name'] ?? '') . ' ' . ($user_data['last_name'] ?? ''));
         $db_billing_email = $user_data['email'];
-        // Jeśli masz zapisane adresy dla zalogowanych użytkowników, możesz je tu pobrać.
-        // Na razie zakładamy, że dla Blik/Karta nie są one wymagane do zapisu w Orders.
+        // Pola adresowe billingowe dla zalogowanego użytkownika mogą być puste,
+        // jeśli nie masz ich w profilu użytkownika i nie zbierasz ich w modalu dla zalogowanych.
+        // Tabela Orders powinna akceptować NULL dla tych kolumn w takim przypadku.
     } else {
-        // To nie powinno się zdarzyć, jeśli user_id jest w sesji
-        error_log("process_payment.php: Błąd krytyczny - user_id w sesji, ale brak użytkownika w bazie.");
-        if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Błąd danych użytkownika.']);}
+        error_log("process_payment.php: Błąd krytyczny - user_id ({$user_id}) w sesji, ale brak użytkownika w bazie.");
+        if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Błąd danych zalogowanego użytkownika.']);}
         exit;
     }
-} else {
-    // Gość - dane billingowe są pobierane z formularza, jeśli metoda płatności tego wymaga (np. Przelew)
-    // Dla BLIK i Karta, dane adresowe mogą nie być wymagane bezpośrednio dla płatności,
-    // ale mogą być potrzebne do zamówienia.
-    // W modalu payment_modal.php sekcja billingDetailsSection jest pokazywana dla gości przy przelewie.
-    // Jeśli dla BLIK/Karta też chcesz zbierać te dane od gościa, musisz dostosować logikę pokazywania tej sekcji w script.js
-    // oraz upewnić się, że pola mają odpowiednie name="" w HTML.
-    // Obecnie Twój script.js pokazuje billingDetailsSection tylko dla gości płacących przelewem.
-    // Załóżmy, że dla BLIK/Karta gość nie podaje pełnych danych adresowych w tym kroku,
-    // chyba że je dodasz do modala i script.js.
+} else { 
+    // Gość - dane billingowe są teraz zawsze zbierane z formularza w modalu (zgodnie z ostatnią zmianą w script.js)
+    $db_billing_name = trim($_POST['billing_name'] ?? '');
+    $db_billing_email = trim($_POST['billing_email'] ?? '');
+    $db_billing_address_street = trim($_POST['billing_address_street'] ?? '');
+    $db_billing_address_city = trim($_POST['billing_address_city'] ?? '');
+    $db_billing_address_postal_code = trim($_POST['billing_address_postal_code'] ?? '');
+    $db_billing_address_country = trim($_POST['billing_address_country'] ?? 'Polska');
 
-    if ($payment_method === 'Przelew') { // Jeśli jednak opcja Przelew zostanie dodana i wybrana
-        $db_billing_name = trim($_POST['billing_name'] ?? '');
-        $db_billing_email = trim($_POST['billing_email'] ?? '');
-        $db_billing_address_street = trim($_POST['billing_address_street'] ?? '');
-        $db_billing_address_city = trim($_POST['billing_address_city'] ?? '');
-        $db_billing_address_postal_code = trim($_POST['billing_address_postal_code'] ?? '');
-        $db_billing_address_country = trim($_POST['billing_address_country'] ?? 'Polska');
-
-        if (empty($db_billing_name) || empty($db_billing_email) || empty($db_billing_address_street) || empty($db_billing_address_city) || empty($db_billing_address_postal_code) || empty($db_billing_address_country)) {
-            if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Dla płatności przelewem jako gość, proszę wypełnić wszystkie pola danych do zamówienia.']);}
-            exit;
-        }
-        if (!filter_var($db_billing_email, FILTER_VALIDATE_EMAIL)) {
-            if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Proszę podać poprawny adres email.']);}
-            exit;
-        }
-        // Walidacja kodu pocztowego (opcjonalnie, script.js już to robi)
-        // if (!preg_match('/^[0-9]{2}-[0-9]{3}$/', $db_billing_address_postal_code)) { ... }
-
-        $db_guest_name = $db_billing_name;   // Używamy billing_name jako guest_name
-        $db_guest_email = $db_billing_email; // Używamy billing_email jako guest_email
-    } else {
-        // Dla BLIK/Karta gościa, jeśli nie zbierasz pełnych danych adresowych w modalu:
-        // Możesz spróbować pobrać podstawowe dane, jeśli są, lub ustawić wartości domyślne.
-        // Załóżmy, że modal NIE zbiera pełnych danych adresowych dla gościa przy BLIK/Karta.
-        // Jeśli chcesz je zbierać, dodaj odpowiednie pola do modala i do tej sekcji.
-        $db_guest_name = $_SESSION['guest_checkout_name'] ?? $_POST['guest_name_from_previous_step'] ?? "Gość"; // Przykładowo
-        $db_guest_email = $_SESSION['guest_checkout_email'] ?? $_POST['guest_email_from_previous_step'] ?? null; // Przykładowo
-
-        // W tym uproszczonym scenariuszu, dane billingowe mogą pozostać null dla BLIK/Karta gościa
-        // lub możesz ustawić $db_billing_name i $db_billing_email na to samo co $db_guest_name i $db_guest_email
-        $db_billing_name = $db_guest_name;
-        $db_billing_email = $db_guest_email;
-
+    // Walidacja tych pól dla gości, niezależnie od metody płatności
+    if (empty($db_billing_name) || empty($db_billing_email) || empty($db_billing_address_street) || empty($db_billing_address_city) || empty($db_billing_address_postal_code) || empty($db_billing_address_country)) {
+        if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Jako gość, proszę wypełnić wszystkie pola danych do zamówienia.']);}
+        exit;
     }
+    if (!filter_var($db_billing_email, FILTER_VALIDATE_EMAIL)) {
+        if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Proszę podać poprawny adres email.']);}
+        exit;
+    }
+    if (!preg_match('/^[0-9]{2}-[0-9]{3}$/', $db_billing_address_postal_code)) {
+        if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Kod pocztowy musi być w formacie XX-XXX.']);}
+        exit;
+    }
+    // Używamy tych danych jako guest_name i guest_email dla tabeli Orders,
+    // a także jako dane billingowe.
+    $db_guest_name = $db_billing_name;
+    $db_guest_email = $db_billing_email;
 }
 
-// Symulacja przetwarzania płatności BLIK/Karta
+// Symulacja przetwarzania płatności
 $payment_transaction_id = null;
+$order_status = 'W trakcie realizacji'; // Domyślny status
+$payment_status = 'Oczekuje';          // Domyślny status
+
 if ($payment_method === 'Karta' || $payment_method === 'Blik') {
-    // Tu normalnie byłaby integracja z bramką płatniczą
-    // Dla symulacji, uznajemy płatność za udaną
-    $payment_status = 'Zakończona'; // Lub 'Opłacone'
-    $order_status = 'Zrealizowane'; // Lub 'W trakcie realizacji', 'Nowe'
-    $payment_transaction_id = 'SIMULATED_' . strtoupper($payment_method) . '_' . time(); // Przykładowy ID transakcji
+    $payment_status = 'Zakończona'; 
+    $order_status = 'Zrealizowane'; 
+    $payment_transaction_id = 'SIMULATED_' . strtoupper($payment_method) . '_' . time();
 } elseif ($payment_method === 'Przelew') {
     $payment_status = 'Oczekuje na wpłatę';
     $order_status = 'Oczekuje na płatność';
 } else {
-    $payment_status = 'Nieznana';
-    $order_status = 'Błąd płatności';
     if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Nieznana lub nieobsługiwana metoda płatności.']);}
     exit;
 }
@@ -148,9 +127,7 @@ if ($payment_method === 'Karta' || $payment_method === 'Blik') {
 try {
     $pdo->beginTransaction();
 
-    // Dodaj zamówienie do tabeli Orders
-    // Upewnij się, że tabela Orders ma kolumny: billing_name, billing_email, billing_address_street, itd.
-    // Jeśli nie, usuń te pola z zapytania lub dodaj je do tabeli.
+    // Wstaw zamówienie do tabeli Orders
     $stmt_order = $pdo->prepare(
         "INSERT INTO Orders (user_id, guest_email, guest_name, 
                              billing_name, billing_email, billing_address_street, billing_address_city, 
@@ -166,7 +143,6 @@ try {
     $stmt_order->bindParam(':guest_email', $db_guest_email, $db_guest_email === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
     $stmt_order->bindParam(':guest_name', $db_guest_name, $db_guest_name === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
     
-    // Dane billingowe
     $stmt_order->bindParam(':billing_name', $db_billing_name, $db_billing_name === null ? PDO::PARAM_NULL : PDO::PARAM_STR); 
     $stmt_order->bindParam(':billing_email', $db_billing_email, $db_billing_email === null ? PDO::PARAM_NULL : PDO::PARAM_STR); 
     $stmt_order->bindParam(':billing_address_street', $db_billing_address_street, $db_billing_address_street === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
@@ -184,38 +160,131 @@ try {
     $stmt_order->execute();
     $order_id = $pdo->lastInsertId();
 
-    // Dodaj pozycje zamówienia do OrderItems
+    // Wstaw pozycje zamówienia i utwórz rezerwacje
     $stmt_order_item = $pdo->prepare(
         "INSERT INTO OrderItems (order_id, product_id, quantity, price_per_item, item_details)
          VALUES (:order_id, :product_id, :quantity, :price_per_item, :item_details)"
     );
+    $stmt_booking = $pdo->prepare(
+        "INSERT INTO bookings (order_item_id, product_id, user_id, guest_name, guest_email, resource_type, start_datetime, end_datetime, quantity_booked, booking_status)
+         VALUES (:order_item_id, :product_id, :user_id, :guest_name, :guest_email, :resource_type, :start_datetime, :end_datetime, :quantity_booked, :booking_status)"
+    );
+
     foreach ($cart_items as $item) {
         $stmt_order_item->execute([
             ':order_id' => $order_id,
             ':product_id' => $item['product_id'],
             ':quantity' => $item['quantity'],
             ':price_per_item' => $item['price_at_addition'],
-            ':item_details' => ($item['item_details'] === null ? PDO::PARAM_NULL : $item['item_details'])
+            ':item_details' => ($item['item_details'] === null ? null : $item['item_details'])
         ]);
+        $order_item_id = $pdo->lastInsertId();
+
+        $details = $item['item_details'] ? json_decode($item['item_details'], true) : [];
+        $resource_type = null;
+        $start_datetime_str = null;
+        $end_datetime_str = null;
+        $quantity_booked = $item['quantity']; 
+
+        if (isset($details['reservation_type'])) {
+            $booking_start_date = $details['reservation_date'] ?? $details['treatment_date'] ?? $details['check_in_date'] ?? null;
+            $booking_start_time_raw = $details['reservation_time'] ?? $details['treatment_time'] ?? null;
+            
+            // Ustalanie godziny rozpoczęcia
+            if ($details['reservation_type'] === 'hotel_room') {
+                 $booking_start_time = '14:00:00'; // Domyślna godzina zameldowania dla hotelu
+            } elseif ($booking_start_time_raw) {
+                 $booking_start_time = date('H:i:s', strtotime($booking_start_time_raw)); // Upewnij się, że format jest poprawny
+            } else {
+                 $booking_start_time = '00:00:00'; // Fallback, jeśli godzina nie jest podana dla innych typów
+            }
+
+
+            if ($booking_start_date) {
+                $start_datetime_str = $booking_start_date . ' ' . $booking_start_time;
+            }
+
+            switch ($details['reservation_type']) {
+                case 'restaurant_table':
+                    $resource_type = 'restaurant_table';
+                    if ($start_datetime_str) {
+                        $end_datetime_str = date('Y-m-d H:i:s', strtotime($start_datetime_str . ' +2 hours'));
+                    }
+                    break;
+                case 'spa_booking':
+                    $resource_type = 'spa_slot';
+                    if ($start_datetime_str) {
+                        $duration_minutes = 60; // Domyślnie
+                        if (isset($details['placeholder_spa_product_id']) && $item['product_id'] == $details['placeholder_spa_product_id'] && isset($details['selected_treatments_ids_string'])) {
+                            // Sumowanie czasów trwania indywidualnych zabiegów - bardziej skomplikowane, wymaga dostępu do danych produktów
+                            // Na razie użyjemy domyślnego lub pobierzemy z głównego produktu SPA, jeśli to pakiet
+                             error_log("SPA Booking: product_id {$item['product_id']} / placeholder {$details['placeholder_spa_product_id']}");
+                             // Jeśli to pakiet (nie placeholder), spróbuj odczytać jego duration
+                             if ($item['product_id'] != ($details['placeholder_spa_product_id'] ?? -1) ) { // -1 by uniknąć warninga jeśli nie ma placeholder
+                                $stmt_prod_info_spa = $pdo->prepare("SELECT availability_details FROM products WHERE product_id = ?");
+                                $stmt_prod_info_spa->execute([$item['product_id']]);
+                                $prod_avail_json_spa = $stmt_prod_info_spa->fetchColumn();
+                                if ($prod_avail_json_spa) {
+                                    $avail_arr_spa = json_decode($prod_avail_json_spa, true);
+                                    if (isset($avail_arr_spa['duration_minutes'])) {
+                                        $duration_minutes = (int)$avail_arr_spa['duration_minutes'];
+                                    }
+                                }
+                             } else {
+                                // Dla indywidualnych, można by zsumować czasy z `selected_treatments_ids_string`
+                                // Dla uproszczenia, przyjmujemy teraz 90 minut
+                                $duration_minutes = 90;
+                             }
+                        } else { // Pojedynczy zabieg/pakiet
+                             $stmt_prod_info_spa = $pdo->prepare("SELECT availability_details FROM products WHERE product_id = ?");
+                             $stmt_prod_info_spa->execute([$item['product_id']]);
+                             $prod_avail_json_spa = $stmt_prod_info_spa->fetchColumn();
+                             if ($prod_avail_json_spa) {
+                                 $avail_arr_spa = json_decode($prod_avail_json_spa, true);
+                                 if (isset($avail_arr_spa['duration_minutes'])) {
+                                     $duration_minutes = (int)$avail_arr_spa['duration_minutes'];
+                                 }
+                             }
+                        }
+                        $end_datetime_str = date('Y-m-d H:i:s', strtotime($start_datetime_str . " +{$duration_minutes} minutes"));
+                    }
+                    break;
+                case 'hotel_room':
+                    $resource_type = 'hotel_room';
+                    $end_date_str = $details['check_out_date'] ?? null;
+                    if ($start_datetime_str && $end_date_str) {
+                        $end_datetime_str = $end_date_str . ' 12:00:00'; // Domyślna godzina wymeldowania
+                    }
+                    break;
+            }
+
+            if ($resource_type && $start_datetime_str && $end_datetime_str) {
+                $current_booking_guest_name = $user_id ? null : ($db_guest_name ?? ($details['booking_name'] ?? null));
+                $current_booking_guest_email = $user_id ? null : ($db_guest_email ?? ($details['booking_email'] ?? null));
+
+                $stmt_booking->execute([
+                    ':order_item_id' => $order_item_id,
+                    ':product_id' => $item['product_id'],
+                    ':user_id' => $user_id,
+                    ':guest_name' => $current_booking_guest_name,
+                    ':guest_email' => $current_booking_guest_email,
+                    ':resource_type' => $resource_type,
+                    ':start_datetime' => $start_datetime_str,
+                    ':end_datetime' => $end_datetime_str,
+                    ':quantity_booked' => $quantity_booked,
+                    ':booking_status' => ($payment_status === 'Zakończona' || $payment_status === 'Opłacone') ? 'confirmed' : 'pending_payment'
+                ]);
+            }
+        }
     }
 
-    // Wyczyść koszyk (CartItems)
     $stmt_clear_cart_items = $pdo->prepare("DELETE FROM CartItems WHERE cart_id = :cart_id");
     $stmt_clear_cart_items->bindParam(':cart_id', $current_cart_id, PDO::PARAM_INT);
     $stmt_clear_cart_items->execute();
-
-    // Opcjonalnie: Usuń sam koszyk z tabeli Carts, jeśli nie jest już potrzebny
-    // $stmt_clear_cart = $pdo->prepare("DELETE FROM Carts WHERE cart_id = :cart_id");
-    // $stmt_clear_cart->bindParam(':cart_id', $current_cart_id, PDO::PARAM_INT);
-    // $stmt_clear_cart->execute();
-    // if (isset($_SESSION['guest_cart_id'])) unset($_SESSION['guest_cart_id']);
-
-
+    
     $pdo->commit();
 
-    // Ustaw komunikat flash dla strony potwierdzenia (jeśli używasz)
-    $_SESSION['flash_message'] = ['type' => 'success', 'text' => 'Zamówienie nr #' . $order_id . ' zostało pomyślnie złożone i opłacone.'];
-    
+    $_SESSION['flash_message'] = ['type' => 'success', 'text' => 'Zamówienie nr #' . $order_id . ' zostało pomyślnie złożone.'];
     if (!headers_sent()) {
         echo json_encode(['success' => true, 'order_id' => $order_id, 'payment_method' => $payment_method]);
     }
@@ -226,7 +295,7 @@ try {
     error_log("Błąd PDO przy przetwarzaniu zamówienia: " . $e->getMessage() . " | Kod: " . $e->getCode() . " | POST: " . json_encode($_POST) . " | CartID: " . $current_cart_id);
     if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Wystąpił błąd serwera podczas przetwarzania zamówienia. (DB_ERR)']);}
     exit;
-} catch (Exception $e) { // Ogólny błąd
+} catch (Exception $e) {
     if (isset($pdo) && $pdo->inTransaction()) { $pdo->rollBack(); }
     error_log("Ogólny błąd przy przetwarzaniu zamówienia: " . $e->getMessage());
     if (!headers_sent()) { echo json_encode(['success' => false, 'message' => 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie. (GEN_ERR)']);}

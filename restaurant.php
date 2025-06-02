@@ -7,7 +7,7 @@ $page_title = "Restauracja AquaTaste - AquaParadise"; // Ustaw tytuł strony
 include BASE_PATH . '/includes/header.php'; // Dołącz główny nagłówek
 ?>
 
-  <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('restaurant_assets/lounge.jpg');">
+  <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%);">
     <div class="content">
       <h1>Kulinarne Doznania w AquaParadise</h1>
       <p>Odkryj bogactwo smaków w naszej eleganckiej restauracji i przytulnym barze. Świeże składniki, autorskie dania.</p>

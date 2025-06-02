@@ -7,7 +7,7 @@ $page_title = "Spa & Wellness - AquaParadise";
 include BASE_PATH . '/includes/header.php'; 
 ?>
 
-    <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%), url('spa_assets/back.jpg');">
+    <header class="page-header" style="background-image: linear-gradient(135deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 86, 179, 0.85) 100%);">
         <div class="content">
             <h1>Oaza Relaksu: Spa & Wellness AquaParadise</h1>
             <p>Zanurz się w świecie spokoju, odprężenia i regeneracji. Czekają na Ciebie luksusowe zabiegi i terapie.</p>

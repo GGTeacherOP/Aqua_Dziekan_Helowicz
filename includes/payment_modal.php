@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_first_name'])) {
             </div>
 
             <div id="billingDetailsSection" style="display:none;">
-                <h4>Dane do Zamówienia (wymagane dla gości przy przelewie)</h4>
+                <h4>Dane do Zamówienia</h4>
                 <div class="form-group">
                     <label for="billing_name">Imię i Nazwisko / Nazwa Firmy:</label>
                     <input type="text" id="billing_name" name="billing_name" value="<?php echo e($user_full_name_modal); ?>" required>

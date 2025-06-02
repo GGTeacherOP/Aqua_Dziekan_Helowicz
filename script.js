@@ -1,5 +1,7 @@
 // script.js
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("SCRIPT.JS DEBUG: DOMContentLoaded event fired.");
+
     const isLoggedIn = typeof isLoggedInFromPHP !== 'undefined' ? isLoggedInFromPHP : false;
     const basePath = typeof basePathJS !== 'undefined' ? basePathJS : '/';
     const currentUserFirstName = typeof currentUserFirstNameFromPHP !== 'undefined' ? currentUserFirstNameFromPHP : '';
@@ -143,10 +145,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // --- Payment Modal Logic ---
     const openPaymentModalBtn = document.getElementById('openPaymentModalBtn');
     const paymentCheckoutModal = document.getElementById('paymentCheckoutModal');
     const closePaymentCheckoutModalBtn = document.getElementById('closePaymentCheckoutModal');
-    const checkoutForm = document.getElementById('checkoutForm');
+    const checkoutForm = document.getElementById('checkoutForm'); 
     const paymentResponseMessage = document.getElementById('paymentResponseMessage');
     const paymentMethodRadios = document.querySelectorAll('input[name="payment_method_choice"]');
     const cardFields = document.getElementById('cardPaymentFields');
@@ -156,34 +159,125 @@ document.addEventListener('DOMContentLoaded', function () {
     const billingDetailsSection = document.getElementById('billingDetailsSection');
     const paymentSpecificFieldsSection = document.getElementById('paymentSpecificFieldsSection');
 
+    console.log("SCRIPT.JS DEBUG: openPaymentModalBtn:", openPaymentModalBtn);
+    console.log("SCRIPT.JS DEBUG: paymentCheckoutModal:", paymentCheckoutModal);
+    console.log("SCRIPT.JS DEBUG: checkoutForm (inside modal):", checkoutForm);
+
+    if (openPaymentModalBtn && paymentCheckoutModal && checkoutForm) {
+        console.log("SCRIPT.JS DEBUG: Attaching click listener to openPaymentModalBtn.");
+        openPaymentModalBtn.addEventListener('click', function() {
+            console.log("SCRIPT.JS DEBUG: 'Przejdź do kasy' button clicked!");
+            
+            checkoutForm.reset(); 
+            const defaultPaymentMethodRadio = document.querySelector('input[name="payment_method_choice"][value="Karta"]');
+            if (defaultPaymentMethodRadio) defaultPaymentMethodRadio.checked = true;
+
+            const cartTotalAmountText = document.querySelector('.cart-summary h3')?.textContent;
+            const modalTotalAmountSpan = document.getElementById('modalTotalAmount');
+            if (cartTotalAmountText && modalTotalAmountSpan) {
+                const match = cartTotalAmountText.match(/([\d,.\s]+)\s*PLN/);
+                if (match && match[1]) {
+                    modalTotalAmountSpan.textContent = match[1].replace(/\s/g, '');
+                } else {
+                    modalTotalAmountSpan.textContent = 'B/D';
+                     console.log("SCRIPT.JS DEBUG: Could not parse total amount from cart summary:", cartTotalAmountText);
+                }
+            } else {
+                if (!cartTotalAmountText) console.log("SCRIPT.JS DEBUG: Cart total amount text not found (.cart-summary h3).");
+                if (!modalTotalAmountSpan) console.log("SCRIPT.JS DEBUG: Modal total amount span (#modalTotalAmount) not found.");
+            }
+            
+            // Pre-wypełnianie danych użytkownika (jeśli zalogowany) jest teraz obsługiwane w updatePaymentFields
+            
+            updatePaymentFields(); 
+
+            if(paymentResponseMessage) paymentResponseMessage.style.display = 'none';
+            checkoutForm.style.display = 'block'; 
+            if(mainPaymentSubmitButton) mainPaymentSubmitButton.disabled = false; 
+            
+            console.log("SCRIPT.JS DEBUG: Attempting to show paymentCheckoutModal.");
+            paymentCheckoutModal.style.display = 'flex'; 
+        });
+    } else {
+        console.log("SCRIPT.JS DEBUG: Could not attach payment modal listener. One or more elements are missing:");
+        if (!openPaymentModalBtn) console.log("SCRIPT.JS DEBUG: - openPaymentModalBtn is missing.");
+        if (!paymentCheckoutModal) console.log("SCRIPT.JS DEBUG: - paymentCheckoutModal is missing (is payment_modal.php included correctly and cart not empty?).");
+        if (!checkoutForm) console.log("SCRIPT.JS DEBUG: - checkoutForm (inside modal) is missing.");
+    }
+
+    if (closePaymentCheckoutModalBtn && paymentCheckoutModal) {
+        closePaymentCheckoutModalBtn.addEventListener('click', function() {
+            console.log("SCRIPT.JS DEBUG: Close button clicked on payment modal.");
+            paymentCheckoutModal.style.display = 'none';
+        });
+    }
+
+    if (paymentCheckoutModal) { 
+        paymentCheckoutModal.addEventListener('click', function(event) {
+            if (event.target === paymentCheckoutModal) {
+                console.log("SCRIPT.JS DEBUG: Clicked outside payment modal content.");
+                paymentCheckoutModal.style.display = 'none';
+            }
+        });
+    }
+
     function updatePaymentFields() {
         const selectedMethodRadio = document.querySelector('input[name="payment_method_choice"]:checked');
-        if (!selectedMethodRadio || !mainPaymentSubmitButton) return;
+        if (!selectedMethodRadio || !mainPaymentSubmitButton) {
+            return;
+        }
         const selectedMethodValue = selectedMethodRadio.value;
+
         if (cardFields) cardFields.style.display = 'none';
         if (blikFields) blikFields.style.display = 'none';
         if (transferInfo) transferInfo.style.display = 'none';
-        if (billingDetailsSection) billingDetailsSection.style.display = 'none';
-        const billingInputs = billingDetailsSection ? billingDetailsSection.querySelectorAll('input') : [];
-        billingInputs.forEach(input => input.required = false);
-        if (cardFields) {
+        
+        // *** ZMIANA TUTAJ: Logika pokazywania danych do zamówienia dla gościa ***
+        if (billingDetailsSection) {
+            if (!isLoggedIn) { // Jeśli użytkownik NIE jest zalogowany (jest gościem)
+                billingDetailsSection.style.display = 'block'; // Pokaż sekcję danych do zamówienia
+                // Ustaw pola jako wymagane
+                ['billing_name', 'billing_email', 'billing_address_street', 'billing_address_city', 'billing_address_postal_code', 'billing_address_country'].forEach(id => {
+                    const field = document.getElementById(id);
+                    if (field) {
+                        field.required = true;
+                        // Wyczyść pola, jeśli użytkownik zmienia metodę płatności lub otwiera modal ponownie jako gość
+                        // (chyba że chcesz zachować wcześniej wpisane dane gościa)
+                        // field.value = ''; // Opcjonalnie: czyść pola przy każdej zmianie
+                    }
+                });
+                // Pre-wypełnij imię i email jeśli byłyby dostępne globalnie dla gościa (rzadziej spotykane)
+                const guestNameField = document.getElementById('billing_name');
+                const guestEmailField = document.getElementById('billing_email');
+                // if(guestNameField && typeof someGlobalGuestName !== 'undefined') guestNameField.value = someGlobalGuestName;
+                // if(guestEmailField && typeof someGlobalGuestEmail !== 'undefined') guestEmailField.value = someGlobalGuestEmail;
+
+            } else { // Jeśli użytkownik JEST zalogowany
+                billingDetailsSection.style.display = 'none'; // Ukryj sekcję
+                const billingInputs = billingDetailsSection.querySelectorAll('input, textarea');
+                billingInputs.forEach(input => input.required = false); // Pola nie są wymagane
+                // Pre-wypełnij dla zalogowanego, jeśli są widoczne (ale teraz nie będą)
+                const billingNameField = document.getElementById('billing_name');
+                const billingEmailField = document.getElementById('billing_email');
+                if(billingNameField) billingNameField.value = currentUserFirstName + ' ' + currentUserLastName;
+                if(billingEmailField) billingEmailField.value = currentUserEmail;
+            }
+        }
+        // *** KONIEC ZMIANY ***
+
+
+        if (paymentSpecificFieldsSection) {
+            paymentSpecificFieldsSection.style.display = 'block';
+        }
+
+        if(cardFields) {
             if(cardFields.querySelector('#card_number')) cardFields.querySelector('#card_number').required = false;
             if(cardFields.querySelector('#card_expiry')) cardFields.querySelector('#card_expiry').required = false;
             if(cardFields.querySelector('#card_cvv')) cardFields.querySelector('#card_cvv').required = false;
         }
-        if (blikFields) {
-            const blikInput = blikFields.querySelector('#blik_code');
-            if (blikInput) blikInput.required = false;
-        }
-        if (selectedMethodValue === 'Przelew' && !isLoggedIn) {
-            if (billingDetailsSection) {
-                billingDetailsSection.style.display = 'block';
-                billingInputs.forEach(input => input.required = true);
-            }
-        }
-        if (paymentSpecificFieldsSection) {
-            paymentSpecificFieldsSection.style.display = 'block';
-        }
+        if(blikFields && blikFields.querySelector('#blik_code')) blikFields.querySelector('#blik_code').required = false;
+
+
         switch (selectedMethodValue) {
             case 'Karta':
                 if (cardFields) cardFields.style.display = 'block';
@@ -194,11 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'Blik':
                 if (blikFields) blikFields.style.display = 'block';
-                const blikInput = blikFields.querySelector('#blik_code');
-                if(blikInput) blikInput.required = true;
+                if(blikFields.querySelector('#blik_code')) blikFields.querySelector('#blik_code').required = true;
                 mainPaymentSubmitButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Zapłać BLIKiem i Złóż Zamówienie';
                 break;
-            case 'Przelew':
+            case 'Przelew': 
                 if (transferInfo) transferInfo.style.display = 'block';
                 mainPaymentSubmitButton.innerHTML = '<i class="fas fa-university"></i> Złóż Zamówienie (Przelew)';
                 break;
@@ -209,57 +302,96 @@ document.addEventListener('DOMContentLoaded', function () {
         paymentMethodRadios.forEach(radio => {
             radio.addEventListener('change', updatePaymentFields);
         });
+        if (document.querySelector('input[name="payment_method_choice"]:checked')) {
+            updatePaymentFields();
+        }
     }
 
-    if (openPaymentModalBtn && paymentCheckoutModal && checkoutForm) {
-        openPaymentModalBtn.addEventListener('click', function() {
-            checkoutForm.reset(); 
-            const defaultPaymentMethodRadio = document.querySelector('input[name="payment_method_choice"][value="Karta"]');
-            if (defaultPaymentMethodRadio) defaultPaymentMethodRadio.checked = true;
-            if (isLoggedIn) {
-                const billingNameField = document.getElementById('billing_name');
-                const billingEmailField = document.getElementById('billing_email');
-                if (billingNameField && billingDetailsSection && billingDetailsSection.style.display === 'block') {
-                    billingNameField.value = currentUserFirstName + ' ' + currentUserLastName;
+    // --- START: Logika formatowania pól karty płatniczej ---
+    const cardNumberInput = document.getElementById('card_number');
+    const cardExpiryInput = document.getElementById('card_expiry');
+    const cardCvvInput = document.getElementById('card_cvv');
+
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ''); 
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
                 }
-                if (billingEmailField && billingDetailsSection && billingDetailsSection.style.display === 'block') {
-                    billingEmailField.value = currentUserEmail;
-                }
+                formattedValue += value[i];
             }
-            if(paymentSpecificFieldsSection) paymentSpecificFieldsSection.style.display = 'block';
-            if(mainPaymentSubmitButton) mainPaymentSubmitButton.style.display = 'block';
-            checkoutForm.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => { input.style.borderColor = 'var(--border-color)'; });
-            updatePaymentFields(); 
-            if(paymentResponseMessage) paymentResponseMessage.style.display = 'none';
-            checkoutForm.style.display = 'block'; 
-            if(mainPaymentSubmitButton) mainPaymentSubmitButton.disabled = false; 
-            paymentCheckoutModal.style.display = 'flex'; 
+            e.target.value = formattedValue.substring(0, 19); 
         });
-    }
-
-    if (closePaymentCheckoutModalBtn && paymentCheckoutModal) {
-        closePaymentCheckoutModalBtn.addEventListener('click', function() {
-            paymentCheckoutModal.style.display = 'none';
-        });
-    }
-
-    if (paymentCheckoutModal) { 
-        paymentCheckoutModal.addEventListener('click', function(event) {
-            if (event.target === paymentCheckoutModal) {
-                paymentCheckoutModal.style.display = 'none';
+        cardNumberInput.addEventListener('keydown', function(e) {
+            const value = e.target.value.replace(/\s/g, '');
+            if (value.length >= 16 && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.length === 1 ) {
+                e.preventDefault();
             }
         });
     }
+
+    if (cardExpiryInput) {
+        cardExpiryInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ''); 
+            let formattedValue = '';
+            if (value.length > 2) {
+                formattedValue = value.substring(0, 2) + '/' + value.substring(2, 4);
+            } else if (value.length === 2 && e.inputType !== 'deleteContentBackward' && e.target.value.indexOf('/') === -1) {
+                formattedValue = value + '/';
+            } else {
+                formattedValue = value;
+            }
+            e.target.value = formattedValue.substring(0, 5); 
+        });
+        cardExpiryInput.addEventListener('keydown', function(e) {
+            const value = e.target.value.replace(/\//g, '');
+             if (value.length >= 4 && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.length === 1) {
+                // Zezwól na wpisanie slasha jeśli nie został jeszcze dodany, a są już 2 cyfry
+                if (e.target.value.length === 2 && e.key === '/') { return; }
+                e.preventDefault();
+            }
+        });
+    }
+
+    if (cardCvvInput) {
+        cardCvvInput.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, ''); 
+            e.target.value = value.substring(0, 3); 
+        });
+        cardCvvInput.addEventListener('keydown', function(e) {
+            const value = e.target.value;
+            if (value.length >= 3 && !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.length === 1) {
+                e.preventDefault();
+            }
+        });
+    }
+    // --- END: Logika formatowania pól karty płatniczej ---
+
 
     if (checkoutForm && mainPaymentSubmitButton) {
         checkoutForm.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            const selectedMethodRadio = document.querySelector('input[name="payment_method_choice"]:checked');
-            if (!selectedMethodRadio) { showSimpleModal('Proszę wybrać metodę płatności.', 'error'); return; }
-            const paymentMethod = selectedMethodRadio.value;
-            let customValidationOk = true;
+            event.preventDefault(); // Zawsze na początku, aby mieć kontrolę
             
-            if (billingDetailsSection && billingDetailsSection.style.display === 'block') {
+            console.log("SCRIPT.JS DEBUG: Checkout form submitted.");
+            const selectedMethodRadio = document.querySelector('input[name="payment_method_choice"]:checked');
+            if (!selectedMethodRadio) { 
+                showSimpleModal('Proszę wybrać metodę płatności.', 'error');
+                console.log("SCRIPT.JS DEBUG: No payment method selected on submit.");
+                return; 
+            }
+            const paymentMethod = selectedMethodRadio.value;
+            let customValidationOk = true; 
+            
+            this.querySelectorAll('input[required]').forEach(input => {
+                 // Reset border color only for visible and required fields
+                if (input.offsetParent !== null) { // Check if element is visible
+                    input.style.borderColor = 'var(--border-color)';
+                }
+            });
+
+            if (billingDetailsSection && billingDetailsSection.style.display === 'block') { // Waliduj tylko jeśli widoczne
                 const requiredBillingFields = ['billing_name', 'billing_email', 'billing_address_street', 'billing_address_city', 'billing_address_postal_code', 'billing_address_country'];
                 for (const id of requiredBillingFields) {
                     const field = document.getElementById(id);
@@ -268,62 +400,113 @@ document.addEventListener('DOMContentLoaded', function () {
                         showSimpleModal(`Pole "${labelText}" jest wymagane.`, 'error');
                         field.style.borderColor = 'red'; customValidationOk = false; break; 
                     }
-                    if (field && field.name === "billing_email" && field.value.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
-                        showSimpleModal('Proszę podać poprawny adres email.', 'error'); field.style.borderColor = 'red'; customValidationOk = false; break;
+                    if (field && field.id === "billing_email" && field.value.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+                        showSimpleModal('Proszę podać poprawny adres email w danych do zamówienia.', 'error'); field.style.borderColor = 'red'; customValidationOk = false; break;
                     }
-                    if (field && field.name === "billing_address_postal_code" && field.value.trim() !== '' && !/^[0-9]{2}-[0-9]{3}$/.test(field.value.trim())) {
-                        showSimpleModal('Kod pocztowy musi być w formacie XX-XXX.', 'error'); field.style.borderColor = 'red'; customValidationOk = false; break;
+                    if (field && field.id === "billing_address_postal_code" && field.value.trim() !== '' && !/^[0-9]{2}-[0-9]{3}$/.test(field.value.trim())) {
+                        showSimpleModal('Kod pocztowy w danych do zamówienia musi być w formacie XX-XXX.', 'error'); field.style.borderColor = 'red'; customValidationOk = false; break;
                     }
                 }
             }
-            if (!customValidationOk) return; 
+            if (!customValidationOk) { console.log("SCRIPT.JS DEBUG: Billing validation failed."); return; }
 
             if (paymentMethod === 'Karta') {
-                const cardNumber = document.getElementById('card_number');
-                const cardExpiry = document.getElementById('card_expiry');
-                const cardCvv = document.getElementById('card_cvv');
-                if (cardNumber && cardNumber.required && cardNumber.value.trim().length < 15) {showSimpleModal('Numer karty jest nieprawidłowy.', 'error'); cardNumber.style.borderColor = 'red'; customValidationOk = false;}
-                if (cardExpiry && cardExpiry.required && !/^(0[1-9]|1[0-2])\s?\/?\s?([0-9]{2})$/.test(cardExpiry.value.replace(' ',''))) {showSimpleModal('Data ważności karty (MM/RR) jest nieprawidłowa.', 'error'); cardExpiry.style.borderColor = 'red'; customValidationOk = false;}
-                if (cardCvv && cardCvv.required && !/^[0-9]{3,4}$/.test(cardCvv.value)) {showSimpleModal('Kod CVV jest nieprawidłowy (3 lub 4 cyfry).', 'error'); cardCvv.style.borderColor = 'red'; customValidationOk = false;}
+                const cardNumberEl = document.getElementById('card_number');
+                const cardExpiryEl = document.getElementById('card_expiry');
+                const cardCvvEl = document.getElementById('card_cvv');
+                
+                const cardNumber = cardNumberEl?.value.replace(/\s/g, '');
+                const cardExpiry = cardExpiryEl?.value;
+                const cardCvv = cardCvvEl?.value;
+
+                if (!cardNumber || cardNumber.length < 13 || cardNumber.length > 16 || !/^\d+$/.test(cardNumber)) {
+                    showSimpleModal('Numer karty jest nieprawidłowy (13-16 cyfr).', 'error'); 
+                    if(cardNumberEl) cardNumberEl.style.borderColor = 'red'; customValidationOk = false;
+                }
+                if (!cardExpiry || !/^(0[1-9]|1[0-2])\s?\/?\s?([0-9]{2})$/.test(cardExpiry.replace(/\s/g, ''))) {
+                    showSimpleModal('Data ważności karty (MM/RR) jest nieprawidłowa.', 'error'); 
+                    if(cardExpiryEl) cardExpiryEl.style.borderColor = 'red'; customValidationOk = false;
+                } else {
+                    const parts = cardExpiry.replace(/\s/g, '').split('/');
+                    if (parts.length === 2) {
+                        const month = parseInt(parts[0], 10);
+                        const year = parseInt("20" + parts[1], 10);
+                        const currentYear = new Date().getFullYear();
+                        const currentMonth = new Date().getMonth() + 1;
+                        if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                            showSimpleModal('Karta straciła ważność.', 'error');
+                            if(cardExpiryEl) cardExpiryEl.style.borderColor = 'red'; customValidationOk = false;
+                        }
+                    }
+                }
+                if (!cardCvv || !/^[0-9]{3}$/.test(cardCvv)) { 
+                    showSimpleModal('Kod CVV jest nieprawidłowy (dokładnie 3 cyfry).', 'error'); 
+                    if(cardCvvEl) cardCvvEl.style.borderColor = 'red'; customValidationOk = false;
+                }
             }
             if (paymentMethod === 'Blik') {
                 const blikCodeInput = document.getElementById('blik_code');
-                if (blikCodeInput && blikCodeInput.required && !/^[0-9]{6}$/.test(blikCodeInput.value)) { showSimpleModal('Kod BLIK musi składać się z 6 cyfr.', 'error'); if (blikCodeInput) blikCodeInput.style.borderColor = 'red'; customValidationOk = false;}
+                if (blikCodeInput && blikCodeInput.required && !/^[0-9]{6}$/.test(blikCodeInput.value)) { 
+                    showSimpleModal('Kod BLIK musi składać się z 6 cyfr.', 'error'); 
+                    if (blikCodeInput) blikCodeInput.style.borderColor = 'red'; customValidationOk = false;
+                }
             }
-            if (!customValidationOk) return; 
 
+            if (!customValidationOk) {
+                console.log("SCRIPT.JS DEBUG: Walidacja formularza płatności nie powiodła się.");
+                return; 
+            }
+            
             mainPaymentSubmitButton.disabled = true;
             mainPaymentSubmitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Przetwarzanie...';
-            processOrder(paymentMethod);
+            processOrder(paymentMethod); 
         });
     }
 
-    function processOrder(paymentMethod) {
+    function processOrder(paymentMethodValue) { // Zmieniono nazwę argumentu dla jasności
         const formData = new FormData(checkoutForm);
-        formData.append('payment_method', paymentMethod); 
-        if (paymentMethod !== 'Karta') {
+        
+        formData.delete('payment_method_choice'); // Usuń pole radio
+        formData.append('payment_method', paymentMethodValue); // Dodaj poprawną nazwę
+
+        if (paymentMethodValue !== 'Karta') {
             formData.delete('card_number'); 
             formData.delete('card_expiry'); 
             formData.delete('card_cvv');
         }
-        if (paymentMethod !== 'Blik') { formData.delete('blik_code'); }
+        if (paymentMethodValue !== 'Blik') { formData.delete('blik_code'); }
+        
+        if(!isLoggedIn) { // Jeśli gość, a sekcja billingDetailsSection nie była widoczna (np. dla Karty/BLIK domyślnie)
+            if (!billingDetailsSection || billingDetailsSection.style.display === 'none') {
+                 ['billing_name', 'billing_email', 'billing_address_street', 'billing_address_city', 'billing_address_postal_code', 'billing_address_country'].forEach(field => formData.delete(field));
+            }
+        }
+
+
+        console.log("SCRIPT.JS DEBUG: Processing order with method:", paymentMethodValue);
+        // Wypisz FormData dla debugowania
+        // for (var pair of formData.entries()) { console.log("FormData: " + pair[0]+ ': ' + pair[1]); }
+
         fetch(basePath + 'process_payment.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
             return response.text().then(text => {
+                console.log("SCRIPT.JS DEBUG: Raw response from process_payment.php:", text);
                 if (!response.ok) {
                     try { const errorData = JSON.parse(text); throw new Error(errorData.message || `Błąd serwera: ${response.status}.`); } 
                     catch (e) { throw new Error(`Błąd serwera: ${response.status}. Odpowiedź: ${text.substring(0, 200)}...`); }
                 }
                 try { return JSON.parse(text); } 
                 catch (e) { 
+                    console.error("SCRIPT.JS DEBUG: Odpowiedź serwera nie jest poprawnym JSON-em:", text);
                     throw new Error('Błąd: Otrzymano nieprawidłową odpowiedź (nie-JSON) z serwera.');
                 }
             });
         })
         .then(data => {
+            console.log("SCRIPT.JS DEBUG: Parsed data from process_payment.php:", data);
             if (data.success) {
                 window.location.href = basePath + 'order_confirmation.php?order_id=' + data.order_id;
             } else {
@@ -335,10 +518,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     showSimpleModal(data.message || 'Wystąpił nieoczekiwany błąd.', 'error');
                 }
                 if(mainPaymentSubmitButton) mainPaymentSubmitButton.disabled = false; 
-                updatePaymentFields(); 
+                const currentMethod = formData.get('payment_method'); // Pobierz aktualną metodę
+                if (currentMethod === 'Karta') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-credit-card"></i> Zapłać Kartą i Złóż Zamówienie';
+                else if (currentMethod === 'Blik') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Zapłać BLIKiem i Złóż Zamówienie';
+                else if (currentMethod === 'Przelew') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-university"></i> Złóż Zamówienie (Przelew)';
+                else mainPaymentSubmitButton.innerHTML = '<i class="fas fa-shield-alt"></i> Zapłać i Złóż Zamówienie';
             }
         })
         .catch(error => {
+            console.error("SCRIPT.JS DEBUG: Error in processOrder fetch:", error);
             if (paymentResponseMessage) {
                 paymentResponseMessage.style.display = 'block';
                 paymentResponseMessage.className = 'flash-message error'; 
@@ -347,395 +535,188 @@ document.addEventListener('DOMContentLoaded', function () {
                  showSimpleModal(error.message || 'Wystąpił krytyczny błąd podczas przetwarzania zamówienia.', 'error');
             }
             if(mainPaymentSubmitButton) mainPaymentSubmitButton.disabled = false; 
-            updatePaymentFields();
-        });
-    }
-
-    function updateCartCountNavbar(newCount) {
-        const cartCountElements = document.querySelectorAll('.cart-count'); 
-        cartCountElements.forEach(el => { 
-            if (el) { 
-                el.textContent = newCount; 
-                el.style.display = newCount > 0 ? 'inline-block' : 'none'; 
-            } 
+            const currentMethod = formData.get('payment_method');
+            if (currentMethod === 'Karta') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-credit-card"></i> Zapłać Kartą i Złóż Zamówienie';
+            else if (currentMethod === 'Blik') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-mobile-alt"></i> Zapłać BLIKiem i Złóż Zamówienie';
+            else if (currentMethod === 'Przelew') mainPaymentSubmitButton.innerHTML = '<i class="fas fa-university"></i> Złóż Zamówienie (Przelew)';
+            else mainPaymentSubmitButton.innerHTML = '<i class="fas fa-shield-alt"></i> Zapłać i Złóż Zamówienie';
         });
     }
     
-    if (checkoutForm) {
-        updatePaymentFields(); 
-    }
-
-    // --- START: SPA Booking Modal Logic ---
+    // --- SPA Booking Modal Logic ---
     const spaBookingForm = document.getElementById('spaBookingForm');
     if (spaBookingForm) {
         const spaModal = document.getElementById('spaPackagesModal');
         const openSpaModalButton = document.getElementById('spaPackageButton');
-        const closeSpaModalButton = spaModal ? spaModal.querySelector('#closeSpaModalBtn') : null; // Poprawiony selektor
-        const confirmSpaSelectionButton = spaModal ? spaModal.querySelector('#confirmSpaSelection') : null;
+        const closeSpaModalButton = spaModal ? spaModal.querySelector('#closeSpaModalBtn') : null;
+        const confirmSpaSelectionButton = spaModal ? spaModal.querySelector('#confirmSpaSelection') : null; 
         const packagesHorizontalListContainer = document.getElementById('spaPackagesHorizontalList');
-        
         const hiddenInputSelectedItems = document.getElementById('selectedSpaItems'); 
         const hiddenInputCalculatedPrice = document.getElementById('calculatedSpaPrice'); 
         const formProductIdInput = document.getElementById('formProductId'); 
-        
         const placeholderSpaProductInput = spaBookingForm.querySelector('input[name="item_details[placeholder_spa_product_id]"]');
         const placeholderSpaProductId = placeholderSpaProductInput ? placeholderSpaProductInput.value : null;
-
         const selectedTreatmentsDisplay = document.getElementById('selectedTreatmentsDisplay');
 
-        function populateSpaModalDynamically(spaProducts) { // Zmieniono nazwę argumentu
-            if (!packagesHorizontalListContainer) { 
-                console.error("JS Error: Kontener #spaPackagesHorizontalList nie został znaleziony.");
-                return; 
-            }
+        function populateSpaModalDynamically(spaProducts) { 
+            if (!packagesHorizontalListContainer) { console.error("JS Error: Kontener #spaPackagesHorizontalList nie został znaleziony."); return; }
             packagesHorizontalListContainer.innerHTML = ''; 
             if (!spaProducts || !Array.isArray(spaProducts) || spaProducts.length === 0) {
-                packagesHorizontalListContainer.innerHTML = '<p style="text-align:center; color:grey; padding:20px;">Obecnie brak dostępnych zabiegów lub pakietów SPA do wyboru.</p>';
+                packagesHorizontalListContainer.innerHTML = '<p style="text-align:center; color:grey; padding:20px;">Obecnie brak dostępnych zabiegów lub pakietów SPA.</p>';
                 return;
             }
-
             const categories = {};
-            spaProducts.forEach(prod => { // Użycie argumentu funkcji
+            spaProducts.forEach(prod => {
                 if (!prod || typeof prod.name !== 'string' || typeof prod.price === 'undefined' || typeof prod.product_id === 'undefined' || typeof prod.category_name_from_db !== 'string') { return; }
                 const price = parseFloat(prod.price);
                 if (isNaN(price)) { return; }
-
                 const categoryName = prod.category_name_from_db;
-                if (!categories[categoryName]) {
-                    categories[categoryName] = { name: categoryName, treatments: [] };
-                }
-                categories[categoryName].treatments.push({
-                    product_id: prod.product_id,
-                    name: `${prod.name} - ${price.toFixed(2)} PLN`,
-                    price: price,
-                    description: prod.description || ''
-                });
+                if (!categories[categoryName]) categories[categoryName] = { name: categoryName, treatments: [] };
+                categories[categoryName].treatments.push({ product_id: prod.product_id, name: `${prod.name} - ${price.toFixed(2)} PLN`, price: price, description: prod.description || '' });
             });
-            
             const displayOrder = ["SPA - Pakiety Wellness", "SPA - Terapie Masażu", "SPA - Zabiegi na Twarz", "SPA - Zabiegi na Ciało"];
             const sortedCategories = {};
-            displayOrder.forEach(catName => {
-                if (categories[catName]) {
-                    sortedCategories[catName] = categories[catName];
-                    delete categories[catName];
-                }
-            });
-            for (const catName in categories) {
-                sortedCategories[catName] = categories[catName];
-            }
+            displayOrder.forEach(catName => { if (categories[catName]) { sortedCategories[catName] = categories[catName]; delete categories[catName]; } });
+            for (const catName in categories) sortedCategories[catName] = categories[catName];
 
             for (const catKey in sortedCategories) {
                 const categoryData = sortedCategories[catKey];
-                const categoryDiv = document.createElement('div');
-                categoryDiv.classList.add('spa-package-category');
-                
-                const categoryTitle = document.createElement('h4');
-                categoryTitle.textContent = categoryData.name.replace('SPA - ', '');
-                categoryDiv.appendChild(categoryTitle);
-
+                const categoryDiv = document.createElement('div'); categoryDiv.classList.add('spa-package-category');
+                const categoryTitle = document.createElement('h4'); categoryTitle.textContent = categoryData.name.replace('SPA - ', ''); categoryDiv.appendChild(categoryTitle);
                 if (categoryData.treatments.length === 0) {
-                    const noTreatmentsMsg = document.createElement('p');
-                    noTreatmentsMsg.textContent = 'Brak ofert w tej kategorii.';
-                    noTreatmentsMsg.style.cssText = 'font-size:0.85em; color:grey; padding:10px 0;';
-                    categoryDiv.appendChild(noTreatmentsMsg);
+                    const p = document.createElement('p'); p.textContent = 'Brak ofert.'; p.style.cssText = 'font-size:0.85em; color:grey;'; categoryDiv.appendChild(p);
                 } else {
                     categoryData.treatments.forEach(treatment => {
-                        const treatmentLabel = document.createElement('label');
-                        treatmentLabel.classList.add('treatment-option-label');
-                        treatmentLabel.title = treatment.description;
-
-                        const treatmentInput = document.createElement('input');
-                        if (categoryData.name === "SPA - Pakiety Wellness") {
-                            treatmentInput.type = 'radio';
-                            treatmentInput.name = 'spa_package_option';
-                        } else {
-                            treatmentInput.type = 'checkbox';
-                            treatmentInput.name = 'spa_treatment_option';
-                        }
-                        treatmentInput.value = treatment.product_id;
-                        treatmentInput.dataset.treatmentName = treatment.name;
-                        treatmentInput.dataset.price = treatment.price;
-                        
-                        treatmentInput.addEventListener('change', function() {
-                            if (this.type === 'radio' && this.checked) {
-                                packagesHorizontalListContainer.querySelectorAll('input[type="checkbox"][name="spa_treatment_option"]').forEach(cb => cb.checked = false);
-                            } else if (this.type === 'checkbox' && this.checked) {
-                                packagesHorizontalListContainer.querySelectorAll('input[type="radio"][name="spa_package_option"]').forEach(rb => rb.checked = false);
-                            }
+                        const lbl = document.createElement('label'); lbl.classList.add('treatment-option-label'); lbl.title = treatment.description;
+                        const inp = document.createElement('input');
+                        inp.type = (categoryData.name === "SPA - Pakiety Wellness") ? 'radio' : 'checkbox';
+                        inp.name = (categoryData.name === "SPA - Pakiety Wellness") ? 'spa_package_option' : 'spa_treatment_option';
+                        inp.value = treatment.product_id; inp.dataset.treatmentName = treatment.name; inp.dataset.price = treatment.price;
+                        inp.addEventListener('change', function() {
+                            if (this.type === 'radio' && this.checked) packagesHorizontalListContainer.querySelectorAll('input[type="checkbox"][name="spa_treatment_option"]').forEach(cb => cb.checked = false);
+                            else if (this.type === 'checkbox' && this.checked) packagesHorizontalListContainer.querySelectorAll('input[type="radio"][name="spa_package_option"]').forEach(rb => rb.checked = false);
                         });
-
-                        treatmentLabel.appendChild(treatmentInput);
-                        treatmentLabel.appendChild(document.createTextNode(` ${treatment.name}`));
-                        categoryDiv.appendChild(treatmentLabel);
+                        lbl.appendChild(inp); lbl.appendChild(document.createTextNode(` ${treatment.name}`)); categoryDiv.appendChild(lbl);
                     });
                 }
                 packagesHorizontalListContainer.appendChild(categoryDiv);
             }
         }
-
         if (openSpaModalButton && spaModal && packagesHorizontalListContainer) {
             openSpaModalButton.addEventListener('click', function() {
-                // Używamy allSpaProductsFromPHP zamiast allSpaProductsFromPHPGlobal
-                if (typeof allSpaProductsFromPHP !== 'undefined' && Array.isArray(allSpaProductsFromPHP)) {
-                    populateSpaModalDynamically(allSpaProductsFromPHP); // Przekazujemy dane do funkcji
+                if (typeof allSpaProductsFromPHP !== 'undefined' && Array.isArray(allSpaProductsFromPHP)) { // ZMIANA ZMIENNEJ
+                    populateSpaModalDynamically(allSpaProductsFromPHP);
                 } else {
-                    if(packagesHorizontalListContainer) packagesHorizontalListContainer.innerHTML = '<p style="text-align:center; color:grey; padding:20px;">Błąd ładowania danych o zabiegach. Spróbuj odświeżyć stronę.</p>';
-                    console.error("script.js: Zmienna allSpaProductsFromPHP nie jest zdefiniowana lub nie jest tablicą. Sprawdź czy jest poprawnie przekazywana z PHP w pliku spa_b.php.");
+                    if(packagesHorizontalListContainer) packagesHorizontalListContainer.innerHTML = '<p>Błąd ładowania danych o zabiegach.</p>';
+                    console.error("script.js: Zmienna allSpaProductsFromPHP nie jest zdefiniowana lub jest niepoprawna.");
                 }
-                
                 if (hiddenInputSelectedItems && packagesHorizontalListContainer) {
-                    const previouslySelectedIds = hiddenInputSelectedItems.value.split(',').filter(id => id.trim() !== '');
-                    if (packagesHorizontalListContainer) { 
-                        packagesHorizontalListContainer.querySelectorAll('input[name="spa_treatment_option"], input[name="spa_package_option"]').forEach(input => {
-                            input.checked = previouslySelectedIds.includes(input.value);
-                        });
-                    }
+                    const prevSelIds = hiddenInputSelectedItems.value.split(',').filter(id => id.trim() !== '');
+                    packagesHorizontalListContainer.querySelectorAll('input[name="spa_treatment_option"], input[name="spa_package_option"]').forEach(input => input.checked = prevSelIds.includes(input.value));
                 }
                 spaModal.style.display = 'block';
             });
-        } else {
-            if(!openSpaModalButton) console.error("script.js: Nie znaleziono #spaPackageButton");
-            if(!spaModal) console.error("script.js: Nie znaleziono #spaPackagesModal");
-            if(!packagesHorizontalListContainer) console.error("script.js: Nie znaleziono #spaPackagesHorizontalList");
         }
-
-        if (closeSpaModalButton && spaModal) { 
-            closeSpaModalButton.onclick = () => { spaModal.style.display = 'none'; };
-        }
-        if (spaModal) { 
-            spaModal.addEventListener('click', e => { if (e.target === spaModal) { spaModal.style.display = 'none'; } });
-        }
+        if (closeSpaModalButton && spaModal) closeSpaModalButton.onclick = () => spaModal.style.display = 'none';
+        if (spaModal) spaModal.addEventListener('click', e => { if (e.target === spaModal) spaModal.style.display = 'none'; });
 
         if (confirmSpaSelectionButton && spaModal && hiddenInputSelectedItems && packagesHorizontalListContainer && selectedTreatmentsDisplay && hiddenInputCalculatedPrice && formProductIdInput) {
             confirmSpaSelectionButton.onclick = function() {
-                const selectedTreatmentIds = [];
-                const selectedTreatmentsDataForDisplay = [];
-                let totalSelectedPrice = 0;
-                let isPackageSelected = false;
-
-                const selectedPackageRadio = packagesHorizontalListContainer.querySelector('input[type="radio"][name="spa_package_option"]:checked');
-                
-                if (selectedPackageRadio) {
-                    isPackageSelected = true;
-                    selectedTreatmentIds.push(selectedPackageRadio.value);
-                    selectedTreatmentsDataForDisplay.push(selectedPackageRadio.dataset.treatmentName);
-                    totalSelectedPrice = parseFloat(selectedPackageRadio.dataset.price || 0);
-                    formProductIdInput.value = selectedPackageRadio.value; 
+                let selIds = [], selDataDisp = [], totPrice = 0, isPkgSel = false;
+                const selPkgRadio = packagesHorizontalListContainer.querySelector('input[type="radio"][name="spa_package_option"]:checked');
+                if (selPkgRadio) {
+                    isPkgSel = true; selIds.push(selPkgRadio.value); selDataDisp.push(selPkgRadio.dataset.treatmentName);
+                    totPrice = parseFloat(selPkgRadio.dataset.price || 0); formProductIdInput.value = selPkgRadio.value;
                 } else {
                     packagesHorizontalListContainer.querySelectorAll('input[type="checkbox"][name="spa_treatment_option"]:checked').forEach(cb => {
-                        selectedTreatmentIds.push(cb.value);
-                        selectedTreatmentsDataForDisplay.push(cb.dataset.treatmentName);
-                        totalSelectedPrice += parseFloat(cb.dataset.price || 0);
+                        selIds.push(cb.value); selDataDisp.push(cb.dataset.treatmentName); totPrice += parseFloat(cb.dataset.price || 0);
                     });
-                    if (selectedTreatmentIds.length > 0) {
-                        formProductIdInput.value = placeholderSpaProductId || ''; 
-                    } else {
-                        formProductIdInput.value = ''; 
-                    }
+                    formProductIdInput.value = selIds.length > 0 ? (placeholderSpaProductId || '') : '';
                 }
-
-                hiddenInputSelectedItems.value = selectedTreatmentIds.join(',');
-                hiddenInputCalculatedPrice.value = totalSelectedPrice.toFixed(2);
-
-                selectedTreatmentsDisplay.innerHTML = ''; 
-                if (selectedTreatmentsDataForDisplay.length > 0) {
-                    const titleEl = document.createElement('h5');
-                    titleEl.textContent = isPackageSelected ? 'Twój wybrany pakiet SPA:' : 'Twoje wybrane zabiegi SPA:';
-                    selectedTreatmentsDisplay.appendChild(titleEl);
-                    const ul = document.createElement('ul');
-                    selectedTreatmentsDataForDisplay.forEach(nameWithPrice => {
-                        const li = document.createElement('li');
-                        li.textContent = nameWithPrice;
-                        ul.appendChild(li);
-                    });
-                    selectedTreatmentsDisplay.appendChild(ul);
-                    const priceEl = document.createElement('p');
-                    priceEl.innerHTML = `<strong>Łączna kwota: ${totalSelectedPrice.toFixed(2)} PLN</strong>`;
-                    selectedTreatmentsDisplay.appendChild(priceEl);
+                hiddenInputSelectedItems.value = selIds.join(','); hiddenInputCalculatedPrice.value = totPrice.toFixed(2);
+                selectedTreatmentsDisplay.innerHTML = '';
+                if (selDataDisp.length > 0) {
+                    const h5 = document.createElement('h5'); h5.textContent = isPkgSel ? 'Wybrany pakiet SPA:' : 'Wybrane zabiegi SPA:'; selectedTreatmentsDisplay.appendChild(h5);
+                    const ul = document.createElement('ul'); selDataDisp.forEach(n => { const li = document.createElement('li'); li.textContent = n; ul.appendChild(li); }); selectedTreatmentsDisplay.appendChild(ul);
+                    const p = document.createElement('p'); p.innerHTML = `<strong>Łączna kwota: ${totPrice.toFixed(2)} PLN</strong>`; selectedTreatmentsDisplay.appendChild(p);
                     selectedTreatmentsDisplay.style.display = 'block';
-                    if (openSpaModalButton) openSpaModalButton.textContent = `Wybrano (${selectedTreatmentIds.length}) Zmień wybór`;
+                    if (openSpaModalButton) openSpaModalButton.textContent = `Wybrano (${selIds.length}) Zmień wybór`;
                 } else {
-                    selectedTreatmentsDisplay.style.display = 'none';
-                    if (openSpaModalButton) openSpaModalButton.textContent = 'Wybierz Zabiegi lub Gotowy Pakiet';
-                    // Jeśli nic nie wybrano, a formularz mógłby być wysłany, przywróć domyślne ID produktu (placeholder), jeśli istnieje.
-                    // W przeciwnym razie zostaw puste, aby walidacja formularza zadziałała.
-                    formProductIdInput.value = (placeholderSpaProductId && selectedTreatmentIds.length === 0) ? placeholderSpaProductId : ''; 
+                    selectedTreatmentsDisplay.style.display = 'none'; if (openSpaModalButton) openSpaModalButton.textContent = 'Wybierz Zabiegi lub Gotowy Pakiet';
+                    formProductIdInput.value = placeholderSpaProductId || '';
                 }
-                spaModal.style.display = 'none'; 
+                spaModal.style.display = 'none';
             };
         }
-        
-        if (spaBookingForm) { 
-            spaBookingForm.addEventListener('submit', function(event){
+        if (spaBookingForm) {
+            spaBookingForm.addEventListener('submit', function(e){
                 if (!hiddenInputSelectedItems || hiddenInputSelectedItems.value.trim() === '') {
-                    if (typeof showSimpleModal === 'function') showSimpleModal('Proszę wybrać przynajmniej jeden zabieg lub pakiet SPA z listy.', 'error');
-                    else alert('Proszę wybrać przynajmniej jeden zabieg lub pakiet SPA z listy.');
-                    event.preventDefault(); return;
+                    showSimpleModal('Proszę wybrać zabieg/pakiet SPA.', 'error'); e.preventDefault(); return;
                 }
                 if (!formProductIdInput.value) {
-                    // Ten warunek jest ważny, jeśli placeholderSpaProductId nie został znaleziony i nic nie wybrano
-                    if (typeof showSimpleModal === 'function') showSimpleModal('Błąd: Brak ID produktu do dodania do koszyka. Wybierz ponownie zabiegi/pakiet lub skontaktuj się z obsługą, jeśli problem się powtarza.', 'error');
-                    else alert('Błąd: Brak ID produktu do dodania do koszyka.');
-                    event.preventDefault(); return;
+                    showSimpleModal('Błąd ID produktu SPA. Wybierz ponownie.', 'error'); e.preventDefault(); return;
                 }
             });
         }
-    } 
-    // --- END: SPA Booking Modal Logic ---
-
+    }
+    // --- Pozostałe funkcje (opinie) ---
     const opinionsListCarousel = document.querySelector('.opinions-list-carousel');
     if (opinionsListCarousel) {
         const opinionCards = Array.from(opinionsListCarousel.querySelectorAll('.opinion-card-carousel'));
         const prevOpinionBtn = document.getElementById('prevOpinionBtn');
         const nextOpinionBtn = document.getElementById('nextOpinionBtn');
         let currentOpinionIndex = 0;
-
         function showOpinion(index) {
-            opinionCards.forEach((card, i) => {
-                card.classList.remove('active'); 
-                card.style.display = 'none'; 
-                if (i === index) {
-                    card.classList.add('active');
-                    card.style.display = 'block'; 
-                }
-            });
-
-            if (prevOpinionBtn && nextOpinionBtn && opinionCards.length > 0) {
-                prevOpinionBtn.disabled = index === 0;
-                nextOpinionBtn.disabled = index === opinionCards.length - 1;
-            } else if (prevOpinionBtn && nextOpinionBtn) { 
-                prevOpinionBtn.style.display = 'none';
-                nextOpinionBtn.style.display = 'none';
-                 const carouselNavContainer = document.querySelector('.carousel-navigation');
-                 if(carouselNavContainer) carouselNavContainer.style.display = 'none';
-            }
+            opinionCards.forEach((card, i) => { card.classList.remove('active'); card.style.display = 'none'; if (i === index) { card.classList.add('active'); card.style.display = 'block'; } });
+            if (prevOpinionBtn && nextOpinionBtn && opinionCards.length > 0) { prevOpinionBtn.disabled = index === 0; nextOpinionBtn.disabled = index === opinionCards.length - 1; }
+            else if (prevOpinionBtn && nextOpinionBtn) { prevOpinionBtn.style.display = 'none'; nextOpinionBtn.style.display = 'none'; const nav = document.querySelector('.carousel-navigation'); if(nav) nav.style.display = 'none';}
         }
-
-        if (prevOpinionBtn) {
-            prevOpinionBtn.addEventListener('click', () => {
-                if (currentOpinionIndex > 0) {
-                    currentOpinionIndex--;
-                    showOpinion(currentOpinionIndex);
-                }
-            });
-        }
-
-        if (nextOpinionBtn) {
-            nextOpinionBtn.addEventListener('click', () => {
-                if (currentOpinionIndex < opinionCards.length - 1) {
-                    currentOpinionIndex++;
-                    showOpinion(currentOpinionIndex);
-                }
-            });
-        }
-        
-        if (opinionCards.length > 0) {
-            showOpinion(currentOpinionIndex); 
-        } else {
-            const carouselNavContainer = document.querySelector('.carousel-navigation');
-            if (carouselNavContainer) {
-                carouselNavContainer.style.display = 'none';
-            }
-        }
+        if (prevOpinionBtn) prevOpinionBtn.addEventListener('click', () => { if (currentOpinionIndex > 0) { currentOpinionIndex--; showOpinion(currentOpinionIndex); } });
+        if (nextOpinionBtn) nextOpinionBtn.addEventListener('click', () => { if (currentOpinionIndex < opinionCards.length - 1) { currentOpinionIndex++; showOpinion(currentOpinionIndex); } });
+        if (opinionCards.length > 0) showOpinion(currentOpinionIndex);
+        else { const nav = document.querySelector('.carousel-navigation'); if (nav) nav.style.display = 'none';}
     }
-
     const opinionsListContainer = document.getElementById('opinionsListContainer');
     const loadMoreOpinionsBtn = document.getElementById('loadMoreOpinionsBtn');
     const loadingOpinionsIndicator = document.getElementById('loadingOpinionsIndicator');
-    let currentPage = 1; 
-
+    let currentPage = 1;
     if (loadMoreOpinionsBtn && opinionsListContainer) {
-        currentPage = 1;                       
-
+        currentPage = 1;
         loadMoreOpinionsBtn.addEventListener('click', function() {
-            currentPage++; 
-            
+            currentPage++;
             if(loadingOpinionsIndicator) loadingOpinionsIndicator.style.display = 'block';
-            this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
-
+            this.disabled = true; this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ładowanie...';
             fetch(`${basePath}load_more_opinions.php?page=${currentPage}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
+                .then(response => { if (!response.ok) throw new Error(`HTTP error! ${response.status}`); return response.json(); })
                 .then(data => {
                     if (data.success && data.opinions_html && Array.isArray(data.opinions_html)) {
-                        if (data.opinions_html.length > 0) {
-                            data.opinions_html.forEach(opinionHTML => {
-                                opinionsListContainer.insertAdjacentHTML('beforeend', opinionHTML);
-                            });
-                        }
-                        
-                        if (data.has_more) {
-                            this.disabled = false;
-                            this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii';
-                        } else {
-                            this.style.display = 'none'; 
-                            const noMoreMsg = document.createElement('p');
-                            noMoreMsg.textContent = 'To już wszystkie opinie.';
-                            noMoreMsg.style.textAlign = 'center';
-                            noMoreMsg.style.marginTop = '20px';
-                            noMoreMsg.style.color = 'var(--text-muted-color)';
-                            if (this.parentElement) this.parentElement.appendChild(noMoreMsg);
-                        }
-                    } else if (data.success && (!data.opinions_html || data.opinions_html.length === 0) && !data.has_more) { // Poprawiony warunek
-                        this.style.display = 'none';
-                        const noMoreMsg = document.createElement('p');
-                        noMoreMsg.textContent = 'To już wszystkie opinie.';
-                        noMoreMsg.style.textAlign = 'center';
-                        noMoreMsg.style.marginTop = '20px';
-                        noMoreMsg.style.color = 'var(--text-muted-color)';
-                        if (this.parentElement) this.parentElement.appendChild(noMoreMsg);
-                    }
-                    else {
-                        showSimpleModal(data.message || 'Nie udało się załadować więcej opinii.', 'error');
-                        this.disabled = false;
-                        this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii';
-                        currentPage--; 
-                    }
+                        if (data.opinions_html.length > 0) data.opinions_html.forEach(html => opinionsListContainer.insertAdjacentHTML('beforeend', html));
+                        if (data.has_more) { this.disabled = false; this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii'; }
+                        else { this.style.display = 'none'; const p = document.createElement('p'); p.textContent = 'To już wszystkie opinie.'; p.style.cssText = 'text-align:center;margin-top:20px;color:var(--text-muted-color);'; if(this.parentElement) this.parentElement.appendChild(p); }
+                    } else if (data.success && (!data.opinions_html || data.opinions_html.length === 0) && !data.has_more) {
+                        this.style.display = 'none'; const p = document.createElement('p'); p.textContent = 'To już wszystkie opinie.'; p.style.cssText = 'text-align:center;margin-top:20px;color:var(--text-muted-color);'; if(this.parentElement) this.parentElement.appendChild(p);
+                    } else { showSimpleModal(data.message || 'Błąd ładowania opinii.', 'error'); this.disabled = false; this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii'; currentPage--; }
                 })
-                .catch(error => {
-                    showSimpleModal('Wystąpił błąd podczas komunikacji z serwerem.', 'error');
-                    this.disabled = false;
-                    this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii';
-                    currentPage--; 
-                })
-                .finally(() => {
-                    if(loadingOpinionsIndicator) loadingOpinionsIndicator.style.display = 'none';
-                });
+                .catch(err => { showSimpleModal('Błąd komunikacji.', 'error'); this.disabled = false; this.innerHTML = '<i class="fas fa-chevron-down"></i> Pokaż więcej opinii'; currentPage--; })
+                .finally(() => { if(loadingOpinionsIndicator) loadingOpinionsIndicator.style.display = 'none'; });
         });
     }
-
     const toggleAddOpinionFormBtn = document.getElementById('toggleAddOpinionFormBtn');
     const addOpinionFormContainer = document.getElementById('addOpinionFormContainer');
-
     if (toggleAddOpinionFormBtn && addOpinionFormContainer) {
         toggleAddOpinionFormBtn.addEventListener('click', function() {
-            const isVisible = addOpinionFormContainer.style.display === 'block';
-            addOpinionFormContainer.style.display = isVisible ? 'none' : 'block';
-            this.innerHTML = isVisible ? '<i class="fas fa-plus-circle"></i> Dodaj swoją opinię' : '<i class="fas fa-minus-circle"></i> Ukryj formularz';
-            if (!isVisible) {
-                 addOpinionFormContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+            const vis = addOpinionFormContainer.style.display === 'block';
+            addOpinionFormContainer.style.display = vis ? 'none' : 'block';
+            this.innerHTML = vis ? '<i class="fas fa-plus-circle"></i> Dodaj swoją opinię' : '<i class="fas fa-minus-circle"></i> Ukryj formularz';
+            if (!vis) addOpinionFormContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
     }
-
     const newOpinionForm = document.getElementById('newOpinionForm');
     if (newOpinionForm) {
-        newOpinionForm.addEventListener('submit', function(event) {
-            const ratingChecked = this.querySelector('input[name="rating"]:checked');
-            if (!ratingChecked) {
-                event.preventDefault();
-                showSimpleModal('Proszę wybrać ocenę (ilość gwiazdek).', 'error');
-                const ratingLabel = this.querySelector('.rating-form-label');
-                if (ratingLabel) {
-                    ratingLabel.scrollIntoView({behavior: 'smooth', block: 'center'});
-                    ratingLabel.style.color = 'red'; 
-                    setTimeout(() => { ratingLabel.style.color = ''; }, 3000);
-                }
+        newOpinionForm.addEventListener('submit', function(e) {
+            if (!this.querySelector('input[name="rating"]:checked')) {
+                e.preventDefault(); showSimpleModal('Proszę wybrać ocenę.', 'error');
+                const lbl = this.querySelector('.rating-form-label'); if(lbl) {lbl.scrollIntoView({behavior:'smooth',block:'center'});lbl.style.color='red';setTimeout(()=>lbl.style.color='',3000);}
                 return false;
             }
         });

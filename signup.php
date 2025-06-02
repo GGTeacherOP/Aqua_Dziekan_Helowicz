@@ -5,7 +5,7 @@ require_once __DIR__ . '/config/init.php';
 $page_title = "Rejestracja - AquaParadise";
 
 $error_message = '';
-$success_message = '';
+// $success_message = ''; // Komunikat sukcesu jest teraz przekazywany przez $_SESSION['flash_message'] po przekierowaniu
 
 $redirect_url_signup = $_GET['redirect'] ?? 'index.php';
 $action_after_signup = $_GET['action'] ?? null;
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Proszę wypełnić wszystkie wymagane pola.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Nieprawidłowy format adresu email.";
-    } elseif (strlen($password) < 8) { // Możesz usunąć lub złagodzić tę walidację, jeśli chcesz bardzo proste hasła
+    } elseif (strlen($password) < 8) { 
         $error_message = "Hasło musi mieć co najmniej 8 znaków.";
     } elseif ($password !== $confirm_password) {
         $error_message = "Hasła nie są identyczne.";
@@ -45,9 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt_check->fetch()) {
                 $error_message = "Użytkownik o podanym adresie email już istnieje.";
             } else {
-                // =========== POCZĄTEK ZMIANY (Zapis czystego tekstu hasła) ===========
-                $password_to_store = $password; // Zamiast hashowania, używamy hasła wprost
-                // =========== KONIEC ZMIANY (Zapis czystego tekstu hasła) ===========
+                $password_to_store = $password; // Zapis czystego tekstu hasła
                 
                 $stmt_role_id = $pdo->prepare("SELECT role_id FROM Roles WHERE role_name = 'Klient'");
                 $stmt_role_id->execute();
@@ -63,24 +61,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt_insert->bindParam(':firstname', $firstname, PDO::PARAM_STR);
                     $stmt_insert->bindParam(':lastname', $lastname, PDO::PARAM_STR);
                     $stmt_insert->bindParam(':email', $email, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':password_to_store', $password_to_store, PDO::PARAM_STR); // Zapisujemy $password_to_store
+                    $stmt_insert->bindParam(':password_to_store', $password_to_store, PDO::PARAM_STR);
                     $phone_to_insert = !empty($phone) ? $phone : null;
-                    $stmt_insert->bindParam(':phone', $phone_to_insert, PDO::PARAM_STR);
+                    $stmt_insert->bindParam(':phone', $phone_to_insert, $phone_to_insert === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
                     $stmt_insert->bindParam(':role_id', $default_role_id, PDO::PARAM_INT);
                     
                     if ($stmt_insert->execute()) {
                         $new_user_id = $pdo->lastInsertId();
-                        $_SESSION['success_message'] = "Rejestracja zakończona sukcesem! Możesz się teraz zalogować.";
                         
+                        // Automatyczne zalogowanie po rejestracji
+                        $guest_php_session_id_before_regenerate_signup = session_id(); // Pobierz ID sesji gościa PRZED regeneracją
+
+                        session_regenerate_id(true); // Zregeneruj ID sesji dla nowego, zalogowanego użytkownika
+
                         $_SESSION['user_id'] = $new_user_id;
                         $_SESSION['user_first_name'] = $firstname;
-                        $_SESSION['user_role_name'] = 'Klient';
+                        $_SESSION['user_last_name'] = $lastname; 
+                        $_SESSION['user_email'] = $email;       
+                        $_SESSION['user_role_id'] = (int)$default_role_id; 
+                        
+                        $stmt_role_fetch = $pdo->prepare("SELECT role_name FROM Roles WHERE role_id = :role_id");
+                        $stmt_role_fetch->execute([':role_id' => $default_role_id]);
+                        $role_data_fetch = $stmt_role_fetch->fetch();
+                        $_SESSION['user_role_name'] = $role_data_fetch ? $role_data_fetch['role_name'] : 'Klient';
+
+
+                        // --- START: Logika scalania koszyka po rejestracji ---
+                        $stmt_guest_cart_signup = $pdo->prepare("SELECT cart_id FROM Carts WHERE session_id = :session_id AND user_id IS NULL");
+                        $stmt_guest_cart_signup->bindParam(':session_id', $guest_php_session_id_before_regenerate_signup, PDO::PARAM_STR);
+                        $stmt_guest_cart_signup->execute();
+                        $guest_cart_data_signup = $stmt_guest_cart_signup->fetch();
+
+                        if ($guest_cart_data_signup) {
+                            $guest_cart_id_signup = $guest_cart_data_signup['cart_id'];
+                            // Nowo zarejestrowany użytkownik na pewno nie ma jeszcze swojego koszyka powiązanego z user_id,
+                            // więc po prostu przypisujemy mu koszyk gościa.
+                            $stmt_assign_signup = $pdo->prepare("UPDATE Carts SET user_id = :user_id, session_id = NULL WHERE cart_id = :guest_cart_id");
+                            $stmt_assign_signup->execute([':user_id' => $new_user_id, ':guest_cart_id' => $guest_cart_id_signup]);
+                        }
+                        unset($_SESSION['guest_cart_id']); 
+                        // --- END: Logika scalania koszyka po rejestracji ---
+
 
                         if ($action_after_signup === 'add_to_cart_after_register' && $product_id_after_signup) {
                             $params_array_signup = [
                                 'action' => 'add_to_cart',
                                 'product_id' => $product_id_after_signup,
-                                'quantity' => 1,
+                                'quantity' => 1, // Domyślna ilość, można dostosować
                             ];
                             if ($details_after_signup_json) {
                                  $params_array_signup['item_details_json_string'] = $details_after_signup_json;
@@ -90,7 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             exit;
                         }
                         
-                        header("Location: login.php?redirect=" . urlencode($redirect_url_signup)); 
+                        $_SESSION['flash_message'] = ['type' => 'success', 'text' => 'Rejestracja zakończona sukcesem! Zostałeś automatycznie zalogowany.'];
+                        header("Location: " . ($redirect_url_signup ?: 'index.php')); 
                         exit;
                     } else {
                         $error_message = "Rejestracja nie powiodła się. Spróbuj ponownie.";
@@ -128,10 +156,6 @@ include BASE_PATH . '/includes/header.php';
             <?php if ($error_message): ?>
                 <div class="flash-message error" style="padding: 10px; margin-bottom:15px; border: 1px solid var(--border-color); border-left-width: 5px; border-left-color: red; background-color: #fdd;"><?php echo e($error_message); ?></div>
             <?php endif; ?>
-             <?php if ($success_message): ?>
-                <div class="flash-message success" style="padding: 10px; margin-bottom:15px; border: 1px solid var(--border-color); border-left-width: 5px; border-left-color: green; background-color: #dfd;"><?php echo e($success_message); ?></div>
-            <?php endif; ?>
-
 
             <form action="<?php echo e($form_action_url_signup); ?>" method="POST" id="signupForm">
                 <div class="form-group">
